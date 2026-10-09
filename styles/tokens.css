@@ -43,6 +43,8 @@
   /* Phông */
   --serif: var(--font-noto-serif), Georgia, "Times New Roman", serif;
   --sans: var(--font-be-vietnam-pro), system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Chữ Hán cho dấu và cửu cung: tập con Noto Serif SC (app/layout.tsx). */
+  --han: var(--font-han), "Noto Serif SC", var(--serif);
 
   /* Chuyển động và lề */
   --ease: cubic-bezier(.22, 1, .36, 1);

@@ -1,0 +1,213 @@
+/*
+ * Trang chủ: phần thêm so với CSS của bản mẫu (styles/trang-chu.css).
+ * Mọi bộ chọn nằm trong .km-tc như tệp kia.
+ */
+
+/*
+ * ===== Đường khảm: chỗ cho thẻ chặng ở trên và dưới đường =====
+ * Bản mẫu thêm đệm 150px bằng script sau khi đặt thẻ chặng; ở chế độ tĩnh
+ * thẻ bị đặt thiếu 150px. Đặt sẵn ở đây để script đo đúng ngay lần đầu.
+ */
+.km-js .km-tc .line-wrap {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
+/* ===== Một chặng đang mở: chỉ thẻ của chặng ấy hiện trong #panel ===== */
+.km-js .km-tc .panel .card:not(.km-on) {
+  display: none;
+}
+
+/*
+ * Tấm trượt trên điện thoại nằm trong #openSec (bản mẫu chuyển nó ra <body>).
+ * Khi tấm đang mở, nâng cả phần I lên trên các phần sau và thanh rút gọn.
+ */
+@media (max-width: 859px) {
+  .km-tc .open.km-tam-mo {
+    z-index: 45;
+  }
+}
+
+/* ===== Cánh cổng: lối "Đi thẳng tới chín chặng đời" dưới nút vàng (docs/03, mục 5) ===== */
+.km-tc .mz-thang {
+  align-self: flex-start;
+  margin-top: 14px;
+  padding: 8px 2px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: #BFB29C;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0;
+}
+.km-tc .mz-thang:hover {
+  color: #F2E6CC;
+}
+.km-tc .mz-thang:focus-visible {
+  outline: 1px solid #E2C27A;
+  outline-offset: 3px;
+}
+.km-tc .eg.mzs-ready .mz-thang {
+  opacity: 1;
+  transition: opacity .7s ease .3s;
+}
+.km-tc .eg.mzs-static .mz-thang {
+  opacity: 1 !important;
+  transition: none !important;
+}
+.easy .km-tc .mz-thang {
+  font-size: 18px !important;
+}
+@media (max-width: 900px), (max-aspect-ratio: 11/10) {
+  .km-tc .mz-thang {
+    align-self: center;
+  }
+}
+
+/*
+ * ===== Khi không có JavaScript: bản tĩnh đọc được trọn chữ =====
+ * (docs/08, "Không cần JS vẫn đọc được"). Lớp km-js do script đầu trang thêm.
+ */
+html:not(.km-js) .km-tc .eg {
+  display: none;
+}
+
+/* Chín chặng: thẻ chặng xếp thành hàng, cả chín thẻ chia sẻ hiện dọc. */
+html:not(.km-js) .km-tc .line-wrap {
+  padding: 0 var(--pad);
+}
+html:not(.km-js) .km-tc .line-svg,
+html:not(.km-js) .km-tc .road-hint,
+html:not(.km-js) .km-tc .peek,
+html:not(.km-js) .km-tc .stage-btn::before,
+html:not(.km-js) .km-tc .stage-btn .sb-go {
+  display: none;
+}
+html:not(.km-js) .km-tc .stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+html:not(.km-js) .km-tc .stage-btn {
+  position: static;
+  opacity: 1;
+  transform: none !important;
+}
+html:not(.km-js) .km-tc .panel {
+  grid-template-rows: 1fr;
+}
+html:not(.km-js) .km-tc .sheet-bar,
+html:not(.km-js) .km-tc .pn,
+html:not(.km-js) .km-tc .polish,
+html:not(.km-js) .km-tc .polish-note {
+  display: none !important;
+}
+@media (max-width: 859px) {
+  html:not(.km-js) .km-tc .panel {
+    position: static !important;
+    height: auto;
+    transform: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* Tiểu vũ trụ: năm nhịp xếp dọc như chế độ tĩnh. */
+html:not(.km-js) .km-tc .micro {
+  height: auto !important;
+}
+html:not(.km-js) .km-tc .micro-stick {
+  position: relative;
+  height: auto;
+  padding: 120px 0;
+}
+html:not(.km-js) .km-tc .micro-text {
+  position: relative;
+  display: grid;
+  gap: 72px !important;
+  padding: 0 var(--pad) !important;
+}
+html:not(.km-js) .km-tc .micro .mb {
+  grid-area: auto;
+  opacity: 1;
+  visibility: visible;
+}
+html:not(.km-js) .km-tc .mdots,
+html:not(.km-js) .km-tc #microCv {
+  display: none;
+}
+
+/* Ba cửa: lá thư sáng sẵn, ba phòng mở sẵn. */
+html:not(.km-js) .km-tc .letter .ln {
+  opacity: 1;
+}
+html:not(.km-js) .km-tc .descend {
+  transform: none;
+}
+html:not(.km-js) .km-tc .tq-frame,
+html:not(.km-js) .km-tc .b-tam .tq-frame {
+  min-height: 0;
+}
+html:not(.km-js) .km-tc .tq-door {
+  position: relative;
+  inset: auto;
+  display: block;
+  cursor: default;
+}
+html:not(.km-js) .km-tc .tq-lv,
+html:not(.km-js) .km-tc .tq-seam,
+html:not(.km-js) .km-tc .tq-knock,
+html:not(.km-js) .km-tc .shut {
+  display: none;
+}
+html:not(.km-js) .km-tc .tq-label {
+  position: static;
+  transform: none;
+  width: auto;
+}
+html:not(.km-js) .km-tc .tq-frame .room {
+  opacity: 1;
+}
+
+/* Lá thư: tiêu đề hiện đủ chữ. */
+html:not(.km-js) .km-tc .inkwrite .w {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/*
+ * ===== Chế độ tĩnh (CLAUDE.md, quy tắc 10) =====
+ * Bản mẫu chỉ tắt từng hiệu ứng một và còn sót vài hoạt ảnh lặp (chấm sáng
+ * "Bạn rê chuột…", vệt mài khi rời cổng). Khi giảm chuyển động hoặc Bản nhẹ,
+ * tắt hết như chế độ Chữ lớn đã làm.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .km-tc *,
+  .km-tc *::before,
+  .km-tc *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+.lite .km-tc *,
+.lite .km-tc *::before,
+.lite .km-tc *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+}
+/* Hai bộ chọn của bản mẫu có transition !important mạnh hơn luật chung ở trên. */
+@media (prefers-reduced-motion: reduce) {
+  .km-tc .stage-btn {
+    transition: none !important;
+  }
+}
+.lite .km-tc .stage-btn,
+.easy .km-tc .stage-btn,
+.lite .km-tc .panel,
+.easy .km-tc .panel {
+  transition: none !important;
+}

@@ -41,6 +41,7 @@ cau_hoi_chinh: "…"
 soi: "…"                 # đoạn "soi" nói lại tình cảnh người đọc
 tra_loi: ["…", "…"]       # các đoạn trả lời
 nguon: "Luận Ngữ 2.4"
+loi_an_toan: "…"         # không bắt buộc: lời nhắc an toàn (chặng 3, 8, 9 theo bản mẫu)
 muc_tin_cay: "Niềm tin truyền thống"
 cau_hoi_lien_quan: ["…", "…", "…"]
 cua: ["tam", "tri", "than"]

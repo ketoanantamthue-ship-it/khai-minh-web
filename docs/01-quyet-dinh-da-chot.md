@@ -64,3 +64,4 @@ Claude Code làm theo cột "Mặc định" cho tới khi anh chốt khác. Mụ
 | F2 | Giữ nguyên câu hỏi “Tuổi bốn mươi chín có thật là một năm hạn nặng?” ở chặng 5, và giữ nó trong danh sách ngoại lệ của `npm run check:words` (`scripts/check-words-cho-phep.json`). | A13 |
 | F3 | Giữ cả ba chỗ `check:words` báo “cần xem”: “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định. | E15 |
 | F4 | Chấp nhận tên nhánh do Claude Code cấp cho mỗi phiên; bỏ quy ước `phien/S<số>-<tên-ngắn>` trong CLAUDE.md. | E16 |
+| F5 | *(Sau phiên S1.)* Cánh cổng chỉ hiện lần đầu trên mỗi máy (lưu ở localStorage `km-gate`). | A10 |

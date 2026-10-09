@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { doors, type DoorKey } from "@/lib/doors";
 import { NutChuLon } from "./HienThiToggle";
+import { NutMucLuc } from "./NutMucLuc";
 import { VetMai } from "./VetMai";
 
 /**
@@ -8,8 +9,7 @@ import { VetMai } from "./VetMai";
  * Thứ tự: Chín chặng · Cửa Tâm · Cửa Trí · Cửa Thân · Gửi một câu hỏi · Aa Chữ lớn · Mục lục
  * (docs/02, mục 5).
  *
- * "Mục lục" hiện là liên kết tới /muc-luc (dựng ở S2). Phiên S1 đổi nút này
- * thành nút mở lớp phủ Mục lục trên trang chủ.
+ * "Mục lục" mở lớp phủ trên trang chủ; ở trang khác là liên kết tới /muc-luc.
  */
 export function SiteHeader({ cuaHienTai }: { cuaHienTai?: DoorKey }) {
   const cacCua: DoorKey[] = ["tam", "tri", "than"];
@@ -43,10 +43,7 @@ export function SiteHeader({ cuaHienTai }: { cuaHienTai?: DoorKey }) {
           </Link>
         </nav>
         <NutChuLon nhan="Chữ lớn" />
-        <Link className="index-btn" href="/muc-luc">
-          <i aria-hidden="true" />
-          Mục lục
-        </Link>
+        <NutMucLuc id="openIndex" />
       </div>
     </header>
   );

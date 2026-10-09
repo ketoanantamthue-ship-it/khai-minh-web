@@ -1,6 +1,6 @@
 # 07 · Bảng rà soát: web Khai Minh còn thiếu gì
 
-Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng này cuối mỗi phiên: ghi `[x]` khi xong và thêm chỗ thiếu mới phát hiện.
+Cập nhật ngày 09/10/2026, sau phiên S1. Claude Code cập nhật bảng này cuối mỗi phiên: ghi `[x]` khi xong và thêm chỗ thiếu mới phát hiện.
 
 **Cách đọc bảng:**
 - **Nhóm A–D và F** là việc chỉ anh hoặc đội của anh làm được.
@@ -11,11 +11,11 @@ Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng n�
 
 | Nhóm | Số mục | Mục gấp nhất |
 | --- | --- | --- |
-| A. Quyết định | 13 | A1 kho mã, A9 tên miền |
+| A. Quyết định | 14 | A1 kho mã, A9 tên miền |
 | B. Chất liệu thật | 10 | B1 ảnh có bản quyền, B2 chân dung, B3 ghi âm |
 | C. Nội dung | 8 | C1 hiện chưa có bài nào để tìm thấy |
 | D. Pháp lý | 6 | D1 pháp nhân, D3 luật sư, D5 kiểm đường dây nóng |
-| E. Kỹ thuật | 10 (+6 từ S0) | Đã nằm trong S0–S7 |
+| E. Kỹ thuật | 10 (+6 từ S0, +5 từ S1) | Đã nằm trong S0–S7 |
 | F. Vận hành | 4 | F1 người giữ hộp thư |
 
 ## A. Quyết định của anh
@@ -31,9 +31,10 @@ Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng n�
 | [ ] A7 | Công cụ đếm lượt xem | S7 | Vercel Web Analytics vì đơn giản nhất; có thể thêm Plausible |
 | [ ] A8 | Bản tiếng Anh và tiếng Trung: khi nào làm? | — | Chưa làm trong hai năm đầu. Kho nội dung có sẵn trường `lang` để thêm sau. Bản dịch phải do người dịch soát, không đăng bản máy dịch hàng loạt. |
 | [ ] A9 | **Tên miền cho Khai Minh**: chọn, kiểm còn trống, mua. Đã chọn thì không đổi về sau. | S7, và canonical | Dùng biến `NEXT_PUBLIC_SITE_URL` cho tới khi có |
-| [ ] A10 | Cánh cổng chỉ hiện lần đầu trên mỗi máy | S1 | Bật (docs/01, mục E7) |
+| [x] A10 | Cánh cổng chỉ hiện lần đầu trên mỗi máy. **Đã chốt (docs/01, F5):** anh xác nhận ngày 09/10/2026. S1 đã làm theo (localStorage `km-gate`). | S1 | Bật (docs/01, mục E7) |
 | [ ] A11 | Hỏi ý một vị thầy hoặc luật sư về việc dùng hình tượng Phật trên trang thương hiệu | S7 | Giữ trong bản xem trước |
 | [x] A12 | *(Phát hiện ở S0.)* Chân trang có ba liên kết chưa có trang nào trong docs/02: “Lịch sử sửa đổi Hiến chương”, “Báo cáo minh bạch hằng năm”, “Trợ năng và cách hiển thị”. Dựng ba trang riêng, gộp vào `/hien-chuong` và `/minh-bach`, hay tạm ẩn? **Đã chốt (docs/01, F1):** mục `#lich-su-sua-doi` trong `/hien-chuong`, mục `#bao-cao` trong `/minh-bach`, trang riêng `/tro-nang`. Chân trang đã trỏ đúng; các trang dựng ở S4. | S4 | Đã nối liên kết theo F1 |
+| [ ] A14 | *(Phát hiện ở S1.)* `npm run check:words` báo thêm 13 chỗ “cần xem” trong chữ trang chủ, tất cả chép nguyên từ bản mẫu đã duyệt: “phán” (5 chỗ, như “tôi không đứng trước bạn để phán”, “một lời phán”, “ai đó từng phán về đời bạn”), “thầy” (3 chỗ: “hỏi nhiều thầy”, “tên người thầy”, “người nói là thầy” trong Điều 6), “giải hạn” (4 chỗ, đều trong câu phủ định “không bán lễ giải hạn”), “định mệnh” (Điều 1, câu phủ định). Không chỗ nào là lỗi chặn CI. Anh đồng ý giữ, hay muốn đổi chữ? | S1 | Giữ như bản mẫu |
 | [x] A13 | *(Phát hiện ở S0.)* Cụm “hạn nặng” trong câu hỏi liên quan của chặng 5 (“Tuổi bốn mươi chín có thật là một năm hạn nặng?”) khớp từ cấm W2 số 10. Đây là câu hỏi nguyên văn của người đọc, có sẵn trong bản mẫu, nên được giữ và ghi vào `scripts/check-words-cho-phep.json`. Anh đồng ý giữ, hay muốn đổi câu? **Đã chốt (docs/01, F2):** giữ nguyên câu và giữ trong danh sách ngoại lệ. | S1, S2 | Giữ như bản mẫu |
 
 ## B. Chất liệu thật
@@ -88,21 +89,26 @@ Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng n�
 
 | Mã | Nợ kỹ thuật của bản mẫu | Phiên |
 | --- | --- | --- |
-| [ ] E1 | Chữ chín chặng nằm trong mảng JS, máy tìm kiếm khó đọc. Đã tách sẵn sang `content/chang/`. | S1, S2 |
+| [x] E1 | Chữ chín chặng nằm trong mảng JS, máy tìm kiếm khó đọc. Đã tách sẵn sang `content/chang/`. **S1: xong cho trang chủ** — chữ đọc từ `content/chang/*.mdx` (schema zod ở `lib/chang.ts`), server dựng sẵn; tắt JavaScript vẫn đọc trọn chín chặng. Trang `/chang/[slug]` làm ở S2. | S1, S2 |
 | [ ] E2 | Khoảng 38 liên kết "#" ở trang chủ và 14–20 liên kết ở mỗi trang con | S4 |
 | [ ] E3 | Form chỉ là bản xem trước, chưa gửi được thư | S5 |
 | [ ] E4 | Chưa có metadata riêng cho từng trang, sitemap, robots, canonical, JSON-LD | S3 |
-| [x] E5 | Phông tải bằng thẻ link CSS; cần chuyển sang `next/font` và chỉ tải tập con. **S0: xong** (Noto Serif, Be Vietnam Pro, tập con `vietnamese` và `latin`). Chữ Hán cho dấu và cửu cung còn chờ S1. | S0 |
-| [ ] E6 | Cổng hiện mỗi lần vào trang và che toàn màn hình | S1 |
+| [x] E5 | Phông tải bằng thẻ link CSS; cần chuyển sang `next/font` và chỉ tải tập con. **S0: xong** (Noto Serif, Be Vietnam Pro, tập con `vietnamese` và `latin`). Chữ Hán cho dấu và cửu cung: **S1 xong**, tập con Noto Serif SC chỉ gồm 33 chữ (9,6 KB, `app/fonts/`). | S0 |
+| [x] E6 | Cổng hiện mỗi lần vào trang và che toàn màn hình. **S1: xong** — cổng chỉ hiện lần đầu trên mỗi máy, có “Vào thẳng trang”, Esc, focus trap, chế độ tĩnh. | S1 |
 | [ ] E7 | Chưa có công cụ đo: Search Console, Bing, đếm lượt xem | S7 |
 | [ ] E8 | Chưa có trang 404 và các trang chính sách | S4 |
 | [ ] E9 | Các trang con dẫn về `index.html#gui-cau-hoi`; cần đổi thành `/gui-cau-hoi` | S2, S4 |
 | [ ] E10 | Chưa thử trên iPhone và Android thật; chưa chạy Bộ thử 20 người thật | S6 |
-| [ ] E11 | *(Từ S0.)* Nút “Mục lục” ở đầu trang tạm là liên kết tới `/muc-luc`. S1 đổi thành nút mở lớp phủ trên trang chủ; S2 dựng trang `/muc-luc`. | S1, S2 |
+| [ ] E11 | *(Từ S0.)* Nút “Mục lục” ở đầu trang tạm là liên kết tới `/muc-luc`. **S1: xong phần trang chủ** (nút mở lớp phủ). Còn lại: S2 dựng trang `/muc-luc`. | S1, S2 |
 | [ ] E12 | *(Từ S0.)* Đầu trang và chân trang đã trỏ vào các route ở docs/02 (`/tam`, `/tri`, `/than`, `/gui-cau-hoi`, `/khai-minh`, `/hien-chuong`, `/minh-bach`, `/tro-nang`, bốn trang chính sách). Các route này chưa dựng nên hiện còn ra trang 404. | S2, S4, S5 |
 | [ ] E13 | *(Từ S0.)* Khi `hotlineDaXacNhan` là `false`, chân trang chỉ nhắc 115 và người thân, chưa nhắc Ngày Mai. Bật cờ trong `site.config.ts` sau khi xong D5 thì câu đầy đủ của bản mẫu hiện lại. | Sau D5 |
 | [ ] E14 | *(Từ S0.)* Liên hệ, mạng xã hội, chủ sở hữu nhãn hiệu, pháp nhân, ngày cập nhật: chân trang đang hiện ô nét đứt như bản mẫu. Điền vào `site.config.ts` khi có D1, C7, C8. **Không ra mắt khi còn ô trống.** | S4, S7 |
 | [x] E15 | *(Từ S0.)* `npm run check:words` đang báo 3 chỗ “cần xem” (không làm hỏng CI): “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định, nên tôi đề nghị giữ. **Đã chốt (docs/01, F3):** giữ cả ba chỗ. | S1 |
+| [ ] E17 | *(Từ S1.)* Liên kết trên trang chủ đã trỏ vào các route ở docs/02 nhưng các trang ấy chưa dựng, nên hiện còn ra 404: `/tam`, `/tri`, `/than` (kèm `#bac-thang`, `#thu`, `#sach`), `/chang/[slug]` (“Đọc trọn bài”), `/khai-minh`, `/hien-chuong`, `/minh-bach`, `/du-lieu`, `/bao-chi`, `/gui-cau-hoi` (nút ở đầu trang). Sáu tầng đi sâu trong Mục lục tạm trỏ `/tang/cham` … `/tang/tot-nghiep` (trang nhãn, S3); khi có bài riêng cho từng chặng thì đổi. Câu hỏi liên quan của mỗi chặng chưa có bài nên để `data-can="C1"`, không có liên kết. | S2–S5 |
+| [ ] E18 | *(Từ S1.)* Lá thư “Gửi một câu hỏi” vẫn là bản xem trước như bản mẫu: bấm gửi thì hiện “Tôi đã nhận được lá thư của bạn…” nhưng **chưa gửi đi đâu**. Không mời người thật dùng thử biểu mẫu trước phiên S5. | S5 (cần A5) |
+| [ ] E19 | *(Từ S1.)* CSS trang chủ chép nguyên từ bản mẫu (`styles/trang-chu.css`, ~1.450 dòng), gồm cả các luật của những phiên bản cũ không còn dùng (`.doors3`, `.foot`, `.grid9`, `.ladder4`, `.wall9`…). Giữ để khớp hình tuyệt đối; dọn khi đo hiệu năng. | S6 |
+| [ ] E20 | *(Từ S1.)* Khi cờ `hotlineDaXacNhan` là `false`, số Ngày Mai cũng được ẩn ở Điều 6 của Hiến chương và ở khối “Nếu bạn đang gặp nguy hiểm” cạnh lá thư (chỉ còn 115). Bật cờ sau khi xong D5 thì câu đầy đủ của bản mẫu hiện lại. | Sau D5 |
+| [ ] E21 | *(Từ S1.)* Các khung còn chờ chất liệu trên trang chủ mang `data-can`: ảnh chân dung (B2), chữ ký tay (B4), video rót trà và giọng đọc (B5), câu hỏi viết tay trong mỗi chặng (B6), số chứng chỉ hành nghề (D2), ngày hiệu lực Hiến chương (C8). | S4 |
 | [x] E16 | *(Từ S0.)* Phiên S0 làm trên nhánh `claude/bold-volta-yy6w5v` do Claude Code trên web cấp, chưa theo quy ước `phien/S<số>-<tên-ngắn>`. Từ S1, khi mở phiên mới, có thể dặn Claude dùng đúng tên nhánh. **Đã chốt (docs/01, F4):** dùng tên nhánh do Claude Code cấp; CLAUDE.md đã bỏ quy ước cũ. | — |
 
 ## F. Vận hành
