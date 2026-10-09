@@ -163,13 +163,18 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     await page.goto(Q001);
     const kieu = await page.locator(".bai-than > .wrap > p").first().evaluate((p) => {
       const k = getComputedStyle(p);
-      return { co: k.fontSize, dong: k.lineHeight, rong: k.maxWidth };
+      // Đo 66 chữ “0” bằng đúng phông của đoạn văn: đó là độ dài của 66ch trong CSS.
+      const thu = document.createElement("span");
+      thu.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
+      thu.textContent = "0".repeat(66);
+      p.append(thu);
+      const sauMuoiSauKyTu = thu.getBoundingClientRect().width;
+      thu.remove();
+      return { co: k.fontSize, dong: k.lineHeight, rong: parseFloat(k.maxWidth), sauMuoiSauKyTu };
     });
     expect(kieu.co).toBe("17px");
     expect(kieu.dong).toBe("29.75px");
-    // 66ch của Be Vietnam Pro 17 px: khoảng 66 ký tự trên một dòng.
-    expect(parseFloat(kieu.rong)).toBeGreaterThan(17 * 66 * 0.45);
-    expect(parseFloat(kieu.rong)).toBeLessThan(17 * 66 * 0.7);
+    expect(Math.abs(kieu.rong - kieu.sauMuoiSauKyTu)).toBeLessThan(1);
   });
 
   test("khối tác giả có chỗ ảnh chân dung chờ chất liệu", async ({ page }) => {
