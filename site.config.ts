@@ -39,11 +39,26 @@ const laBanXemTruoc =
 const choPhepLapChiMuc =
   process.env.NEXT_PUBLIC_CHO_PHEP_LAP_CHI_MUC === "true" && !laBanXemTruoc;
 
+/**
+ * Có hiện bài chưa `da-dang` hay không (docs/04, mục 5).
+ * - Production của Vercel, hoặc khi cờ lập chỉ mục đang bật: không bao giờ.
+ * - Bản xem trước, `next dev`, bản build trên máy và trong CI: có, kèm dải
+ *   “Bản nháp” trên trang.
+ * Đặt HIEN_BAN_NHAP=false để dựng thử đúng như production.
+ */
+const moiTruongVercel = process.env.VERCEL_ENV ?? process.env.NEXT_PUBLIC_VERCEL_ENV;
+const hienBanNhap =
+  process.env.HIEN_BAN_NHAP !== "false" && moiTruongVercel !== "production" && !choPhepLapChiMuc;
+
 export const siteConfig = {
   ten: "Khai Minh",
   kyTen: "Người Khai Vấn (Khai Minh)",
   siteUrl,
   choPhepLapChiMuc,
+  hienBanNhap,
+
+  /** Tổ chức mà Khai Minh làm việc cho (JSON-LD Organization; docs/05, mục 1). */
+  toChuc: { ten: "An Tâm Mệnh", url: "https://antammenh.com" },
 
   /** Liên kết sang các web khác trong cùng ngôi nhà (docs/02, mục 4). */
   lienKetNgoai: {

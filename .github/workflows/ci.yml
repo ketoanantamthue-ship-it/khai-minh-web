@@ -32,6 +32,9 @@ jobs:
       - name: Quét từ cấm
         run: npm run check:words
 
+      - name: Kiểm kho bài (schema và ba nhãn)
+        run: npm run kiem:bai
+
       - name: Lint
         run: npm run lint
 
@@ -46,6 +49,11 @@ jobs:
 
       - name: Test (Playwright và axe)
         run: npm run test
+
+      # Bản build ở trên là bản xem trước (có bài nháp). Dựng lại đúng như
+      # production và kiểm không bài nào chưa da-dang có trang hay vào sitemap.
+      - name: Dựng như production và kiểm bài nháp
+        run: HIEN_BAN_NHAP=false npm run build && npm run kiem:bai -- --sau-build
 
       - name: Lưu báo cáo test khi lỗi
         if: failure()

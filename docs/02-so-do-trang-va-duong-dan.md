@@ -40,6 +40,7 @@ Các đường dẫn `/chang/1` đến `/chang/9` chuyển hướng 301 về slu
 | Loại trang | Đường dẫn mẫu | Người đọc tìm gì | Khuôn viết | Trạng thái | Phiên |
 | --- | --- | --- | --- | --- | --- |
 | Hỏi – đáp | `/hoi/bon-muoi-tuoi-thay-trong-rong` | Một câu hỏi cụ thể | Khuôn 9 bước ở docs/04, 800–1.500 chữ | Khung (chưa có bài) | S3 |
+| Mục hỏi – đáp *(thêm ở S3)* | `/hoi` | Mọi câu hỏi, chia theo chín chặng, cộng bài cắt ngang | Tự sinh; câu chưa có bài là chữ thường | Khung | S3 |
 | Từ điển | `/tu-dien/tam-tai` | "X là gì" | Định nghĩa trước, rồi kinh nói gì, dân gian nói gì, ngộ nhận | Khung | S3 |
 | Ngộ nhận | `/ngo-nhan/not-ruoi-duoi-mat` | "Có thật không" | Sự thật trước, nguồn sau, nhãn tin cậy | Khung | S3 |
 | Phương pháp | `/phuong-phap/soi-thau-chuyen` | Tên riêng của phương pháp | Trang định nghĩa gốc, có ngày công bố và phiên bản | Khung, chữ chờ anh | S3 |

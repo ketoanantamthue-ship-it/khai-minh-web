@@ -3,6 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
+import { schemaCua, schemaTang as schemaNhanTang, schemaTrangThai } from "./nhan";
 
 /**
  * Chín chặng đời, đọc từ content/chang/*.mdx (docs/03, mục 7; docs/04, mục 4).
@@ -12,10 +13,6 @@ import { z } from "zod";
  * này thì trang chặng dựng từ phần seed và để ô CẦN (docs/07, mục C2).
  * Frontmatter sai schema thì build báo lỗi, kèm tên tệp.
  */
-
-const TANG = ["cham", "hieu", "soi", "chuyen", "dong-hanh", "tot-nghiep"] as const;
-const CUA = ["tam", "tri", "than"] as const;
-const TRANG_THAI = ["ban-nhap", "ban-mau-chua-duyet", "da-soat", "da-dang"] as const;
 
 /** Thang nhãn tin cậy bản mẫu đang dùng (docs/04, mục 3; thang đầy đủ chờ docs/07, mục C6). */
 export const MUC_TIN_CAY = {
@@ -78,9 +75,9 @@ const schemaChang = z.object({
   loi_an_toan: z.string().min(1).optional(),
   muc_tin_cay: z.string().min(1),
   cau_hoi_lien_quan: z.array(z.string().min(1)),
-  cua: z.array(z.enum(CUA)).min(1),
-  tang: z.enum(TANG),
-  trang_thai: z.enum(TRANG_THAI),
+  cua: schemaCua,
+  tang: schemaNhanTang,
+  trang_thai: schemaTrangThai,
   nguon_goc: z.string().optional(),
   trang: schemaTrang.optional(),
 });

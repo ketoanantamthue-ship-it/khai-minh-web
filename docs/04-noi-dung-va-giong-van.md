@@ -69,12 +69,13 @@ slug: "bon-muoi-tuoi-thay-trong-rong"
 chang: 5
 tang: "hieu"
 cua: ["tam"]
+tinh_canh: "…"             # (từ S3) bước 2: hai câu nói lại tình cảnh người đọc
 tra_loi_ngan: "…"          # 40–60 chữ, hiện ngay dưới tiêu đề
 ma_cau_hoi: "Q003"         # khớp cột A của data/bang-loc-cau-hoi-noi-dau.xlsx
 nguon: [{ ten: "Tăng Chi Bộ 1.51", loai: "kinh", dien_y: true }]
 muc_tin_cay: "…"
 ngay_viet: 2026-11-02
-ngay_kiem_lai: 2027-05-02
+ngay_kiem_lai: 2027-05-02   # ngày người soát đọc lại gần nhất (docs/07, mục A16)
 nguoi_soat: "…"            # bắt buộc khi trang_thai = da-dang
 trang_thai: "ban-nhap"
 lien_quan: ["tu-dien/tam-tai", "hoi/…"]
@@ -91,13 +92,19 @@ lien_quan: ["tu-dien/tam-tai", "hoi/…"]
 8. Câu hỏi liên quan cùng chặng và các mục Từ điển.
 9. Tác giả, ngày viết, ngày kiểm lại và nguồn.
 
+*(Từ S3.)* Bước 1–3 nằm ở frontmatter (`tieu_de`, `tinh_canh`, `tra_loi_ngan`). Bước 4–7 là bốn tiêu đề `##` đúng chữ, đúng thứ tự trong thân MDX. Bước 8–9 do trang tự dựng từ frontmatter và chặng. Schema và luật kiểm ở `lib/noi-dung.ts`: tên tệp phải trùng `slug`; bài `da-dang` phải đủ mọi bước, có người soát, nguồn, nhãn tin cậy và không còn dấu CẦN, nếu không thì build báo lỗi. Hướng dẫn cho đội viết: **docs/09**.
+
 ### `content/tu-dien/*.mdx`
 
 Gồm `thuat_ngu`, `slug`, `dinh_nghia` (1–2 câu, đặt đầu trang), `kinh_noi`, `dan_gian_noi`, `ngo_nhan`, `nguon`, `muc_tin_cay`, ba nhãn, `trang_thai`.
 
 ### `content/ngo-nhan/*.mdx`
 
-Gồm `niem_tin`, `slug`, `su_that` (đặt trước), `nguon`, `muc_tin_cay`, ba nhãn, `trang_thai`. Tư liệu sẵn có: 238 niềm tin sai về cầm tướng (bản V3) và các bài nhân tướng. **Các tệp này không nằm trong gói** (xem docs/07, mục C5).
+Gồm `niem_tin`, `slug`, `su_that` (đặt trước), `nguon`, `muc_tin_cay`, ba nhãn, `trang_thai`.
+
+*(Từ S3.)* Thêm ba loại: `content/viet/` (`tieu_de`, `tom_tat`), `content/thu/` (`tieu_de`, `ngay_gui`, `tom_tat`; tên tệp dạng `2026-11`) và `content/phuong-phap/` (`ten`, `dinh_nghia`, `ngay_cong_bo`, `phien_ban`). Mọi loại đều mang ba nhãn và các trường chung `nguon`, `muc_tin_cay`, `ngay_viet`, `ngay_kiem_lai`, `nguoi_soat`, `lien_quan`, `mo_ta`, `lang`. Khuôn để chép: `content/<loại>/_mau.mdx`.
+
+Tư liệu sẵn có: 238 niềm tin sai về cầm tướng (bản V3) và các bài nhân tướng. **Các tệp này không nằm trong gói** (xem docs/07, mục C5).
 
 ## 5. Quy trình từ câu hỏi đến bài đăng
 
@@ -105,7 +112,7 @@ Gồm `niem_tin`, `slug`, `su_that` (đặt trước), `nguon`, `muc_tin_cay`, b
 2. Câu nào có kết luận "Viết" thì mở tệp `content/hoi/<slug>.mdx` với `trang_thai: ban-nhap` và `ma_cau_hoi` khớp bảng.
 3. Viết theo khuôn chín bước, rồi chạy `npm run check:words`.
 4. Người soát kiểm nguồn kinh và nhãn tin cậy, điền `nguoi_soat`, chuyển sang `da-soat`.
-5. Anh duyệt và chuyển sang `da-dang`. **Chỉ bài `da-dang` mới được build ra trang công khai.** Bài ở trạng thái khác chỉ hiện trên bản xem trước.
+5. Anh duyệt và chuyển sang `da-dang`. **Chỉ bài `da-dang` mới được build ra trang công khai.** Bài ở trạng thái khác chỉ hiện trên bản xem trước, kèm dải “Bản nháp”. *(Từ S3: biến `hienBanNhap` trong `site.config.ts`; production của Vercel và lúc cờ lập chỉ mục bật thì không bao giờ hiện bài nháp. CI dựng thêm một bản như production và kiểm bằng `npm run kiem:bai -- --sau-build`.)*
 6. Thứ tự viết: hai cụm thử trước (chặng 5 và năm hạn), mỗi cụm 15–20 bài, đăng đều mỗi tuần.
 
 ## 6. Chữ đã có sẵn và chữ còn thiếu

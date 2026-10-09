@@ -1,16 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { CacLopSau, DauMucLuc, ICON_CHIN_CHANG, NoiDungNgoiLang, TieuDeLop } from "@/components/muc-luc/CacLop";
 import { CuuCungTrang } from "@/components/muc-luc/CuuCungTrang";
 import { docChinChang, duongDanChang } from "@/lib/chang";
+import { taoMetadata } from "@/lib/seo";
 import "@/styles/muc-luc.css";
 
-export const metadata: Metadata = {
-  title: "Mục lục",
-  description:
-    "Ngôi nhà này có bốn lối đi. Bạn chọn lối nào gần với lòng mình nhất cũng được, và có thể quay lại đây bất cứ lúc nào.",
-  alternates: { canonical: "/muc-luc" },
-};
+export const metadata = taoMetadata({
+  tieuDe: "Mục lục",
+  moTa: "Ngôi nhà này có bốn lối đi. Bạn chọn lối nào gần với lòng mình nhất cũng được, và có thể quay lại đây bất cứ lúc nào.",
+  duongDan: "/muc-luc",
+});
 
 /**
  * Trang /muc-luc (phiên S2): Mục lục bốn lớp ở dạng trang HTML đầy đủ, để

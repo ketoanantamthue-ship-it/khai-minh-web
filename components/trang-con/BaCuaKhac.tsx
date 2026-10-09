@@ -2,7 +2,7 @@ import Link from "next/link";
 import { DOOR_KEYS, doors, doorStyle, type DoorKey } from "@/lib/doors";
 
 /** Tên phụ và lời dẫn của mỗi cửa trong khối `.dsw` (chữ của bản mẫu). */
-const CHU_CUA: Record<DoorKey, { phu: string; danhCho: string }> = {
+export const CHU_CUA: Record<DoorKey, { phu: string; danhCho: string }> = {
   tam: { phu: "An Tâm Mệnh", danhCho: "Dành cho bạn khi lòng chưa yên." },
   tri: { phu: "Sách và tri thức", danhCho: "Dành cho bạn khi muốn hiểu cho đúng." },
   than: { phu: "Dưỡng sinh Trần Y Thư", danhCho: "Dành cho bạn khi thân thể mỏi mệt." },
