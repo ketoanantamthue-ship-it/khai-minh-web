@@ -1,0 +1,139 @@
+/*
+ * Trang /muc-luc: Mục lục bốn lớp ở dạng trang đầy đủ.
+ * CSS chép từ lớp phủ Mục lục của trang chủ (styles/trang-chu.css, gốc là
+ * prototypes/index.html K1.9.15), đổi tiền tố .km-tc .index / .km-tc thành
+ * .km-ml (phần tử <main> của trang) để không lan sang trang khác.
+ *
+ * Khác lớp phủ (cố ý), xem các luật ở cuối tệp:
+ * - trang cuộn bình thường, không phủ toàn màn hình;
+ * - bốn lớp luôn mở (<section>, không phải <details>);
+ * - ô cửu cung là liên kết <a> thay cho <button>;
+ * - có JavaScript thì chỉ hiện thang của cung đang chọn; không có thì hiện cả chín.
+ */
+.km-ml{display:block;min-height:100vh;padding:calc(env(safe-area-inset-top,0px) + 124px) var(--pad) clamp(64px,10vh,104px);background:var(--lac);color:var(--on);font-family:var(--serif)}
+.km-ml *,.km-ml *::before,.km-ml *::after{box-sizing:inherit}
+.km-ml h1,.km-ml h2,.km-ml h3,.km-ml p{text-wrap:pretty}
+.km-ml :focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.km-ml .lo .n,.km-ml .lo .t,.km-ml .ladder h3{font-family:var(--serif)}
+.km-ml .lo-note,.km-ml .ladder li span{font-size:15px!important;line-height:1.6!important}
+/* ===== Thang sáu tầng (bản mẫu: Thang sáu tầng trong Mục lục) ===== */
+.km-ml .ladder{margin-top:22px;padding:18px 18px 8px;border:1px solid rgba(196,151,59,.3);background:rgba(196,151,59,.04)}
+.km-ml .ladder h3{margin:0 0 4px;font-weight:400;font-size:22px;color:var(--on)}
+.km-ml .ladder .lq{margin:0 0 12px;font-style:italic;font-size:16px;line-height:1.5;color:var(--cream-gold)}
+.km-ml .ladder ol{list-style:none;margin:0;padding:0;counter-reset:t}
+.km-ml .ladder li{display:grid;grid-template-columns:118px 1fr;gap:10px;padding:9px 0;border-top:1px solid rgba(241,232,216,.09);font-size:15.5px;line-height:1.4}
+.km-ml .ladder li span{font-family:var(--sans);font-size:12px;letter-spacing:.04em;color:var(--gold-ink);padding-top:2px}
+.km-ml .ladder ol{max-width:none!important}
+.km-ml .ladder li{border-bottom:0!important}
+.km-ml .ladder li a{display:inline!important;padding:0!important;grid-template-columns:none!important;color:var(--on);text-decoration:none}
+.km-ml .ladder li a:hover{color:var(--cream-gold);text-decoration:underline;text-underline-offset:3px}
+.km-ml .ladder .go{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;margin:12px 0 10px;padding:10px 16px;background:var(--gold);color:#15110D;font-family:var(--sans);font-weight:600;font-size:14px}
+.km-ml .ladder .go:hover{background:var(--gold-hi)}
+/* ===== Cửu cung Lạc thư ===== */
+.km-ml .idx-wrap{display:grid;gap:44px;max-width:1180px;width:100%;margin:0 auto}
+@media (min-width:960px){.km-ml .idx-wrap{grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:72px;align-items:start}}
+.km-ml .idx-h{margin:0 0 16px;font-style:italic;font-size:18px;color:var(--gold-ink)}
+.km-ml .lo{position:relative;width:100%;max-width:520px;aspect-ratio:1/1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);border:1px solid rgba(196,151,59,.45)}
+.km-ml .lo a{all:unset;box-sizing:border-box;position:relative;z-index:1;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:12px 12px 12px 14px;border-right:1px solid rgba(196,151,59,.22);border-bottom:1px solid rgba(196,151,59,.22);transition:background-color .35s var(--ease)}
+.km-ml .lo a:nth-child(3n){border-right:0}.km-ml .lo a:nth-child(n+7){border-bottom:0}
+.km-ml .lo a:hover,.km-ml .lo a:focus-visible{background:rgba(196,151,59,.09)}
+.km-ml .lo a:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.km-ml .lo .n{font-style:italic;font-size:clamp(22px,2.4vw,30px);line-height:1;color:var(--gold-ink)}
+.km-ml .lo .t{font-size:clamp(14px,1.25vw,17px);line-height:1.25;color:var(--on)}
+.km-ml .lo .mid{background:rgba(196,151,59,.05)}
+.km-ml .lo svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.km-ml .lo .fly{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:.5;stroke-dasharray:1400;stroke-dashoffset:1400}
+.km-ml .lo .fly{animation:fly 2.4s var(--ease) .25s forwards}
+@keyframes fly{to{stroke-dashoffset:0}}
+.km-ml .lo .pt{fill:var(--egg);opacity:.9}
+.km-ml .lo-note{margin:14px 0 0;font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--on-3);max-width:46ch}
+@media (prefers-reduced-motion:reduce){.km-ml .lo .fly{animation:none;stroke-dashoffset:0}}
+/* ===== Đầu mục lục ===== */
+.km-ml .idx-head{display:flex;align-items:flex-start;gap:16px;max-width:1180px;margin:0 auto 28px;width:100%}
+.km-ml .idx-seal{flex:none;display:grid;place-items:center;width:46px;height:46px;border:1.5px solid #C24A43;color:#D9826F;font-family:var(--han);font-size:22px;transform:rotate(-3deg)}
+.km-ml .idx-t{margin:0;font-family:var(--serif);font-size:clamp(30px,3.4vw,44px);line-height:1.1;color:var(--on)}
+.km-ml .idx-s{margin:6px 0 0;max-width:58ch;font-family:var(--sans);font-size:15.5px;line-height:1.6;color:var(--on-2)}
+.km-ml .idx-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-style:normal!important;font-family:var(--serif)!important;font-size:22px!important;color:var(--on)!important}
+.km-ml .idx-h span{flex-basis:100%;font-family:var(--sans);font-size:15px;color:var(--on-3)}
+.km-ml .idx-h b{display:inline-grid;place-items:center;min-width:34px;height:34px;margin-right:10px;padding:0 6px;border:1px solid rgba(196,151,59,.55);font-family:var(--serif);font-style:italic;font-weight:400;font-size:16px;color:var(--gold-hi)}
+@media (max-width:700px){.km-ml .idx-head{margin-bottom:18px}.km-ml .idx-seal{width:38px;height:38px;font-size:18px}}
+/* ===== K1.9.15 · Mục lục rõ ràng, tách lớp ===== */
+.km-ml .ii{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.km-ml .ix .idx-h{margin:4px 0 14px!important}
+.km-ml .ix-sec{border:1px solid rgba(196,151,59,.28);border-radius:6px;background:rgba(255,248,235,.025);margin:0 0 12px;overflow:hidden}
+.km-ml .ix-sec[open]{background:rgba(255,248,235,.04);border-color:rgba(196,151,59,.5)}
+.km-ml .layers .ix-sec{border-bottom:1px solid rgba(196,151,59,.28)}
+.km-ml .layers .ix-sec[open]{border-bottom-color:rgba(196,151,59,.5)}
+.km-ml .ix-sum,.km-ml .layers .ix-sum{list-style:none;cursor:pointer;display:grid!important;grid-template-columns:auto auto 1fr auto;align-items:center;gap:12px;padding:16px 16px!important;border:0!important;font-style:normal!important;font-size:inherit!important;color:var(--on)!important}
+.km-ml .ix-sum::-webkit-details-marker{display:none}
+.km-ml .layers .ix-sum::after{content:none!important}
+.km-ml .ix-sum:focus-visible{outline:2px solid var(--gold-hi);outline-offset:-2px}
+.km-ml .ix-num{display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border:1px solid rgba(196,151,59,.55);font-family:var(--serif);font-style:italic;font-weight:400;font-size:16px;color:var(--gold-hi)}
+.km-ml .ix-si{width:26px;height:26px;color:var(--gold-hi)}
+.km-ml .layers .ix-sum .ix-st,.km-ml .ix-sum .ix-st{display:block}
+.km-ml .ix-st{font-family:var(--serif);font-size:clamp(20px,1.7vw,23px);line-height:1.25;color:var(--on)}
+.km-ml .ix-st em{display:block;margin-top:3px;font-style:normal;font-family:var(--sans);font-size:15px;line-height:1.4;color:var(--on-3)}
+.km-ml .ix-pm{position:relative;width:18px;height:18px}
+.km-ml .ix-pm::before,.km-ml .ix-pm::after{content:"";position:absolute;left:2px;right:2px;top:8.5px;height:1.5px;background:var(--gold-ink);transition:transform .3s var(--ease)}
+.km-ml .ix-pm::after{transform:rotate(90deg)}
+.km-ml .ix-sec[open] .ix-pm::after{transform:rotate(0)}
+.km-ml .ix-body{padding:4px 16px 18px}
+.km-ml .idx-wrap.ix{gap:0}
+.km-ml .ix-1{margin-bottom:12px}
+/* rows */
+.km-ml .ix-a,.km-ml .layers .g .ix-a,.km-ml .layers .ix-a{all:unset;box-sizing:border-box;cursor:pointer;display:grid!important;grid-template-columns:22px 1fr 14px;align-items:center;gap:14px;width:100%;padding:12px 4px!important;border-top:1px solid rgba(241,232,216,.08);color:var(--on)}
+.km-ml .ix-a:first-of-type{border-top:0}
+.km-ml .ix-a .ii{color:var(--gold-ink)}
+.km-ml .ix-t{font-family:var(--serif);font-size:clamp(18px,1.4vw,20px);line-height:1.3;color:var(--on)}
+.km-ml .ix-t em{display:block;margin-top:2px;font-style:normal;font-family:var(--sans);font-weight:400;font-size:15px;line-height:1.45;color:var(--on-3)}
+.km-ml .ix-c{font-style:normal;font-family:var(--sans);font-size:20px;color:var(--on-3);transition:transform .3s var(--ease),color .3s}
+.km-ml .ix-a:hover .ix-t,.km-ml .ix-a:focus-visible .ix-t{color:var(--gold-hi)}
+.km-ml .ix-a:hover .ix-c{transform:translateX(3px);color:var(--gold-hi)}
+.km-ml .ix-a:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+/* doors */
+.km-ml .ix-doors{display:grid;gap:12px;padding-top:6px}
+.km-ml .idd{border-radius:5px;padding:4px 14px 6px;border:1px solid color-mix(in srgb,var(--dc) 45%,transparent);border-left:4px solid var(--dc);background:linear-gradient(90deg,color-mix(in srgb,var(--dc) 14%,transparent),transparent 70%)}
+.km-ml .idd-h{display:flex;align-items:center;gap:14px;padding:12px 0 10px}
+.km-ml .idd-seal{flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:4px;background:var(--dc);color:#FFF4E6;font-family:var(--han);font-size:22px;box-shadow:inset 0 0 0 1.5px rgba(255,244,230,.35)}
+.km-ml .idd-n{margin:0;font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.2;color:var(--dc2)}
+.km-ml .idd-s{margin:2px 0 0;font-family:var(--sans);font-size:15px;line-height:1.4;color:var(--on-2)}
+.km-ml .idd .ix-a .ii{color:var(--dc2)}
+.km-ml .idd .ix-a{border-top-color:color-mix(in srgb,var(--dc) 22%,transparent)}
+.km-ml .idd .ix-a:hover .ix-t{color:var(--dc2)}
+/* six levels: vertical ladder */
+.km-ml .ix-tang{position:relative}
+.km-ml .ix-tang::before{content:"";position:absolute;left:31px;top:26px;bottom:30px;width:1px;background:linear-gradient(rgba(196,151,59,.15),rgba(196,151,59,.6))}
+.km-ml .ix-tang .ix-a .ii{position:relative;z-index:1;width:30px;height:30px;padding:5px;margin-left:-4px;border-radius:50%;background:#14100C;border:1px solid rgba(196,151,59,.5);box-sizing:border-box}
+.km-ml .ix-tang .ix-a{grid-template-columns:30px 1fr 14px;border-top:0}
+/* nine stages grid as tiles */
+.km-ml .ix .lo{gap:6px;border:0;max-width:440px;margin:0 auto}
+.km-ml .ix .lo a{border:1px solid rgba(196,151,59,.28)!important;border-radius:4px;background:rgba(20,15,11,.82);padding:10px 10px 10px 12px;overflow:hidden;transition:border-color .3s,background .3s,box-shadow .3s}
+.km-ml .ix .lo a.mid{background:rgba(48,34,18,.85)}
+.km-ml .ix .lo a.on{border-color:var(--gold-hi)!important;background:rgba(60,42,18,.92);box-shadow:0 0 0 1px var(--gold-hi),0 0 22px rgba(226,194,122,.25)}
+.km-ml .ix .lo .hz{position:absolute;right:6px;top:2px;font-family:var(--han);font-size:clamp(30px,4vw,40px);line-height:1;color:rgba(226,194,122,.16);pointer-events:none}
+.km-ml .ix .lo .t{position:relative;font-size:15px!important;line-height:1.25}
+.km-ml .ix .lo .n{position:relative;font-size:24px}
+.km-ml .ix .lo .fly{opacity:.28}
+.km-ml .ix .ladder{margin-top:18px;border-radius:5px}
+.km-ml .ix .ladder ol{counter-reset:lt}
+.km-ml .ix .ladder li{display:grid!important;grid-template-columns:26px 1fr!important;gap:2px 12px!important;align-items:start;counter-increment:lt}
+.km-ml .ix .ladder li::before{content:counter(lt);grid-row:1/3;display:grid;place-items:center;width:24px;height:24px;margin-top:1px;border-radius:50%;border:1px solid rgba(196,151,59,.5);font-family:var(--sans);font-size:13px;color:var(--gold-hi)}
+.km-ml .ix .ladder li span{font-size:12.5px!important;letter-spacing:.12em!important;text-transform:uppercase}
+.km-ml .ix .ladder li a{font-family:var(--serif);font-size:17px;line-height:1.35}
+@media (min-width:960px){
+  .km-ml .idx-wrap.ix{grid-template-columns:minmax(0,480px) minmax(0,1fr);gap:40px}
+  .km-ml .ix-1{position:sticky;top:0}
+}
+.easy .km-ml .ix-t em,.easy .km-ml .ix-st em,.easy .km-ml .idd-s{font-size:18px!important}
+.easy .km-ml .ix-t{font-size:22px!important}
+@media (prefers-reduced-motion:reduce){.km-ml .ix-pm::before,.km-ml .ix-pm::after,.km-ml .ix-c{transition:none}}
+
+/* ===== Riêng cho trang /muc-luc ===== */
+.km-ml section.ix-sec{background:rgba(255,248,235,.04);border-color:rgba(196,151,59,.5)}
+.km-ml h2.ix-sum{margin:0;cursor:default;font-weight:400}
+.km-ml .ix .lo a.on{border-color:var(--gold-hi)!important}
+.km-js .km-ml .ladder:not(.on){display:none}
+.km-ml .ladder{scroll-margin-top:24px}
+@media (max-width:700px){.km-ml{padding-top:calc(env(safe-area-inset-top,0px) + 96px)}}
+.easy .km-ml .idx-s,.easy .km-ml .lo-note,.easy .km-ml .ladder .lq{font-size:19px!important}
+.easy .km-ml .ladder li a{font-size:20px!important}

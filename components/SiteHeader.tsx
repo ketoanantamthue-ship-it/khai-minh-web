@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { doors, type DoorKey } from "@/lib/doors";
+import { DOOR_KEYS } from "@/lib/doors";
 import { NutChuLon } from "./HienThiToggle";
+import { LienKetCua } from "./LienKetCua";
 import { NutMucLuc } from "./NutMucLuc";
 import { VetMai } from "./VetMai";
 
@@ -10,10 +11,9 @@ import { VetMai } from "./VetMai";
  * (docs/02, mục 5).
  *
  * "Mục lục" mở lớp phủ trên trang chủ; ở trang khác là liên kết tới /muc-luc.
+ * Cửa đang xem được đánh dấu bằng `aria-current` (LienKetCua).
  */
-export function SiteHeader({ cuaHienTai }: { cuaHienTai?: DoorKey }) {
-  const cacCua: DoorKey[] = ["tam", "tri", "than"];
-
+export function SiteHeader() {
   return (
     <header className="top" id="dau-trang">
       <Link className="mark brand" href="/" aria-label="Khai Minh, về trang chủ">
@@ -27,16 +27,8 @@ export function SiteHeader({ cuaHienTai }: { cuaHienTai?: DoorKey }) {
           <Link className="dn" href="/#chang">
             Chín chặng
           </Link>
-          {cacCua.map((k) => (
-            <Link
-              key={k}
-              className="dn"
-              href={doors[k].href}
-              aria-current={cuaHienTai === k ? "page" : undefined}
-            >
-              <i className="dd" style={{ background: doors[k].dc }} aria-hidden="true" />
-              Cửa {doors[k].ten}
-            </Link>
+          {DOOR_KEYS.map((k) => (
+            <LienKetCua key={k} cua={k} />
           ))}
           <Link className="ask-link" href="/gui-cau-hoi">
             Gửi một câu hỏi

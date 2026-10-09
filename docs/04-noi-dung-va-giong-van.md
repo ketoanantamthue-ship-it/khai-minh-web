@@ -57,6 +57,8 @@ Phần thân MDX của trang chặng theo khuôn `prototypes/chang-5.html`, gồ
 5. khối ba cửa;
 6. gửi một câu hỏi.
 
+*(Từ S2.)* Phần chữ riêng của trang chặng nằm trong trường `trang` của frontmatter (schema ở `lib/chang.ts`): `mo_ta`, `mo_dau`, `binh_minh`, `goi_ten`, `nam_tang` (đúng năm tầng), `ba_cua`, `di_sau` (đúng sáu dòng), `cau_hoi_khac`. Chặng nào chưa có trường này thì trang hiện phần seed và ô “Đang soạn” (docs/07, mục C2).
+
 Chặng 5 lấy nguyên chữ từ bản mẫu. Tám chặng còn lại hiện chỉ có phần seed; phần sâu viết từ `data/truc-a/A{n}_*_DAO_SAU.md` và **phải được anh duyệt** trước khi đổi `trang_thai`.
 
 ### `content/hoi/*.mdx` — trang hỏi – đáp
