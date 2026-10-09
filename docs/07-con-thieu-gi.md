@@ -33,8 +33,8 @@ Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng n�
 | [ ] A9 | **Tên miền cho Khai Minh**: chọn, kiểm còn trống, mua. Đã chọn thì không đổi về sau. | S7, và canonical | Dùng biến `NEXT_PUBLIC_SITE_URL` cho tới khi có |
 | [ ] A10 | Cánh cổng chỉ hiện lần đầu trên mỗi máy | S1 | Bật (docs/01, mục E7) |
 | [ ] A11 | Hỏi ý một vị thầy hoặc luật sư về việc dùng hình tượng Phật trên trang thương hiệu | S7 | Giữ trong bản xem trước |
-| [ ] A12 | *(Phát hiện ở S0.)* Chân trang có ba liên kết chưa có trang nào trong docs/02: “Lịch sử sửa đổi Hiến chương”, “Báo cáo minh bạch hằng năm”, “Trợ năng và cách hiển thị”. Dựng ba trang riêng, gộp vào `/hien-chuong` và `/minh-bach`, hay tạm ẩn? | S4 | Giữ chữ nhưng chưa có liên kết (đã gắn `data-can`); không trỏ “#” |
-| [ ] A13 | *(Phát hiện ở S0.)* Cụm “hạn nặng” trong câu hỏi liên quan của chặng 5 (“Tuổi bốn mươi chín có thật là một năm hạn nặng?”) khớp từ cấm W2 số 10. Đây là câu hỏi nguyên văn của người đọc, có sẵn trong bản mẫu, nên được giữ và ghi vào `scripts/check-words-cho-phep.json`. Anh đồng ý giữ, hay muốn đổi câu? | S1, S2 | Giữ như bản mẫu |
+| [x] A12 | *(Phát hiện ở S0.)* Chân trang có ba liên kết chưa có trang nào trong docs/02: “Lịch sử sửa đổi Hiến chương”, “Báo cáo minh bạch hằng năm”, “Trợ năng và cách hiển thị”. Dựng ba trang riêng, gộp vào `/hien-chuong` và `/minh-bach`, hay tạm ẩn? **Đã chốt (docs/01, F1):** mục `#lich-su-sua-doi` trong `/hien-chuong`, mục `#bao-cao` trong `/minh-bach`, trang riêng `/tro-nang`. Chân trang đã trỏ đúng; các trang dựng ở S4. | S4 | Đã nối liên kết theo F1 |
+| [x] A13 | *(Phát hiện ở S0.)* Cụm “hạn nặng” trong câu hỏi liên quan của chặng 5 (“Tuổi bốn mươi chín có thật là một năm hạn nặng?”) khớp từ cấm W2 số 10. Đây là câu hỏi nguyên văn của người đọc, có sẵn trong bản mẫu, nên được giữ và ghi vào `scripts/check-words-cho-phep.json`. Anh đồng ý giữ, hay muốn đổi câu? **Đã chốt (docs/01, F2):** giữ nguyên câu và giữ trong danh sách ngoại lệ. | S1, S2 | Giữ như bản mẫu |
 
 ## B. Chất liệu thật
 
@@ -99,11 +99,11 @@ Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng n�
 | [ ] E9 | Các trang con dẫn về `index.html#gui-cau-hoi`; cần đổi thành `/gui-cau-hoi` | S2, S4 |
 | [ ] E10 | Chưa thử trên iPhone và Android thật; chưa chạy Bộ thử 20 người thật | S6 |
 | [ ] E11 | *(Từ S0.)* Nút “Mục lục” ở đầu trang tạm là liên kết tới `/muc-luc`. S1 đổi thành nút mở lớp phủ trên trang chủ; S2 dựng trang `/muc-luc`. | S1, S2 |
-| [ ] E12 | *(Từ S0.)* Đầu trang và chân trang đã trỏ vào các route ở docs/02 (`/tam`, `/tri`, `/than`, `/gui-cau-hoi`, `/khai-minh`, `/minh-bach`, bốn trang chính sách). Các route này chưa dựng nên hiện còn ra trang 404. | S2, S4, S5 |
+| [ ] E12 | *(Từ S0.)* Đầu trang và chân trang đã trỏ vào các route ở docs/02 (`/tam`, `/tri`, `/than`, `/gui-cau-hoi`, `/khai-minh`, `/hien-chuong`, `/minh-bach`, `/tro-nang`, bốn trang chính sách). Các route này chưa dựng nên hiện còn ra trang 404. | S2, S4, S5 |
 | [ ] E13 | *(Từ S0.)* Khi `hotlineDaXacNhan` là `false`, chân trang chỉ nhắc 115 và người thân, chưa nhắc Ngày Mai. Bật cờ trong `site.config.ts` sau khi xong D5 thì câu đầy đủ của bản mẫu hiện lại. | Sau D5 |
 | [ ] E14 | *(Từ S0.)* Liên hệ, mạng xã hội, chủ sở hữu nhãn hiệu, pháp nhân, ngày cập nhật: chân trang đang hiện ô nét đứt như bản mẫu. Điền vào `site.config.ts` khi có D1, C7, C8. **Không ra mắt khi còn ô trống.** | S4, S7 |
-| [ ] E15 | *(Từ S0.)* `npm run check:words` đang báo 3 chỗ “cần xem” (không làm hỏng CI): “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định, nên tôi đề nghị giữ. | S1 |
-| [ ] E16 | *(Từ S0.)* Phiên S0 làm trên nhánh `claude/bold-volta-yy6w5v` do Claude Code trên web cấp, chưa theo quy ước `phien/S<số>-<tên-ngắn>`. Từ S1, khi mở phiên mới, có thể dặn Claude dùng đúng tên nhánh. | — |
+| [x] E15 | *(Từ S0.)* `npm run check:words` đang báo 3 chỗ “cần xem” (không làm hỏng CI): “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định, nên tôi đề nghị giữ. **Đã chốt (docs/01, F3):** giữ cả ba chỗ. | S1 |
+| [x] E16 | *(Từ S0.)* Phiên S0 làm trên nhánh `claude/bold-volta-yy6w5v` do Claude Code trên web cấp, chưa theo quy ước `phien/S<số>-<tên-ngắn>`. Từ S1, khi mở phiên mới, có thể dặn Claude dùng đúng tên nhánh. **Đã chốt (docs/01, F4):** dùng tên nhánh do Claude Code cấp; CLAUDE.md đã bỏ quy ước cũ. | — |
 
 ## F. Vận hành
 

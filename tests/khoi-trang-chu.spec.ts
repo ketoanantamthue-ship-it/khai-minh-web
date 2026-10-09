@@ -25,6 +25,17 @@ test.describe("Trang chủ trống", () => {
     await expect(chan.locator("#mien-tru")).toContainText("Miễn trừ trách nhiệm");
     await expect(chan.getByRole("link", { name: "An Tâm Mệnh" })).toHaveAttribute("href", "https://antammenh.com");
     await expect(chan.getByRole("link", { name: "Khai Mệnh" })).toHaveAttribute("href", "https://khaimenh.com");
+
+    // Quyết định F1 (docs/01): ba liên kết chân trang trỏ vào mục và trang đã chốt.
+    await expect(chan.getByRole("link", { name: "Lịch sử sửa đổi Hiến chương" })).toHaveAttribute(
+      "href",
+      "/hien-chuong#lich-su-sua-doi",
+    );
+    await expect(chan.getByRole("link", { name: "Báo cáo minh bạch hằng năm" })).toHaveAttribute(
+      "href",
+      "/minh-bach#bao-cao",
+    );
+    await expect(chan.getByRole("link", { name: "Trợ năng và cách hiển thị" })).toHaveAttribute("href", "/tro-nang");
   });
 
   test("thanh điều hướng đủ mục ở màn hình rộng", async ({ page }, info) => {

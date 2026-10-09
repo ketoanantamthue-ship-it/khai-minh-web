@@ -8,8 +8,9 @@ import { VetMai } from "./VetMai";
 /**
  * Chân trang dùng chung, chép từ `footer.ft` của prototypes/cua-tam.html (K1.9.9).
  *
- * Liên kết "#" của bản mẫu được nối vào route ở docs/02. Mục nào chưa có
- * route hay chất liệu thì giữ chữ, bỏ `href` và gắn `data-can` (docs/07).
+ * Liên kết "#" của bản mẫu được nối vào route ở docs/02 (gồm quyết định F1
+ * ở docs/01). Mục nào chưa có địa chỉ thì giữ chữ, bỏ `href` và gắn
+ * `data-can` (docs/07).
  */
 
 type MucLienKet = { ten: string; href: string | null; can?: string };
@@ -27,8 +28,8 @@ const KHAM_PHA: MucLienKet[] = [
 
 const CAM_KET: MucLienKet[] = [
   { ten: "Hiến chương chín điều", href: "/#loi-hua" },
-  { ten: "Lịch sử sửa đổi Hiến chương", href: null, can: "Chưa có trang lịch sử sửa đổi Hiến chương" },
-  { ten: "Báo cáo minh bạch hằng năm", href: null, can: "Chưa có báo cáo minh bạch hằng năm" },
+  { ten: "Lịch sử sửa đổi Hiến chương", href: "/hien-chuong#lich-su-sua-doi" },
+  { ten: "Báo cáo minh bạch hằng năm", href: "/minh-bach#bao-cao" },
   { ten: "Minh bạch lợi ích", href: "/minh-bach" },
   { ten: "Khi tôi làm chưa đúng một điều", href: "/#khi-sai" },
 ];
@@ -39,7 +40,7 @@ const CHINH_SACH: MucLienKet[] = [
   { ten: "Dữ liệu cá nhân và quyền của bạn", href: "/du-lieu" },
   { ten: "Chính sách cookie", href: "/cookie" },
   { ten: "Miễn trừ trách nhiệm", href: "#mien-tru" },
-  { ten: "Trợ năng và cách hiển thị", href: null, can: "Chưa có trang trợ năng" },
+  { ten: "Trợ năng và cách hiển thị", href: "/tro-nang" },
 ];
 
 function LienKetChu({ href, can, className, children }: {

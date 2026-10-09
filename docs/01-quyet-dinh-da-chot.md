@@ -55,3 +55,12 @@ Claude Code làm theo cột "Mặc định" cho tới khi anh chốt khác. Mụ
 | E5 | **Trang phương pháp.** Bản cuối đặt phương pháp ở antammenh.com, còn Chiến lược muốn có trang định nghĩa gốc trên Khai Minh. | **Trang `/phuong-phap/soi-thau-chuyen` trên Khai Minh** định nghĩa khái niệm và ghi ngày công bố. Phần dịch vụ theo phương pháp vẫn ở antammenh.com. | Tách "định nghĩa" khỏi "dịch vụ" để không đăng trùng. |
 | E6 | **Doanh thu.** Bản cuối có bậc thang trả phí (Hồ sơ Soi, Hành trình). Quyết định sau đó là hai năm đầu không thu tiền. | **Web không hiện giá hay nút mua.** | Quyết định mới hơn. |
 | E7 | **Cánh cổng.** Bản mẫu hiện cổng mỗi lần vào trang. Chiến lược cảnh báo lớp phủ toàn màn hình có thể bị hạ điểm. | **Cổng chỉ ở trang chủ** và chỉ hiện lần đầu trên mỗi máy. Có nút "Vào thẳng". | Giữ trải nghiệm mà vẫn an toàn cho tìm kiếm. |
+
+## F. Quyết định của anh sau phiên S0 (09/10/2026)
+
+| # | Điều đã chốt | Mã ở docs/07 |
+| --- | --- | --- |
+| F1 | Ba liên kết chân trang chưa có trang: **“Lịch sử sửa đổi Hiến chương”** là mục `#lich-su-sua-doi` trong `/hien-chuong`; **“Báo cáo minh bạch hằng năm”** là mục `#bao-cao` trong `/minh-bach`, ghi rõ bản đầu tiên ra sau đợt chạy thử; **“Trợ năng và cách hiển thị”** là trang riêng `/tro-nang`. Đã cập nhật docs/02 và chân trang. | A12 |
+| F2 | Giữ nguyên câu hỏi “Tuổi bốn mươi chín có thật là một năm hạn nặng?” ở chặng 5, và giữ nó trong danh sách ngoại lệ của `npm run check:words` (`scripts/check-words-cho-phep.json`). | A13 |
+| F3 | Giữ cả ba chỗ `check:words` báo “cần xem”: “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định. | E15 |
+| F4 | Chấp nhận tên nhánh do Claude Code cấp cho mỗi phiên; bỏ quy ước `phien/S<số>-<tên-ngắn>` trong CLAUDE.md. | E16 |
