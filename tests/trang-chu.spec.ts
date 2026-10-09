@@ -210,6 +210,52 @@ test.describe("Chín phần của trang chủ", () => {
     }
   });
 
+  for (const chuyenDong of ["no-preference", "reduce"] as const) {
+    test(`thẻ chặng không đè lên dòng gợi ý và hàng người hỏi, khớp bản mẫu (1366×768, ${chuyenDong})`, async ({
+      page,
+    }, info) => {
+      test.skip(info.project.name !== "may-tinh-1366", "Thẻ chặng nằm trên đường khảm chỉ có từ 860 px");
+      await page.emulateMedia({ reducedMotion: chuyenDong });
+
+      // Đọc toạ độ thẻ chặng, dòng gợi ý và hàng người hỏi, so với đầu .line-wrap.
+      const doViTri = async (url: string) => {
+        await page.goto(url);
+        await expect(page.locator(".stage-btn").first()).toHaveAttribute("style", /top:/);
+        // Bản mẫu đặt lại thẻ chặng khi phông tải xong: chờ cho vị trí đứng yên.
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(300);
+        return page.evaluate(() => {
+          const hop = (el: Element) => {
+            const r = el.getBoundingClientRect();
+            return { top: r.top, bottom: r.bottom, left: r.left, right: r.right };
+          };
+          const goc = document.getElementById("lineWrap")!.getBoundingClientRect().top;
+          return {
+            the: [...document.querySelectorAll(".stage-btn")].map(hop),
+            goiY: hop(document.querySelector(".road-hint")!),
+            nguoiHoi: hop(document.querySelector(".asker")!),
+            top: [...document.querySelectorAll<HTMLElement>(".stage-btn")].map(
+              (b) => b.getBoundingClientRect().top - goc,
+            ),
+          };
+        });
+      };
+
+      const web = await doViTri("/");
+      const giao = (a: { top: number; bottom: number; left: number; right: number }, b: typeof a) =>
+        a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+      web.the.forEach((t, k) => {
+        expect(giao(t, web.goiY), `thẻ chặng ${k + 1} đè lên dòng “Bạn rê chuột…”`).toBe(false);
+        expect(giao(t, web.nguoiHoi), `thẻ chặng ${k + 1} đè lên hàng “Cho chính tôi…”`).toBe(false);
+      });
+
+      // Cùng khổ, bản mẫu đặt thẻ chặng ở đâu thì web đặt đúng chỗ đó (lệch dưới 2 px).
+      await page.addInitScript(() => sessionStorage.setItem("km-gate", "1"));
+      const mau = await doViTri(`file://${join(process.cwd(), "prototypes", "index.html")}`);
+      web.top.forEach((y, k) => expect(Math.abs(y - mau.top[k]!), `thẻ chặng ${k + 1}`).toBeLessThan(2));
+    });
+  }
+
   test("mở một chặng: chỉ thẻ của chặng ấy hiện", async ({ page }, info) => {
     await page.goto("/");
     const mayTinh = info.project.name === "may-tinh-1366";

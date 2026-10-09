@@ -3,6 +3,16 @@
  * Mọi bộ chọn nằm trong .km-tc như tệp kia.
  */
 
+/*
+ * ===== Đường khảm: chỗ cho thẻ chặng ở trên và dưới đường =====
+ * Bản mẫu thêm đệm 150px bằng script sau khi đặt thẻ chặng; ở chế độ tĩnh
+ * thẻ bị đặt thiếu 150px. Đặt sẵn ở đây để script đo đúng ngay lần đầu.
+ */
+.km-js .km-tc .line-wrap {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
 /* ===== Một chặng đang mở: chỉ thẻ của chặng ấy hiện trong #panel ===== */
 .km-js .km-tc .panel .card:not(.km-on) {
   display: none;

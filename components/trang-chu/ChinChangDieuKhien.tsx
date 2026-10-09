@@ -70,6 +70,10 @@ export function ChinChangDieuKhien({ chang }: { chang: ChangGon[] }) {
     L.style.strokeDashoffset = String(len);
 
     function placeLabels() {
+      // Khoảng đệm 150px trên và dưới đường khảm do CSS đặt sẵn
+      // (.km-js .line-wrap, styles/trang-chu-them.css). Bản mẫu đặt đệm bằng
+      // script sau khi đo, nên ở chế độ tĩnh (mọi thuộc tính "chuyển" trong
+      // .01ms) lần đo đầu thiếu 150px và thẻ chặng đè lên hàng chữ phía trên.
       const r = svg!.getBoundingClientRect();
       const wr = wrap!.getBoundingClientRect();
       deskBtns.forEach((b, k) => {
@@ -80,8 +84,6 @@ export function ChinChangDieuKhien({ chang }: { chang: ChangGon[] }) {
         const ly = r.top - wr.top + (yAt(px) / KHUNG_CAO) * r.height;
         b.style.top = `${up ? ly - 18 : ly + 18}px`;
       });
-      wrap!.style.paddingBottom = "150px";
-      wrap!.style.paddingTop = "150px";
     }
 
     /* ---------- Vệt sáng lướt trên đường khảm ---------- */
