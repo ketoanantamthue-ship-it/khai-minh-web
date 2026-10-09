@@ -58,11 +58,12 @@ Các đường dẫn `/chang/1` đến `/chang/9` chuyển hướng 301 về slu
 | Tủ sách | `/tu-sach` | Ba cuốn sách gợi ý cho mỗi chặng | Nhận thư hằng tháng | Chờ danh sách sách | S4 |
 | Ngồi lặng | `/ngoi-lang` | Chín mươi giây có người dẫn | Bắt đầu ngồi lặng | Khung (dùng `#khoang-lang`); chờ video và giọng đọc | S4 |
 | Gửi một câu hỏi | `/gui-cau-hoi` | Lời nhắn riêng, phiếu đồng ý dữ liệu | Gửi câu hỏi | BM (dùng `#gui-cau-hoi`); cần nơi nhận thư | S5 |
-| Hiến chương (bản trên web Khai Minh) | `/hien-chuong` | Chín điều hứa, khi tôi sai | (không có nút bán) | BM (dùng `#loi-hua`, `#dieu-1…9`, `#khi-sai`). Bản gốc đầy đủ đặt ở antammenh.com | S4 |
+| Hiến chương (bản trên web Khai Minh) | `/hien-chuong` | Chín điều hứa, khi tôi sai | (không có nút bán) | BM (dùng `#loi-hua`, `#dieu-1…9`, `#khi-sai`). Thêm mục `#lich-su-sua-doi` (Lịch sử sửa đổi Hiến chương). Bản gốc đầy đủ đặt ở antammenh.com | S4 |
 | Báo chí và hợp tác | `/bao-chi` | Tiểu sử, ảnh tải về, chủ đề nói chuyện, nguyên tắc nhận lời | Gửi lời mời hợp tác | Chờ ảnh và tiểu sử | S4 |
-| Minh bạch lợi ích | `/minh-bach` | Các lợi ích kinh doanh của Khai Minh | (không có) | Chờ quyết định cửa Thân A hay B | S4 |
+| Minh bạch lợi ích | `/minh-bach` | Các lợi ích kinh doanh của Khai Minh; mục `#bao-cao` (Báo cáo minh bạch hằng năm) ghi rõ bản đầu tiên ra sau đợt chạy thử | (không có) | Chờ quyết định cửa Thân A hay B | S4 |
 | Dữ liệu của bạn | `/du-lieu` | Thu gì, để làm gì, quyền của bạn | (không có) | Chờ luật sư | S4 |
 | Chính sách | `/dieu-khoan`, `/bao-mat`, `/cookie`, `/mien-tru` | Pháp lý | (không có) | Chờ luật sư | S4 |
+| Trợ năng và cách hiển thị | `/tro-nang` | Cách dùng chế độ Chữ lớn, Bản nhẹ cho máy yếu, và cam kết về trợ năng | (không có) | Khung | S4 |
 | Không tìm thấy | `/404` | Dẫn người đọc về | Về trang chủ | Khung | S4 |
 
 ## 4. Liên kết sang web khác (không dựng trên Khai Minh)
@@ -75,7 +76,7 @@ Mọi liên kết ra ngoài lấy từ `site.config.ts`. Đường dẫn trang c
 ## 5. Thanh điều hướng và chân trang
 
 - **Thanh điều hướng**, theo bản mẫu: Chín chặng · Cửa Tâm · Cửa Trí · Cửa Thân · Gửi một câu hỏi · Aa Chữ lớn · Mục lục.
-- **Chân trang** có ba cột (Khám phá · Cam kết và minh bạch · Chính sách và quyền), khối Liên hệ, khối Miễn trừ trách nhiệm, số 115 và Ngày Mai, dòng "Cùng một ngôi nhà" dẫn sang An Tâm Mệnh và Khai Mệnh.
+- **Chân trang** có ba cột (Khám phá · Cam kết và minh bạch · Chính sách và quyền). Trong cột thứ hai, “Lịch sử sửa đổi Hiến chương” dẫn tới `/hien-chuong#lich-su-sua-doi` và “Báo cáo minh bạch hằng năm” dẫn tới `/minh-bach#bao-cao`; trong cột thứ ba, “Trợ năng và cách hiển thị” dẫn tới `/tro-nang` (quyết định F1 ở docs/01). Chân trang còn có khối Liên hệ, khối Miễn trừ trách nhiệm, số 115 và Ngày Mai, dòng "Cùng một ngôi nhà" dẫn sang An Tâm Mệnh và Khai Mệnh.
 - Bản mẫu còn khoảng 38 liên kết "#" ở trang chủ và 14–20 liên kết ở mỗi trang con. Phiên S4 phải nối hết vào các route ở bảng trên. Không để liên kết nào trỏ "#".
 
 ## 6. Ánh xạ từ bản mẫu sang route

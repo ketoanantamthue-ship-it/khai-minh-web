@@ -68,7 +68,7 @@ tests/               Playwright và axe
 ## Cách làm một phiên
 
 1. Đọc `docs/06` để biết phiên hiện tại và tiêu chí xong.
-2. Làm trên một nhánh riêng, đặt tên `phien/S<số>-<tên-ngắn>`.
+2. Làm trên nhánh mà Claude Code cấp cho phiên (docs/01, mục F4). Không đổi tên nhánh.
 3. Cuối phiên chạy `npm run lint && npm run typecheck && npm run build && npm run test`. Mọi bước phải qua.
 4. So hình với bản mẫu ở các khổ 390×844, 768×1024 và 1366×768. Chụp ảnh màn hình vào `tests/__screens__/`.
 5. Cập nhật `docs/07`: đánh dấu việc đã xong và thêm chỗ thiếu mới phát hiện.

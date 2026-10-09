@@ -1,0 +1,59 @@
+/*
+ * Token thiết kế, chép từ :root của prototypes/index.html (K1.9.16).
+ * Khi tài liệu và bản mẫu khác nhau, theo bản mẫu (docs/03).
+ *
+ * Màu ba cửa không nằm ở đây: chúng ở lib/doors.ts và được đặt thành
+ * biến --dc, --dc2, --ink-d, --tint trên từng trang hoặc thẻ cửa.
+ *
+ * Phông tải bằng next/font (app/layout.tsx); --font-noto-serif và
+ * --font-be-vietnam-pro do next/font sinh ra trên thẻ <html>.
+ */
+:root {
+  /* Sơn mài tối */
+  --lac: #120E0B;
+  --lac-2: #1B1510;
+  --lac-red: #3A1410;
+
+  /* Vàng */
+  --gold: #C4973B;
+  --gold-hi: #E2C27A;
+  --egg: #EFE6D2;
+
+  /* Chữ trên nền tối */
+  --on: #F4ECDD;
+  --on-2: #DCD0BA;
+  --on-3: #A89C88;
+  --gold-ink: #D9B76A;
+  /* Không đặt --cream-gold lên nền giấy: tương phản chỉ 1,14:1 (docs/03). */
+  --cream-gold: #E8D6AE;
+
+  /* Giấy và mực */
+  --paper: #F5EFE1;
+  --paper-2: #EDE5D3;
+  --gold-text: #7C5A1E;
+  --body-ink: #3B342C;
+  --ink: #1A1614;
+  --ink-2: #5E554A;
+
+  /* Thương hiệu mẹ, dấu son, viền focus */
+  --navy: #1A2F4E;
+  --son: #9B3A33;
+  --teal: #7DB8B2;
+
+  /* Phông */
+  --serif: var(--font-noto-serif), Georgia, "Times New Roman", serif;
+  --sans: var(--font-be-vietnam-pro), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Chuyển động và lề */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --pad: clamp(20px, 6vw, 96px);
+
+  box-sizing: border-box;
+}
+
+/* Chế độ "Aa Chữ lớn" (lớp easy trên <html>) */
+.easy {
+  --on-2: #F4ECDD;
+  --on-3: #DCD0BA;
+  --body-ink: #1A1614;
+}

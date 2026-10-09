@@ -1,0 +1,10 @@
+{
+  "_ghi_chu": "Những chỗ đã được người thật xem và cho phép giữ, dù khớp mẫu từ cấm. Mỗi mục ghi rõ tệp, cụm từ và lý do. Chỉ thêm khi chữ đã có trong bản mẫu hoặc anh đã duyệt. Xem docs/07.",
+  "cho_phep": [
+    {
+      "tep": "content/chang/05-tuoi-giua-doi.mdx",
+      "cum": "hạn nặng",
+      "ly_do": "Câu hỏi nguyên văn của người đọc (“Tuổi bốn mươi chín có thật là một năm hạn nặng?”), có sẵn trong bản mẫu chang-5.html và index.html. Bài trả lời nhằm gỡ nỗi sợ, không gieo sợ. Anh đã xác nhận giữ ngày 09/10/2026 (docs/01, mục F2)."
+    }
+  ]
+}
