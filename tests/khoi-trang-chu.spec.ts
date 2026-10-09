@@ -2,11 +2,21 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 /**
- * Bài test khói cho trang chủ trống của phiên S0 (docs/06, docs/08).
+ * Bài test khói cho đầu trang và chân trang dùng chung (phiên S0, docs/08).
  * Chạy ở hai khổ 390 và 1366 (xem playwright.config.ts).
+ * Cánh cổng có bài test riêng ở tests/trang-chu.spec.ts; ở đây coi như
+ * khách đã qua cổng.
  */
 
-test.describe("Trang chủ trống", () => {
+test.describe("Đầu trang và chân trang", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        window.localStorage.setItem("km-gate", "1");
+      } catch {}
+    });
+  });
+
   test("có đầu trang, chân trang và chữ tiếng Việt", async ({ page }) => {
     const res = await page.goto("/");
     expect(res?.status()).toBe(200);
@@ -17,7 +27,8 @@ test.describe("Trang chủ trống", () => {
     const dau = page.locator("header.top");
     await expect(dau.getByRole("link", { name: "Khai Minh, về trang chủ" })).toBeVisible();
     await expect(dau.getByRole("button", { name: "Bật chữ lớn, dễ đọc" })).toBeVisible();
-    await expect(dau.getByRole("link", { name: "Mục lục" })).toBeVisible();
+    // Trên trang chủ, "Mục lục" là nút mở lớp phủ (phiên S1).
+    await expect(dau.getByRole("button", { name: "Mục lục" })).toBeVisible();
 
     const chan = page.locator("footer.ft");
     await expect(chan.getByText("Nếu bạn đang gặp nguy hiểm")).toBeVisible();
@@ -41,7 +52,7 @@ test.describe("Trang chủ trống", () => {
   test("thanh điều hướng đủ mục ở màn hình rộng", async ({ page }, info) => {
     test.skip(info.project.name !== "may-tinh-1366", "Thanh điều hướng chữ chỉ hiện từ 960 px");
     await page.goto("/");
-    const nav = page.getByRole("navigation", { name: "Ba cửa" });
+    const nav = page.getByRole("navigation", { name: "Ba cửa", exact: true });
     for (const ten of ["Chín chặng", "Cửa Tâm", "Cửa Trí", "Cửa Thân", "Gửi một câu hỏi"]) {
       await expect(nav.getByRole("link", { name: ten })).toBeVisible();
     }

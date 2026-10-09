@@ -38,7 +38,7 @@ Trong code, đặt màu cửa thành một map duy nhất `doors.ts`. Mọi thà
 ## 3. Chữ
 
 - Tiêu đề: Noto Serif (400, 500, 600, nghiêng 400). Thân bài: Be Vietnam Pro (300, 400, 500, 600). Tải bằng `next/font/google`, tập con `vietnamese` và `latin`, `display: swap`.
-- Chữ Hán cho dấu và cửu cung: 心 智 身 開 明 và 胎 幼 少 立 中 轉 老 終 後. Chỉ tải đúng những chữ này, bằng tham số `text=` của Google Fonts hoặc dùng SVG. Không tải cả bộ Noto Serif SC.
+- Chữ Hán cho dấu và cửu cung: 心 智 身 開 明 và 胎 幼 少 立 中 轉 老 終 後. Chỉ tải đúng những chữ này, bằng tham số `text=` của Google Fonts hoặc dùng SVG. Không tải cả bộ Noto Serif SC. *(S1: tệp `app/fonts/noto-serif-sc-han.woff2` gồm 33 chữ Hán có trong `prototypes/*.html`, dùng qua biến `--han`. Thêm chữ Hán mới thì tải lại tệp này.)*
 - Khoảng lề: `--pad: clamp(20px, 6vw, 96px)`. Đường cong chuyển động: `--ease: cubic-bezier(.22,1,.36,1)`.
 - Chế độ "Aa Chữ lớn" (lớp `easy` trên `<html>`) phóng chữ thân bài và tắt hiệu ứng. Lưu lựa chọn vào `localStorage`.
 

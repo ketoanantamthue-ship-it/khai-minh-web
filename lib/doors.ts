@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 /**
  * Nhận diện ba cửa (docs/03, mục 2; bản mẫu K1.9.16).
  *
@@ -61,8 +63,14 @@ export const doors: Record<DoorKey, Door> = {
 
 export const doorList: Door[] = DOOR_KEYS.map((k) => doors[k]);
 
-/** Biến CSS của một cửa, đặt lên phần tử gốc của trang hoặc thẻ cửa. */
-export function doorStyle(key: DoorKey): Record<"--dc" | "--dc2" | "--ink-d" | "--tint", string> {
+/** Biến CSS của một cửa, đặt lên phần tử gốc của trang hoặc thẻ cửa (thuộc tính `style`). */
+export function doorStyle(key: DoorKey): CSSProperties {
   const d = doors[key];
-  return { "--dc": d.dc, "--dc2": d.dc2, "--ink-d": d.inkD, "--tint": d.tint };
+  const bien: Record<"--dc" | "--dc2" | "--ink-d" | "--tint", string> = {
+    "--dc": d.dc,
+    "--dc2": d.dc2,
+    "--ink-d": d.inkD,
+    "--tint": d.tint,
+  };
+  return bien as CSSProperties;
 }
