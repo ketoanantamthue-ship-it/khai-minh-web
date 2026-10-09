@@ -37,7 +37,7 @@ export function DanhSachCauHoi({ ds }: { ds: CauHoi[] }) {
 }
 
 /**
- * Bước 8 của khuôn hỏi – đáp: câu hỏi liên quan cùng chặng và các mục Từ
+ * Bước 9 của khuôn hỏi – đáp: câu hỏi liên quan cùng chặng và các mục Từ
  * điển (docs/04, mục 4). Dùng cho mọi loại bài.
  *
  * - Câu hỏi cùng chặng (cauHoiCungChang). Câu chưa có bài là chữ thường,

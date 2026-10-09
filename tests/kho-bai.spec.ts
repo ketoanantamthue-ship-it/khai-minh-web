@@ -73,7 +73,7 @@ test.describe("Schema và trạng thái bài (lib/noi-dung.ts)", () => {
     const n = demChu(q.fm.tra_loi_ngan ?? "");
     expect(n).toBeGreaterThanOrEqual(40);
     expect(n).toBeLessThanOrEqual(60);
-    // Bốn bước trong thân bài đủ và đúng thứ tự.
+    // Năm bước trong thân bài đủ, đúng thứ tự, phần huyền học và khoa học có nhãn riêng.
     expect(q.thieu.filter((t) => t.startsWith("bước"))).toEqual([]);
 
     // Mọi câu khách đọc được đều có sẵn trong tệp chặng 5.
@@ -108,6 +108,12 @@ test.describe("Schema và trạng thái bài (lib/noi-dung.ts)", () => {
     expect(() => docKho(join(FIX, "kho-dang-thieu"))).toThrow(/da-dang[\s\S]*người soát[\s\S]*dấu CẦN/);
   });
 
+  test("phần huyền học hay khoa học thiếu nhãn tin cậy riêng thì không đăng được", () => {
+    expect(() => docKho(join(FIX, "kho-thieu-nhan-tin-cay"))).toThrow(
+      /thieu-nhan-khoa-hoc\.mdx[\s\S]*bước “Khoa học nói gì” thiếu nhãn tin cậy riêng/,
+    );
+  });
+
   test("slug phải trùng tên tệp", () => {
     expect(() => docKho(join(FIX, "kho-sai-slug"))).toThrow(/slug “slug-khac” phải trùng tên tệp/);
   });
@@ -121,7 +127,12 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     await expect(page.locator(".hero .soi")).toContainText("Có những tối bạn ngồi lại trong xe");
     await expect(page.locator(".tl-ngan")).toContainText("Nó cần được nhìn cho rõ, từng lớp một.");
     const h2 = await page.locator("main h2").allTextContents();
-    expect(h2.slice(0, 4)).toEqual([...BUOC_HOI]);
+    expect(h2.slice(0, 5)).toEqual([...BUOC_HOI]);
+    expect(BUOC_HOI).toHaveLength(5);
+    await expect(page.locator(".bai-than .label")).toHaveText([
+      "Câu nói dân gian: niềm tin truyền thống",
+      "Điều đang được nghiên cứu",
+    ]);
     expect(h2).toContain("Những câu hỏi khác người ta hay mang ở chặng này");
     expect(h2).toContain("Tác giả và nguồn");
     await expect(page.locator(".bai-tg")).toContainText("Người Khai Vấn (Khai Minh)");
@@ -132,6 +143,40 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     expect(chu).not.toMatch(/CẦN|ghi_chu|Bài mẫu S3/);
     // Một lời mời chính, ở cuối trang.
     await expect(page.locator("main .btn")).toHaveCount(1);
+  });
+
+  test("đầu bài có thời gian đọc và mục lục nhỏ dẫn tới từng tiêu đề", async ({ page }) => {
+    await page.goto(Q001);
+    await expect(page.locator(".phut-doc")).toHaveText(/^\d+ phút đọc$/);
+    const muc = page.locator("nav.muc-bai a");
+    await expect(muc).toHaveText([...BUOC_HOI]);
+    for (const href of await muc.evaluateAll((as) => as.map((a) => a.getAttribute("href")!))) {
+      await expect(page.locator(`main h2${href}`)).toHaveCount(1);
+    }
+    await muc.nth(2).click();
+    await expect(page).toHaveURL(/#khoa-hoc-noi-gi$/);
+    // Chưa có video, bản đọc, ảnh đầu bài: không hiện khung nào.
+    await expect(page.locator(".video-yt, .am-thanh, .anh-bai, .ba-lop")).toHaveCount(0);
+  });
+
+  test("thân bài 17 px, giãn dòng 1,75, cột chữ tối đa khoảng 66 ký tự", async ({ page }) => {
+    await page.goto(Q001);
+    const kieu = await page.locator(".bai-than > .wrap > p").first().evaluate((p) => {
+      const k = getComputedStyle(p);
+      return { co: k.fontSize, dong: k.lineHeight, rong: k.maxWidth };
+    });
+    expect(kieu.co).toBe("17px");
+    expect(kieu.dong).toBe("29.75px");
+    // 66ch của Be Vietnam Pro 17 px: khoảng 66 ký tự trên một dòng.
+    expect(parseFloat(kieu.rong)).toBeGreaterThan(17 * 66 * 0.45);
+    expect(parseFloat(kieu.rong)).toBeLessThan(17 * 66 * 0.7);
+  });
+
+  test("khối tác giả có chỗ ảnh chân dung chờ chất liệu", async ({ page }) => {
+    await page.goto(Q001);
+    const anh = page.locator(".bai-tg [data-can='B2']");
+    await expect(anh).toHaveAttribute("role", "img");
+    await expect(anh).toHaveAttribute("aria-label", "Ảnh chân dung");
   });
 
   test("chữ nằm sẵn trong HTML do server dựng (không cần JavaScript)", async ({ request }) => {

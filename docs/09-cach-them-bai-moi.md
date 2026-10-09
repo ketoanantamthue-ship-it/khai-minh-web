@@ -9,7 +9,7 @@ Bài mẫu để nhìn theo: `content/hoi/bon-muoi-tuoi-du-day-sao-long-chua-yen
 | Bước | Ai làm | Việc | Bài đang ở trạng thái |
 | --- | --- | --- | --- |
 | 1 | Đội vận hành | Chấm câu hỏi trong bảng lọc, chọn câu có kết luận “Viết” | (chưa có tệp) |
-| 2 | Người viết | Tạo tệp bài từ khuôn, viết theo khuôn chín bước | `ban-nhap` |
+| 2 | Người viết | Tạo tệp bài từ khuôn, viết theo khuôn mười bước | `ban-nhap` |
 | 3 | Người viết | Xem bài trên bản xem trước, sửa cho tới khi đủ | `ban-nhap` |
 | 4 | Người soát | Kiểm nguồn kinh và nhãn tin cậy, ghi tên mình | `da-soat` |
 | 5 | Anh | Đọc lần cuối và cho đăng | `da-dang` |
@@ -82,12 +82,28 @@ Thiếu một nhãn thì web không dựng được. Nhãn quyết định bài 
 | `nguon` | Danh sách nguồn (xem dưới) | Có |
 | `muc_tin_cay` | Nhãn tin cậy chung của bài | Có |
 | `ngay_viet` | Ngày viết, dạng `2026-11-02` | Có |
-| `ngay_kiem_lai` | Ngày người soát đọc lại gần nhất, dạng `2027-05-02` | Không |
+| `ngay_kiem_lai` | Ngày người soát **đã** đọc lại bài gần nhất (không phải ngày hẹn), dạng `2027-05-02` | Không |
 | `nguoi_soat` | Tên người soát | Có |
 | `trang_thai` | `ban-nhap`, `da-soat` hoặc `da-dang` | Có |
 | `lien_quan` | Bài khác nên dẫn tới, ví dụ `["tu-dien/tam-tai"]` | Không |
 | `mo_ta` | Câu mô tả cho Google, 120–155 ký tự. Bỏ trống thì web lấy đoạn trả lời ngắn | Không |
 | `ghi_chu_noi_bo` | Ghi chú cho đội, không bao giờ hiện trên web | Không |
+| `video` | Video YouTube đặt ở đầu bài (xem dưới) | Không |
+| `am_thanh` | Bản ghi âm Khai Minh đọc bài, hiện dòng “Nghe Khai Minh đọc bài này” | Không |
+| `anh_bia` | Ảnh đầu bài; cũng là ảnh hiện ra khi bài được chia sẻ | Không |
+
+**Video, bản đọc, ảnh đầu bài** chỉ hiện khi bạn điền. Không điền thì trang không hiện gì, không có khung trống:
+
+```
+video: { id: "mã 11 ký tự", tieu_de: "…", loi_thoai: "…", ngay_dang: 2026-11-02, thoi_luong: "PT8M30S" }
+am_thanh: { src: "/am-thanh/<slug>.mp3", thoi_luong: "8 phút" }
+anh_bia: { src: "/assets/img/<tệp>.webp", alt: "Mô tả ảnh bằng tiếng Việt", chu_thich: "…" }
+```
+
+- Mã video là 11 ký tự sau `watch?v=` trong địa chỉ YouTube. Ngày đăng và thời lượng giúp Google hiểu video; thời lượng viết kiểu `PT8M30S` (8 phút 30 giây).
+- Lời thoại hiện thu gọn dưới video, để người không xem được video vẫn đọc được. Hãy dán đủ lời thoại.
+- Tệp ghi âm và ảnh đặt trong thư mục `public/` (nhờ Claude Code tải lên nếu cần); đường dẫn bắt đầu bằng `/`.
+- `alt` là câu tả ảnh bằng tiếng Việt cho người không nhìn thấy ảnh. Thiếu `alt` thì ảnh không hiện.
 
 **Nguồn**, mỗi nguồn một dòng:
 
@@ -103,14 +119,16 @@ nguon:
 
 **Nhãn tin cậy** hiện có bốn mức của bản mẫu: “Niềm tin truyền thống”, “Luận giải mệnh lý”, “Đang được nghiên cứu”, “Điều đã được kiểm chứng”. Thang đầy đủ của Chuẩn Chính Tín còn chờ chốt (docs/07, mục C6).
 
-## 5. Viết thân bài theo khuôn chín bước
+## 5. Viết thân bài theo khuôn mười bước
 
-Bước 1, 2, 3 nằm ở phần đầu tệp. Bước 8 và 9 do web tự dựng. Thân bài là phần dưới dòng `---` thứ hai, và chỉ gồm **bốn tiêu đề đúng chữ, đúng thứ tự**:
+Bước 1, 2, 3 nằm ở phần đầu tệp. Bước 9 và 10 do web tự dựng. Thân bài là phần dưới dòng `---` thứ hai, và chỉ gồm **năm tiêu đề đúng chữ, đúng thứ tự**:
 
 ```
 ## Nhân quả nói gì
 
 ## Huyền học nói gì
+
+## Khoa học nói gì
 
 ## Ba việc bạn làm được từ hôm nay
 
@@ -120,15 +138,20 @@ Bước 1, 2, 3 nằm ở phần đầu tệp. Bước 8 và 9 do web tự dựn
 | Bước | Viết gì |
 | --- | --- |
 | 4. Nhân quả nói gì | Lời dạy có nguồn kinh. Không trích nguyên văn thì ghi “Diễn ý”. |
-| 5. Huyền học nói gì | Nêu như một giả thuyết, không bao giờ như lời phán. Luôn kèm nhãn tin cậy. |
-| 6. Ba việc bạn làm được từ hôm nay | Ba việc nhỏ, cụ thể, làm được trong một ngày. Đánh số `1.`, `2.`, `3.` |
-| 7. Khi nào cần gặp bác sĩ, chuyên gia tâm lý hoặc luật sư | Dấu hiệu nào thì nên tìm người có chuyên môn. |
-| 8. Câu hỏi liên quan | Web tự liệt kê các câu hỏi cùng chặng, cộng những bài bạn ghi trong `lien_quan`. |
-| 9. Tác giả, ngày, nguồn | Web tự dựng từ phần đầu tệp. Mọi bài ký tên Người Khai Vấn (Khai Minh). |
+| 5. Huyền học nói gì | Nêu như một giả thuyết, không bao giờ như lời phán. **Luôn kèm nhãn tin cậy riêng.** |
+| 6. Khoa học nói gì | Điều nghiên cứu đã biết hoặc còn đang tìm hiểu, kể cả góc nhìn của người dược sĩ. **Luôn kèm nhãn tin cậy riêng.** |
+| 7. Ba việc bạn làm được từ hôm nay | Ba việc nhỏ, cụ thể, làm được trong một ngày. Đánh số `1.`, `2.`, `3.` |
+| 8. Khi nào cần gặp bác sĩ, chuyên gia tâm lý hoặc luật sư | Dấu hiệu nào thì nên tìm người có chuyên môn. |
+| 9. Câu hỏi liên quan | Web tự liệt kê các câu hỏi cùng chặng, cộng những bài bạn ghi trong `lien_quan`. |
+| 10. Tác giả, ngày, nguồn | Web tự dựng từ phần đầu tệp. Mọi bài ký tên Người Khai Vấn (Khai Minh). |
+
+Bước 5 và bước 6 mà thiếu thẻ `<NhanTinCay>` thì bài không đăng được.
+
+Đầu mỗi bài, web tự hiện **thời gian đọc** và **mục lục nhỏ** dẫn tới năm tiêu đề trên. Bạn không phải viết gì thêm.
 
 Giữa các đoạn văn để một dòng trống. Muốn in nghiêng thì bọc chữ bằng `*…*`, in đậm thì `**…**`.
 
-### Bốn thẻ đặc biệt
+### Các thẻ đặc biệt
 
 | Thẻ | Dùng khi | Cách viết |
 | --- | --- | --- |
@@ -136,8 +159,14 @@ Giữa các đoạn văn để một dòng trống. Muốn in nghiêng thì bọ
 | Nhãn tin cậy | Ngay sau một đoạn huyền học hay khoa học | `<NhanTinCay chu="Niềm tin truyền thống" />` |
 | Lời nhắc an toàn | Bài chạm tới sức khoẻ, ý nghĩ làm hại bản thân, pháp lý | `<LoiAnToan>` xuống dòng, lời nhắc, xuống dòng, `</LoiAnToan>` |
 | Ô “Đang soạn” | Chỗ chưa viết được | `<DangSoan ma="C1" />` |
+| Video YouTube | Một video đặt giữa bài | `<VideoYouTube id="mã 11 ký tự" tieuDe="…" loiThoai="…" />` |
+| Bản đọc | Bản ghi âm đặt giữa bài | `<AmThanh src="/am-thanh/….mp3" thoiLuong="8 phút" />` |
+| Ảnh | Một ảnh trong bài | `<Anh src="/assets/img/….webp" alt="Mô tả bằng tiếng Việt" chuThich="…" />` |
+| Bảng soi ba lớp | Đặt nhân quả, khoa học, huyền học cạnh nhau | `<BangSoiBaLop nhanQua="…" tinCayNhanQua="…" khoaHoc="…" tinCayKhoaHoc="…" huyenHoc="…" tinCayHuyenHoc="…" />` |
 
 Với nhãn tin cậy có chữ khác bốn mức trên, thêm màu: `lop="l1"` (vàng), `l2` (xanh ngọc), `l3` (đỏ son), `l4` (xanh lá).
+
+Bốn thẻ cuối **không hiện gì khi thiếu dữ liệu** (thiếu mã video, thiếu tệp, thiếu `alt`, ô trống). Video chỉ hiện ảnh bìa; người đọc bấm vào mới tải trình phát của YouTube. Trong bảng soi ba lớp, ô nào có chữ thì nên có nhãn tin cậy của ô ấy.
 
 ### Chỗ còn thiếu
 
@@ -174,7 +203,7 @@ Trên bản xem trước, bạn sẽ thấy:
 
 Bản xem trước luôn chặn máy tìm kiếm, nên bài nháp không lọt ra ngoài.
 
-**Muốn biết bài còn thiếu gì?** Lệnh `npm run kiem:bai` liệt kê từng bài, trạng thái của nó, và những phần còn thiếu trước khi đăng (người soát, nguồn, đủ bốn tiêu đề, trả lời ngắn đủ 40–60 chữ, dấu CẦN…). Nếu bạn không tự chạy được lệnh, hãy nhờ Claude Code chạy và đọc kết quả cho bạn.
+**Muốn biết bài còn thiếu gì?** Lệnh `npm run kiem:bai` liệt kê từng bài, trạng thái của nó, và những phần còn thiếu trước khi đăng (người soát, nguồn, đủ năm tiêu đề, nhãn tin cậy của phần huyền học và khoa học, trả lời ngắn đủ 40–60 chữ, dấu CẦN…). Nếu bạn không tự chạy được lệnh, hãy nhờ Claude Code chạy và đọc kết quả cho bạn.
 
 ## 8. Soát bài
 
@@ -194,7 +223,7 @@ trang_thai: "da-soat"
 
 Anh đọc lần cuối trên bản xem trước. Khi đồng ý, đổi `trang_thai: "da-dang"` rồi gộp pull request vào nhánh chính. Vài phút sau bài lên web thật, vào sitemap và được ghi ngày cập nhật.
 
-Web **tự chặn** bài chưa đủ: khi `trang_thai` là `da-dang` mà bài còn thiếu người soát, nguồn, nhãn tin cậy, ngày viết, một trong bốn tiêu đề, trả lời ngắn đúng độ dài, hay còn dấu CẦN, thì bước dựng web báo lỗi kèm tên tệp và danh sách phần thiếu. Bài thiếu không bao giờ lên được web thật.
+Web **tự chặn** bài chưa đủ: khi `trang_thai` là `da-dang` mà bài còn thiếu người soát, nguồn, nhãn tin cậy, ngày viết, một trong năm tiêu đề, nhãn tin cậy riêng của phần huyền học hay khoa học, trả lời ngắn đúng độ dài, hay còn dấu CẦN, thì bước dựng web báo lỗi kèm tên tệp và danh sách phần thiếu. Bài thiếu không bao giờ lên được web thật.
 
 Sau khi đăng, đổi cột **Trạng thái** trong bảng lọc thành “Đã đăng”.
 

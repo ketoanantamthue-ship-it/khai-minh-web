@@ -12,6 +12,8 @@ export default function nextConfig(phase: string): NextConfig {
   return {
     reactStrictMode: true,
     poweredByHeader: false,
+    // Ảnh bìa video YouTube (components/bai/VideoYouTube.tsx).
+    images: { remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }] },
     // /chang/1 … /chang/9 chuyển hướng 301 về đường dẫn có chữ (docs/02, mục 1).
     async redirects() {
       return chuyenHuongChang();

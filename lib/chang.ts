@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
-import { schemaCua, schemaTang as schemaNhanTang, schemaTrangThai } from "./nhan";
+import { MUC_TIN_CAY, schemaCua, schemaTang as schemaNhanTang, schemaTrangThai } from "./nhan";
 
 /**
  * Chín chặng đời, đọc từ content/chang/*.mdx (docs/03, mục 7; docs/04, mục 4).
@@ -14,13 +14,7 @@ import { schemaCua, schemaTang as schemaNhanTang, schemaTrangThai } from "./nhan
  * Frontmatter sai schema thì build báo lỗi, kèm tên tệp.
  */
 
-/** Thang nhãn tin cậy bản mẫu đang dùng (docs/04, mục 3; thang đầy đủ chờ docs/07, mục C6). */
-export const MUC_TIN_CAY = {
-  "Niềm tin truyền thống": "b1",
-  "Luận giải mệnh lý": "b2",
-  "Đang được nghiên cứu": "b3",
-  "Điều đã được kiểm chứng": "b4",
-} as const;
+export { MUC_TIN_CAY } from "./nhan";
 
 /** Nhãn tin cậy dạng thẻ nhỏ của bản mẫu: chữ hiện ra và lớp màu l1–l4. */
 const schemaNhan = z.object({

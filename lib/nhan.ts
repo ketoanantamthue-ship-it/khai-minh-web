@@ -31,6 +31,20 @@ export const TEN_TANG: Record<MaTang, string> = {
   "tot-nghiep": "Tốt nghiệp",
 };
 
+/** Thang nhãn tin cậy bản mẫu đang dùng (docs/04, mục 3; thang đầy đủ chờ docs/07, mục C6). */
+export const MUC_TIN_CAY = {
+  "Niềm tin truyền thống": "b1",
+  "Luận giải mệnh lý": "b2",
+  "Đang được nghiên cứu": "b3",
+  "Điều đã được kiểm chứng": "b4",
+} as const;
+
+/** Lớp màu thẻ nhãn tin cậy trên trang con (l1–l4) cho một mức trong thang; mức lạ trả `undefined`. */
+export function lopTinCay(chu: string): "l1" | "l2" | "l3" | "l4" | undefined {
+  const b = MUC_TIN_CAY[chu as keyof typeof MUC_TIN_CAY];
+  return b ? (b.replace("b", "l") as "l1" | "l2" | "l3" | "l4") : undefined;
+}
+
 /** Chữ hiện trên dải bản nháp (chỉ có ở bản xem trước). */
 export const TEN_TRANG_THAI: Record<TrangThai, string> = {
   "ban-nhap": "Bản nháp",

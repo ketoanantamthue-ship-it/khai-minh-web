@@ -7,12 +7,35 @@ import { OCan } from "@/components/trang-con/OCan";
 import { docChinChang, duongDanChang } from "@/lib/chang";
 import { doorStyle } from "@/lib/doors";
 import { khoHienThi } from "@/lib/kho";
-import { TEN_LOAI, vietNgay, type Bai, type FrontMatter } from "@/lib/noi-dung";
-import { doThi, nutBaiViet, nutDuongDan, nutNguoi, nutToChuc, nutWeb, taoMetadata, type MucDuongDan } from "@/lib/seo";
+import {
+  phutDoc,
+  taoNeo,
+  TEN_LOAI,
+  tieuDeHai,
+  videoTrongThan,
+  vietNgay,
+  type Bai,
+  type FrontMatter,
+} from "@/lib/noi-dung";
+import {
+  doThi,
+  idVideo,
+  nutBaiViet,
+  nutDuongDan,
+  nutNguoi,
+  nutToChuc,
+  nutVideo,
+  nutWeb,
+  taoMetadata,
+  type DuLieuVideo,
+  type MucDuongDan,
+} from "@/lib/seo";
 import { KhoiTacGia } from "./KhoiTacGia";
 import { LienQuan } from "./LienQuan";
 import { ManDauBai } from "./ManDauBai";
 import { ThanMdx } from "./Mdx";
+import { AmThanh, Anh } from "./ThanhPhanMdx";
+import { VideoYouTube } from "./VideoYouTube";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 
@@ -62,7 +85,58 @@ export function metadataBai(bai: Bai | undefined): Metadata {
     ngayViet: bai.fm.ngay_viet,
     ngayCapNhat: bai.ngayCapNhat,
     coAnhRieng: true,
+    anh: bai.fm.anh_bia ? { url: bai.fm.anh_bia.src, alt: bai.fm.anh_bia.alt } : undefined,
   });
+}
+
+/** Mọi video của bài: video ở frontmatter, rồi các thẻ <VideoYouTube> trong thân bài. */
+function videoCuaBai(bai: Bai): DuLieuVideo[] {
+  const v = bai.fm.video;
+  const dau: DuLieuVideo[] = v
+    ? [{ id: v.id, tieuDe: v.tieu_de, loiThoai: v.loi_thoai, ngayDang: v.ngay_dang, thoiLuong: v.thoi_luong }]
+    : [];
+  const trongThan = videoTrongThan(bai.than).flatMap((a) =>
+    a.id && a.tieuDe
+      ? [
+          {
+            id: a.id,
+            tieuDe: a.tieuDe,
+            loiThoai: a.loiThoai || undefined,
+            ngayDang: a.ngayDang,
+            thoiLuong: a.thoiLuong,
+          },
+        ]
+      : [],
+  );
+  return [...dau, ...trongThan];
+}
+
+/**
+ * Đầu bài: thời gian đọc, bản đọc của Khai Minh (nếu có), mục lục nhỏ theo các
+ * tiêu đề `##` của thân bài, ảnh đầu bài và video (nếu có).
+ */
+function DauBai({ bai }: { bai: Bai }) {
+  const muc = tieuDeHai(bai.than.replace(/\{\/\*[\s\S]*?\*\/\}/g, ""));
+  const { am_thanh, anh_bia, video } = bai.fm;
+  return (
+    <div className="dau-bai">
+      <p className="phut-doc">{phutDoc(bai)} phút đọc</p>
+      <AmThanh src={am_thanh?.src} thoiLuong={am_thanh?.thoi_luong} />
+      {muc.length >= 2 ? (
+        <nav className="muc-bai" aria-label="Các phần của bài">
+          <ol>
+            {muc.map((m) => (
+              <li key={m}>
+                <a href={`#${taoNeo(m)}`}>{m}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      ) : null}
+      <Anh src={anh_bia?.src} alt={anh_bia?.alt} chuThich={anh_bia?.chu_thich} />
+      <VideoYouTube id={video?.id} tieuDe={video?.tieu_de} loiThoai={video?.loi_thoai} />
+    </div>
+  );
 }
 
 /** Nhãn nhỏ trên tiêu đề: loại bài, chặng hoặc ngày gửi thư. */
@@ -134,6 +208,9 @@ export async function TrangBai({ bai }: { bai: Bai }) {
   const cua = bai.cua[0]!;
   const soi = bai.loai === "hoi" ? bai.fm.tinh_canh : undefined;
   const coThan = bai.than.trim().length > 0;
+  // Từ điển và phương pháp có phần riêng từ frontmatter, nên thân bài đặt sau phần ấy.
+  const thanTruoc = bai.loai !== "tu-dien" && bai.loai !== "phuong-phap";
+  const video = videoCuaBai(bai);
 
   return (
     <main id="main" className="km-con km-bai" data-door={cua} style={doorStyle(cua)}>
@@ -146,7 +223,10 @@ export async function TrangBai({ bai }: { bai: Bai }) {
             ngayViet: bai.fm.ngay_viet,
             ngayCapNhat: bai.ngayCapNhat,
             nguon: bai.fm.nguon.map((n) => n.ten),
+            anh: bai.fm.anh_bia?.src,
+            video: video.map((v) => idVideo(v.id)),
           }),
+          ...video.map(nutVideo),
           nutDuongDan(vun),
           nutNguoi(),
           nutToChuc(),
@@ -157,6 +237,13 @@ export async function TrangBai({ bai }: { bai: Bai }) {
         <DauRieng bai={bai} />
       </ManDauBai>
 
+      <section className="s bai-than">
+        <div className="wrap bai-doc">
+          <DauBai bai={bai} />
+          {coThan && thanTruoc ? <ThanMdx than={bai.than} /> : null}
+        </div>
+      </section>
+
       {bai.loai === "tu-dien" ? (
         <>
           <PhanDoan id="kinh-noi" tieuDe="Kinh nói gì" doan={bai.fm.kinh_noi} />
@@ -166,7 +253,7 @@ export async function TrangBai({ bai }: { bai: Bai }) {
       ) : null}
       {bai.loai === "phuong-phap" ? <ThongTinPhuongPhap fm={bai.fm} /> : null}
 
-      {coThan ? (
+      {coThan && !thanTruoc ? (
         <section className="s bai-than">
           <div className="wrap bai-doc">
             <ThanMdx than={bai.than} />

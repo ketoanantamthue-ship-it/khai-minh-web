@@ -6,7 +6,7 @@ import type { MucDuongDan } from "@/lib/seo";
 /**
  * Màn đầu của trang bài và trang danh sách: lớp sơn mài tối như trang con
  * (docs/01, mục C1), nhưng gọn hơn để câu trả lời ngắn nằm ngay dưới tiêu đề
- * (docs/04, khuôn chín bước, bước 3). Không có hiệu ứng nào, nên trang bài
+ * (docs/04, khuôn mười bước, bước 3). Không có hiệu ứng nào, nên trang bài
  * không tải thêm JavaScript (docs/05, mục 2).
  *
  * Dải đường dẫn hiện trên trang khớp với BreadcrumbList trong JSON-LD.

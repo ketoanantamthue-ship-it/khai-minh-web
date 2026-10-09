@@ -47,16 +47,20 @@ export const TEN_LOAI: Record<Loai, string> = {
 };
 
 /**
- * Bốn bước của khuôn hỏi – đáp nằm trong thân MDX, mỗi bước là một tiêu đề
- * `##` đúng chữ và đúng thứ tự (bước 4 đến 7; docs/04, mục 4). Bước 1–3 và
- * 8–9 do trang dựng từ frontmatter.
+ * Năm bước của khuôn mười bước hỏi – đáp nằm trong thân MDX, mỗi bước là một
+ * tiêu đề `##` đúng chữ và đúng thứ tự (bước 4 đến 8; docs/04, mục 4;
+ * docs/01, mục F7). Bước 1–3 và 9–10 do trang dựng từ frontmatter.
  */
 export const BUOC_HOI = [
   "Nhân quả nói gì",
   "Huyền học nói gì",
+  "Khoa học nói gì",
   "Ba việc bạn làm được từ hôm nay",
   "Khi nào cần gặp bác sĩ, chuyên gia tâm lý hoặc luật sư",
 ] as const;
+
+/** Hai bước phải có nhãn tin cậy riêng (thẻ <NhanTinCay> hoặc <BangSoiBaLop>). */
+export const BUOC_CAN_NHAN = ["Huyền học nói gì", "Khoa học nói gì"] as const;
 
 /* ------------------------------------------------------------------ */
 /* Schema                                                              */
@@ -90,6 +94,34 @@ const schemaThamChieu = z
   .string()
   .regex(new RegExp(`^(${LOAI.join("|")})/[a-z0-9]+(?:-[a-z0-9]+)*$`), "tham chiếu dạng “hoi/slug”, “tu-dien/slug”…");
 
+/** Video YouTube đặt ở đầu bài (thẻ <VideoYouTube> cho video trong thân bài). */
+const schemaVideo = z.strictObject({
+  /** Mã video YouTube, 11 ký tự, ví dụ trong youtube.com/watch?v=<mã>. */
+  id: z.string().regex(/^[A-Za-z0-9_-]{11}$/, "mã video YouTube gồm 11 ký tự"),
+  tieu_de: z.string().min(1),
+  /** Lời thoại đầy đủ, hiện thu gọn dưới video. */
+  loi_thoai: z.string().min(1).optional(),
+  ngay_dang: schemaNgay.optional(),
+  /** Thời lượng theo chuẩn ISO 8601, ví dụ "PT8M30S". */
+  thoi_luong: z.string().regex(/^PT(\d+H)?(\d+M)?(\d+S)?$/, "thời lượng dạng PT8M30S").optional(),
+});
+export type Video = z.infer<typeof schemaVideo>;
+
+/** Bản ghi âm Khai Minh đọc bài, đặt trong public/. */
+const schemaAmThanh = z.strictObject({
+  src: z.string().startsWith("/", "đường dẫn tệp trong public/, bắt đầu bằng “/”"),
+  /** Thời lượng hiện cho người nghe, ví dụ "8 phút". */
+  thoi_luong: z.string().min(1).optional(),
+});
+
+/** Ảnh đầu bài, đặt trong public/. Dùng làm ảnh chia sẻ của bài. */
+const schemaAnh = z.strictObject({
+  src: z.string().startsWith("/", "đường dẫn tệp trong public/, bắt đầu bằng “/”"),
+  /** Mô tả ảnh bằng tiếng Việt cho người không nhìn thấy ảnh. */
+  alt: z.string().min(1),
+  chu_thich: z.string().min(1).optional(),
+});
+
 /** Trường chung của mọi bài. */
 const coBan = {
   slug: schemaSlug,
@@ -111,6 +143,10 @@ const coBan = {
   lang: z.literal("vi").default("vi"),
   /** Ghi chú cho đội viết. Không bao giờ hiện trên trang. */
   ghi_chu_noi_bo: z.string().optional(),
+  /** Tuỳ chọn: video, bản đọc, ảnh đầu bài. Không có thì trang không hiện gì. */
+  video: schemaVideo.optional(),
+  am_thanh: schemaAmThanh.optional(),
+  anh_bia: schemaAnh.optional(),
 };
 
 const schemaHoi = z.strictObject({
@@ -252,6 +288,59 @@ export function tieuDeHai(than: string): string[] {
   return [...than.matchAll(/^##\s+(.+?)\s*$/gm)].map((m) => m[1]!);
 }
 
+/** Phần thân bài nằm dưới một tiêu đề `##`, tới tiêu đề `##` kế tiếp. */
+export function phanDuoiTieuDe(than: string, tieuDe: string): string | undefined {
+  const dong = than.split("\n");
+  const dau = dong.findIndex((d) => d.trim() === `## ${tieuDe}`);
+  if (dau < 0) return undefined;
+  const sau = dong.findIndex((d, i) => i > dau && /^##\s/.test(d));
+  return dong.slice(dau + 1, sau < 0 ? undefined : sau).join("\n");
+}
+
+/** Chữ người đọc thấy trong thân MDX: bỏ chú thích, thẻ và dấu Markdown. */
+export function chuTrongThan(than: string): string {
+  return than
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/^#+\s+/gm, "")
+    .replace(/[*_`]/g, "");
+}
+
+/** Số phút đọc, tính 220 chữ mỗi phút, ít nhất một phút. */
+export function phutDoc(b: Bai): number {
+  const fm = b.fm as Partial<Record<string, unknown>>;
+  const dau = ["tinh_canh", "tra_loi_ngan", "dinh_nghia", "tom_tat"].map((k) => (typeof fm[k] === "string" ? fm[k] : ""));
+  const doan = ["kinh_noi", "dan_gian_noi", "ngo_nhan", "su_that"].flatMap((k) => (Array.isArray(fm[k]) ? fm[k] : []));
+  const chu = [...dau, ...doan, chuTrongThan(b.than)].join(" ");
+  return Math.max(1, Math.round(demChu(chu) / 220));
+}
+
+/**
+ * Neo cho một tiêu đề: chữ thường không dấu, nối bằng gạch ngang.
+ * “Khoa học nói gì” → `khoa-hoc-noi-gi`.
+ */
+export function taoNeo(chu: string): string {
+  return chu
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+/** Thuộc tính của các thẻ <VideoYouTube …> trong thân MDX, để dựng JSON-LD VideoObject. */
+export function videoTrongThan(than: string): Record<string, string>[] {
+  return [...chuKhongChuThich(than).matchAll(/<VideoYouTube\b([^>]*)>/g)].map((m) =>
+    Object.fromEntries([...m[1]!.matchAll(/(\w+)="([^"]*)"/g)].map((a) => [a[1]!, a[2]!])),
+  );
+}
+
+function chuKhongChuThich(than: string): string {
+  return than.replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
+}
+
 /** Liệt kê những phần còn thiếu, theo khuôn của từng loại bài. */
 function timChoThieu(b: { loai: Loai; fm: FrontMatter[Loai] }, than: string): string[] {
   const t: string[] = [];
@@ -284,6 +373,12 @@ function timChoThieu(b: { loai: Loai; fm: FrontMatter[Loai] }, than: string): st
         else if (o < viTri) t.push(`bước ${i + 4}: tiêu đề “## ${buoc}” sai thứ tự`);
         else viTri = o;
       });
+      for (const buoc of BUOC_CAN_NHAN) {
+        const phan = phanDuoiTieuDe(chuKhongChuThich(than), buoc);
+        if (phan !== undefined && !/<(NhanTinCay|BangSoiBaLop)\b/.test(phan)) {
+          t.push(`bước “${buoc}” thiếu nhãn tin cậy riêng (<NhanTinCay>)`);
+        }
+      }
       break;
     }
     case "tu-dien": {

@@ -33,6 +33,7 @@ export function taoMetadata({
   ngayViet,
   ngayCapNhat,
   coAnhRieng = false,
+  anh,
 }: {
   tieuDe: string;
   moTa?: string;
@@ -40,6 +41,8 @@ export function taoMetadata({
   loai?: "website" | "article";
   /** Route có tệp opengraph-image.tsx riêng: để Next tự gắn ảnh ấy. */
   coAnhRieng?: boolean;
+  /** Ảnh chia sẻ riêng của trang (ảnh đầu bài), đè lên mọi ảnh khác. */
+  anh?: { url: string; alt: string };
   ngayViet?: string;
   ngayCapNhat?: string;
 }): Metadata {
@@ -57,7 +60,11 @@ export function taoMetadata({
       url: duongDan,
       // Trang không có ảnh riêng thì dùng ảnh mặc định (app/opengraph-image.tsx).
       // Ảnh khai báo ở đây đè lên ảnh của tệp, nên trang có ảnh riêng bỏ qua.
-      ...(coAnhRieng ? {} : { images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Khai Minh – Người Khai Vấn" }] }),
+      ...(anh
+        ? { images: [anh] }
+        : coAnhRieng
+          ? {}
+          : { images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Khai Minh – Người Khai Vấn" }] }),
       ...(loai === "article"
         ? {
             publishedTime: ngayViet,
@@ -70,7 +77,7 @@ export function taoMetadata({
       card: "summary_large_image",
       title: tieuDe,
       description: moTa,
-      ...(coAnhRieng ? {} : { images: ["/opengraph-image"] }),
+      ...(anh ? { images: [anh.url] } : coAnhRieng ? {} : { images: ["/opengraph-image"] }),
     },
   };
 }
@@ -144,6 +151,8 @@ export function nutBaiViet({
   ngayViet,
   ngayCapNhat,
   nguon,
+  anh,
+  video,
 }: {
   tieuDe: string;
   moTa?: string;
@@ -151,6 +160,10 @@ export function nutBaiViet({
   ngayViet?: string;
   ngayCapNhat?: string;
   nguon?: string[];
+  /** Ảnh đầu bài; không có thì dùng ảnh chia sẻ của bài. */
+  anh?: string;
+  /** @id của các VideoObject trong bài. */
+  video?: string[];
 }): Nut {
   const url = urlTuyetDoi(duongDan);
   return {
@@ -161,13 +174,51 @@ export function nutBaiViet({
     url,
     mainEntityOfPage: url,
     inLanguage: "vi",
-    image: urlTuyetDoi(`${duongDan}/opengraph-image`),
+    image: anh ? urlTuyetDoi(anh) : urlTuyetDoi(`${duongDan}/opengraph-image`),
+    ...(video && video.length > 0 ? { video: video.map((v) => ({ "@id": v })) } : {}),
     ...(ngayViet ? { datePublished: ngayViet } : {}),
     ...(ngayCapNhat ?? ngayViet ? { dateModified: ngayCapNhat ?? ngayViet } : {}),
     author: { "@id": ID_NGUOI },
     publisher: { "@id": ID_NGUOI },
     isPartOf: { "@id": ID_WEB },
     ...(nguon && nguon.length > 0 ? { citation: nguon } : {}),
+  };
+}
+
+export type DuLieuVideo = {
+  id: string;
+  tieuDe: string;
+  loiThoai?: string;
+  /** YYYY-MM-DD */
+  ngayDang?: string;
+  /** ISO 8601, ví dụ PT8M30S */
+  thoiLuong?: string;
+};
+
+/** @id của một video YouTube trong JSON-LD. */
+export function idVideo(id: string): string {
+  return `https://www.youtube.com/watch?v=${id}`;
+}
+
+/**
+ * VideoObject cho một video YouTube trong bài. Mô tả lấy từ lời thoại (đã
+ * nằm trên trang); ngày đăng và thời lượng chỉ ghi khi người viết đã điền.
+ */
+export function nutVideo(v: DuLieuVideo): Nut {
+  const moTa = v.loiThoai?.replace(/\s+/g, " ").trim();
+  return {
+    "@type": "VideoObject",
+    "@id": idVideo(v.id),
+    name: v.tieuDe,
+    description: moTa ? (moTa.length > 300 ? `${moTa.slice(0, moTa.lastIndexOf(" ", 299))}…` : moTa) : v.tieuDe,
+    thumbnailUrl: [`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`],
+    embedUrl: `https://www.youtube-nocookie.com/embed/${v.id}`,
+    url: idVideo(v.id),
+    inLanguage: "vi",
+    ...(v.ngayDang ? { uploadDate: v.ngayDang } : {}),
+    ...(v.thoiLuong ? { duration: v.thoiLuong } : {}),
+    ...(v.loiThoai ? { transcript: v.loiThoai } : {}),
+    author: { "@id": ID_NGUOI },
   };
 }
 

@@ -65,3 +65,5 @@ Claude Code làm theo cột "Mặc định" cho tới khi anh chốt khác. Mụ
 | F3 | Giữ cả ba chỗ `check:words` báo “cần xem”: “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định. | E15 |
 | F4 | Chấp nhận tên nhánh do Claude Code cấp cho mỗi phiên; bỏ quy ước `phien/S<số>-<tên-ngắn>` trong CLAUDE.md. | E16 |
 | F5 | *(Sau phiên S1.)* Cánh cổng chỉ hiện lần đầu trên mỗi máy (lưu ở localStorage `km-gate`). | A10 |
+| F6 | *(Sau phiên S3.)* Trường `ngay_kiem_lai` là **ngày người soát đã đọc lại bài gần nhất**, không phải ngày hẹn kiểm lại. Ngày này hiện trên trang, vào sitemap và `dateModified` của JSON-LD. | A16 |
+| F7 | *(Sau phiên S3.)* Khuôn bài hỏi – đáp có **mười bước**: thêm bước riêng “Khoa học nói gì”, đặt giữa “Huyền học nói gì” và “Ba việc bạn làm được từ hôm nay”, có nhãn tin cậy riêng. Đã cập nhật docs/04, docs/09 và `content/hoi/_mau.mdx`. | A17 |
