@@ -6,7 +6,7 @@
 - kho nội dung khởi đầu;
 - bộ câu lệnh cho từng phiên.
 
-Kho này **chưa có mã Next.js**. Phiên S0 sẽ dựng phần đó.
+Phiên S0 đã dựng phần nền Next.js: đầu trang, chân trang, phông, cờ lập chỉ mục, kiểm thử và CI. Các trang thật được dựng từ phiên S1.
 
 ## Bước 1: Đọc bảng còn thiếu trước
 

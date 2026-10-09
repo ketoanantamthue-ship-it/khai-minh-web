@@ -1,0 +1,733 @@
+/*
+ * Nền chung, đầu trang và chân trang.
+ * CSS chép từ prototypes/index.html (K1.9.16), giữ nguyên tên lớp của bản mẫu
+ * để các phiên sau chuyển tiếp phần còn lại cho khớp.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+html {
+  background: var(--lac);
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+body {
+  margin: 0;
+  color: var(--on);
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+p,
+h1,
+h2,
+h3 {
+  text-wrap: pretty;
+}
+h1,
+h2 {
+  text-wrap: balance;
+}
+a {
+  color: inherit;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+.nb {
+  white-space: nowrap;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.skip {
+  position: absolute;
+  left: -9999px;
+  z-index: 60;
+}
+.skip:focus {
+  left: 16px;
+  top: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 10px 14px;
+  font-family: var(--sans);
+}
+
+/* Chế độ tĩnh: Chữ lớn tắt mọi hiệu ứng */
+.easy * {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+}
+
+/* ===== Dấu vết mài (vm) ===== */
+.brand {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 12px;
+}
+.vm {
+  flex: none;
+  display: block;
+}
+.vm .vm-s {
+  stroke-dasharray: 32;
+  stroke-dashoffset: 0;
+}
+.vm .vm-h {
+  opacity: .55;
+}
+.vm-anim .vm-s {
+  animation: mai 1.6s cubic-bezier(.65, 0, .3, 1) .5s both;
+}
+.vm-anim .vm-h {
+  animation: maiHi 1.6s ease-out 1.6s both;
+}
+.vm-anim .vm-g {
+  animation: maiG 1s ease-out 1.8s both;
+}
+@keyframes mai {
+  from { stroke-dashoffset: 32; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes maiHi {
+  from { opacity: 0; }
+  to { opacity: .55; }
+}
+@keyframes maiG {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.brand:hover .vm-s {
+  filter: drop-shadow(0 0 3px rgba(239, 230, 210, .7));
+}
+@media (prefers-reduced-motion: reduce) {
+  .vm-anim .vm-s,
+  .vm-anim .vm-h,
+  .vm-anim .vm-g {
+    animation: none;
+  }
+}
+.lite .vm-anim .vm-s,
+.lite .vm-anim .vm-h,
+.lite .vm-anim .vm-g {
+  animation: none;
+}
+
+/* ===== Đầu trang ===== */
+.top {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: calc(env(safe-area-inset-top, 0px) + 24px) var(--pad) 0;
+}
+.mark {
+  text-decoration: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: .24em;
+  color: var(--on);
+}
+.mark.brand .bt {
+  display: block;
+}
+.mark .bt {
+  display: block !important;
+  margin: 0 !important;
+  font-family: var(--sans) !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: .24em !important;
+  color: var(--on) !important;
+}
+.mark .bt span {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: .01em;
+  color: var(--on-2);
+}
+.top-r {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.topnav {
+  display: none;
+  gap: 22px;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 15px;
+}
+@media (min-width: 960px) {
+  .topnav {
+    display: flex;
+  }
+}
+.topnav a {
+  color: var(--on);
+  text-decoration: none;
+  letter-spacing: .02em;
+}
+.topnav a:hover {
+  color: var(--cream-gold);
+}
+.topnav a.dn {
+  position: relative;
+  padding: 8px 0;
+  white-space: nowrap;
+}
+.topnav a.dn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 1px;
+  background: var(--gold-hi);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.topnav a.dn:hover::after {
+  transform: scaleX(1);
+}
+/* Trang đang xem (theo .nav a[aria-current] của bản mẫu trang cửa) */
+.topnav a.dn[aria-current="page"] {
+  color: var(--dc2, var(--gold-hi));
+  box-shadow: inset 0 -2px 0 var(--dc, var(--gold-hi));
+}
+.topnav .ask-link {
+  white-space: nowrap;
+  padding: 8px 14px;
+  border: 1px solid rgba(226, 194, 122, .55);
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--cream-gold);
+  transition: background .3s, color .3s;
+}
+.topnav .ask-link:hover {
+  background: var(--gold);
+  color: #15110D;
+}
+@media (min-width: 860px) and (max-width: 1100px) {
+  .topnav a.dn:first-child {
+    display: none;
+  }
+  .top .aa-btn em {
+    display: none;
+  }
+}
+.dd {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  vertical-align: 1px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .4);
+}
+.index-btn {
+  background: none;
+  border: 0;
+  color: var(--on);
+  font-family: var(--sans);
+  font-size: 15px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.index-btn i {
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: var(--gold);
+  box-shadow: 0 7px 0 var(--gold);
+}
+
+/* Nút chữ lớn và bản nhẹ */
+.aa-btn,
+.lite-btn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 12px;
+  border: 1px solid rgba(232, 214, 174, .4);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--on);
+}
+.aa-btn span {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1;
+}
+.aa-btn em {
+  font-style: normal;
+}
+.aa-btn[aria-pressed="true"],
+.lite-btn[aria-pressed="true"] {
+  background: var(--cream-gold);
+  color: #15110D;
+  border-color: var(--cream-gold);
+}
+.aa-btn:focus-visible,
+.lite-btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+.top .aa-btn {
+  margin-right: 14px;
+}
+@media (max-width: 700px) {
+  .top .aa-btn em {
+    display: none;
+  }
+  .top .aa-btn {
+    margin-right: 8px;
+    padding: 6px 10px;
+  }
+}
+.easy .topnav a {
+  font-size: 17.5px !important;
+}
+
+/* ===== K1.9.9 · Chân trang chung ===== */
+.ft {
+  position: relative;
+  padding: clamp(64px, 10vh, 104px) var(--pad) 36px;
+  background: #15100D;
+  color: #DCD0BA;
+  border-top: 1px solid rgba(196, 151, 59, .45);
+  font-family: var(--sans);
+}
+.ft::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--son) 20%, #C4973B 50%, var(--son) 80%, transparent);
+}
+.ft-in {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.ft a {
+  color: #F4ECDD;
+  text-decoration: none;
+}
+.ft a[href]:hover {
+  color: #E2C27A;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ft a:focus-visible,
+.ft button:focus-visible {
+  outline: 2px solid #E2C27A;
+  outline-offset: 3px;
+}
+.ft-top {
+  display: grid;
+  gap: 26px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(196, 151, 59, .22);
+}
+@media (min-width: 960px) {
+  .ft-top {
+    grid-template-columns: 1.1fr 1.3fr auto;
+    align-items: center;
+    gap: 44px;
+  }
+}
+.ft-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ft-name {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  letter-spacing: .14em;
+  color: #F4ECDD;
+}
+.ft-name span {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--sans);
+  font-size: 15px;
+  letter-spacing: .02em;
+  color: #B8AA92;
+}
+.ft-tag {
+  margin: 6px 0 0;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: #E2C27A;
+}
+.ft-vow {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 1.5vw, 21px);
+  line-height: 1.55;
+  color: #F4ECDD;
+  max-width: 34em;
+}
+.ft-act {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+.ft .ft-letter {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  background: #E2C27A;
+  color: #16100C;
+  font-weight: 600;
+  font-size: 15.5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.ft .ft-letter:hover {
+  background: #F0D998;
+  color: #16100C;
+  text-decoration: none;
+}
+.ft-reply {
+  font-size: 15px;
+  color: #B8AA92;
+}
+.ft-safe {
+  display: grid;
+  gap: 10px;
+  margin: 32px 0 0;
+  padding: 20px 22px;
+  border: 1px solid rgba(217, 130, 111, .45);
+  border-left: 4px solid #D9826F;
+  border-radius: 3px;
+  background: rgba(155, 58, 51, .12);
+}
+@media (min-width: 900px) {
+  .ft-safe {
+    grid-template-columns: auto 1fr;
+    column-gap: 28px;
+    align-items: center;
+  }
+}
+.ft-safe b {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20px;
+  color: #F4ECDD;
+}
+.ft-safe p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #E9DEC8;
+}
+.ft-safe p a {
+  font-weight: 700;
+  color: #FFE3D8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.ft-cols {
+  display: grid;
+  gap: 34px;
+  margin: 44px 0 0;
+}
+@media (min-width: 640px) {
+  .ft-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1040px) {
+  .ft-cols {
+    grid-template-columns: 1fr 1fr 1.1fr 1.25fr;
+  }
+}
+.ft h2 {
+  margin: 0 0 14px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #C4973B;
+}
+.ft-cols ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.ft-cols li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font-size: 15.5px;
+  line-height: 1.4;
+}
+@media (max-width: 639px) {
+  .ft-cols ul {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+  .ft-cols li a {
+    min-height: 44px;
+  }
+  .ft-cols {
+    gap: 28px;
+    margin-top: 36px;
+  }
+  .ft-top {
+    padding-bottom: 28px;
+  }
+}
+.ft-dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+.ft-dl div {
+  display: grid;
+  gap: 2px;
+}
+.ft-dl dt {
+  font-size: 15px;
+  color: #B8AA92;
+}
+.ft-dl dd {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: #F4ECDD;
+}
+.ft-slot {
+  display: inline-block;
+  padding: 1px 9px;
+  border: 1px dashed rgba(226, 194, 122, .5);
+  border-radius: 2px;
+  font-size: 15px;
+  color: #CFC2AA;
+}
+.ft-soc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+.ft .ft-soc a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1px solid rgba(226, 194, 122, .35);
+  border-radius: 20px;
+  font-size: 15px;
+}
+.ft .ft-soc a[href]:hover {
+  border-color: #E2C27A;
+  text-decoration: none;
+}
+.ft-eco {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin: 44px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(196, 151, 59, .22);
+  border-bottom: 1px solid rgba(196, 151, 59, .22);
+}
+.ft-eco > span {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: #C4973B;
+}
+.ft-eco a,
+.ft-eco em {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-style: normal;
+}
+.ft-eco em {
+  color: #9C9080;
+}
+.ft-eco em small {
+  font-family: var(--sans);
+  font-size: 15px;
+}
+.ft-disc {
+  margin: 30px 0 0;
+  max-width: 62rem;
+}
+.ft-disc p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #CFC2AA;
+}
+.ft-base {
+  display: grid;
+  gap: 14px;
+  margin: 34px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(196, 151, 59, .22);
+}
+@media (min-width: 960px) {
+  .ft-base {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    column-gap: 40px;
+  }
+}
+.ft-base p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #B8AA92;
+}
+.ft-base p + p {
+  margin-top: 4px;
+}
+.ft-right {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+@media (min-width: 960px) {
+  .ft-right {
+    justify-items: end;
+  }
+}
+.ft .prefs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+}
+.ft .aa-btn,
+.ft .lite-btn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid rgba(226, 194, 122, .4);
+  border-radius: 3px;
+  color: #F4ECDD !important;
+  font-family: var(--sans);
+  font-size: 15px !important;
+}
+.ft .aa-btn span {
+  font-family: var(--serif);
+  font-size: 18px;
+}
+.ft .aa-btn em {
+  font-style: normal;
+}
+.ft .aa-btn[aria-pressed="true"],
+.ft .lite-btn[aria-pressed="true"] {
+  background: #E2C27A;
+  color: #16100C !important;
+  border-color: #E2C27A;
+}
+.ft .ft-up {
+  font-size: 15px;
+  color: #E2C27A;
+}
+.easy .ft-cols li a,
+.easy .ft-dl dd,
+.easy .ft-safe p,
+.easy .ft-disc p,
+.easy .ft-base p,
+.easy .ft-reply,
+.easy .ft-dl dt {
+  font-size: 19px !important;
+  line-height: 1.65 !important;
+}
+.easy .ft h2,
+.easy .ft-eco > span {
+  font-size: 15px !important;
+}
+
+/* ===== Lớp sơn mài tối (màn mở đầu mỗi trang) ===== */
+.lacquer {
+  position: relative;
+  background: var(--lac);
+  isolation: isolate;
+  overflow: hidden;
+}
+.lacquer::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  z-index: -2;
+  background:
+    radial-gradient(120% 80% at 18% 30%, rgba(58, 20, 16, .55), transparent 60%),
+    radial-gradient(90% 70% at 85% 75%, rgba(26, 47, 78, .35), transparent 65%);
+}
+.lacquer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .35;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.004 .09' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
+}
+
+/* Trang chủ trống của S0: một màn sơn mài để đầu trang nằm đúng nền */
+.km-trong {
+  min-height: 60vh;
+  min-height: 60svh;
+}

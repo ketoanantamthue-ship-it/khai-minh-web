@@ -1,6 +1,6 @@
 # 07 · Bảng rà soát: web Khai Minh còn thiếu gì
 
-Cập nhật ngày 09/10/2026. Claude Code cập nhật bảng này cuối mỗi phiên: ghi `[x]` khi xong và thêm chỗ thiếu mới phát hiện.
+Cập nhật ngày 09/10/2026, sau phiên S0. Claude Code cập nhật bảng này cuối mỗi phiên: ghi `[x]` khi xong và thêm chỗ thiếu mới phát hiện.
 
 **Cách đọc bảng:**
 - **Nhóm A–D và F** là việc chỉ anh hoặc đội của anh làm được.
@@ -11,18 +11,18 @@ Cập nhật ngày 09/10/2026. Claude Code cập nhật bảng này cuối mỗi
 
 | Nhóm | Số mục | Mục gấp nhất |
 | --- | --- | --- |
-| A. Quyết định | 11 | A1 kho mã, A9 tên miền |
+| A. Quyết định | 13 | A1 kho mã, A9 tên miền |
 | B. Chất liệu thật | 10 | B1 ảnh có bản quyền, B2 chân dung, B3 ghi âm |
 | C. Nội dung | 8 | C1 hiện chưa có bài nào để tìm thấy |
 | D. Pháp lý | 6 | D1 pháp nhân, D3 luật sư, D5 kiểm đường dây nóng |
-| E. Kỹ thuật | 10 | Đã nằm trong S0–S7 |
+| E. Kỹ thuật | 10 (+6 từ S0) | Đã nằm trong S0–S7 |
 | F. Vận hành | 4 | F1 người giữ hộp thư |
 
 ## A. Quyết định của anh
 
 | Mã | Việc | Chặn | Mặc định nếu anh chưa chốt |
 | --- | --- | --- | --- |
-| [ ] A1 | **Kho mã riêng hay chung với antammenh-web?** | S0 | Kho riêng `khai-minh-web` (docs/01, mục E1) |
+| [ ] A1 | **Kho mã riêng hay chung với antammenh-web?** | S0 | Kho riêng `khai-minh-web` (docs/01, mục E1). **S0 đã dựng theo mặc định này**; anh chỉ cần xác nhận. |
 | [ ] A2 | Đường dẫn chặng: có chữ hay số? | S2 | Có chữ, ví dụ `/chang/tuoi-giua-doi`; `/chang/5` chuyển hướng về đó |
 | [ ] A3 | Cửa Thân và việc kinh doanh sản phẩm: A (dừng, chỉ giáo dục) hay B (giữ nhưng tách hẳn, chỉ công khai ở trang Minh bạch lợi ích) | S4 (`/minh-bach`) | Kiến trúc web không đổi; trang Minh bạch để khung |
 | [ ] A4 | Xác nhận dòng danh xưng "Người khai vấn, người viết sách, và một dược sĩ", và việc người lạ chỉ cần nhớ hai tên Khai Minh và An Tâm Mệnh | S1 | Giữ như bản mẫu |
@@ -33,6 +33,8 @@ Cập nhật ngày 09/10/2026. Claude Code cập nhật bảng này cuối mỗi
 | [ ] A9 | **Tên miền cho Khai Minh**: chọn, kiểm còn trống, mua. Đã chọn thì không đổi về sau. | S7, và canonical | Dùng biến `NEXT_PUBLIC_SITE_URL` cho tới khi có |
 | [ ] A10 | Cánh cổng chỉ hiện lần đầu trên mỗi máy | S1 | Bật (docs/01, mục E7) |
 | [ ] A11 | Hỏi ý một vị thầy hoặc luật sư về việc dùng hình tượng Phật trên trang thương hiệu | S7 | Giữ trong bản xem trước |
+| [ ] A12 | *(Phát hiện ở S0.)* Chân trang có ba liên kết chưa có trang nào trong docs/02: “Lịch sử sửa đổi Hiến chương”, “Báo cáo minh bạch hằng năm”, “Trợ năng và cách hiển thị”. Dựng ba trang riêng, gộp vào `/hien-chuong` và `/minh-bach`, hay tạm ẩn? | S4 | Giữ chữ nhưng chưa có liên kết (đã gắn `data-can`); không trỏ “#” |
+| [ ] A13 | *(Phát hiện ở S0.)* Cụm “hạn nặng” trong câu hỏi liên quan của chặng 5 (“Tuổi bốn mươi chín có thật là một năm hạn nặng?”) khớp từ cấm W2 số 10. Đây là câu hỏi nguyên văn của người đọc, có sẵn trong bản mẫu, nên được giữ và ghi vào `scripts/check-words-cho-phep.json`. Anh đồng ý giữ, hay muốn đổi câu? | S1, S2 | Giữ như bản mẫu |
 
 ## B. Chất liệu thật
 
@@ -82,18 +84,26 @@ Cập nhật ngày 09/10/2026. Claude Code cập nhật bảng này cuối mỗi
 
 ## E. Kỹ thuật (Claude Code tự làm)
 
+**S0 · Nền móng đã xong:** Next.js 16 (App Router, TypeScript strict); token màu (`styles/tokens.css`); màu ba cửa (`lib/doors.ts`); cấu hình chung (`site.config.ts`); phông qua `next/font`; đầu trang và chân trang dùng chung; cờ lập chỉ mục (thẻ meta, `robots.txt` và tiêu đề `X-Robots-Tag`); build báo lỗi khi cờ bật mà còn ảnh tạm; `npm run check:words`; Playwright và axe; GitHub Actions. Ảnh so hình nằm ở `tests/__screens__/`.
+
 | Mã | Nợ kỹ thuật của bản mẫu | Phiên |
 | --- | --- | --- |
 | [ ] E1 | Chữ chín chặng nằm trong mảng JS, máy tìm kiếm khó đọc. Đã tách sẵn sang `content/chang/`. | S1, S2 |
 | [ ] E2 | Khoảng 38 liên kết "#" ở trang chủ và 14–20 liên kết ở mỗi trang con | S4 |
 | [ ] E3 | Form chỉ là bản xem trước, chưa gửi được thư | S5 |
 | [ ] E4 | Chưa có metadata riêng cho từng trang, sitemap, robots, canonical, JSON-LD | S3 |
-| [ ] E5 | Phông tải bằng thẻ link CSS; cần chuyển sang `next/font` và chỉ tải tập con | S0 |
+| [x] E5 | Phông tải bằng thẻ link CSS; cần chuyển sang `next/font` và chỉ tải tập con. **S0: xong** (Noto Serif, Be Vietnam Pro, tập con `vietnamese` và `latin`). Chữ Hán cho dấu và cửu cung còn chờ S1. | S0 |
 | [ ] E6 | Cổng hiện mỗi lần vào trang và che toàn màn hình | S1 |
 | [ ] E7 | Chưa có công cụ đo: Search Console, Bing, đếm lượt xem | S7 |
 | [ ] E8 | Chưa có trang 404 và các trang chính sách | S4 |
 | [ ] E9 | Các trang con dẫn về `index.html#gui-cau-hoi`; cần đổi thành `/gui-cau-hoi` | S2, S4 |
 | [ ] E10 | Chưa thử trên iPhone và Android thật; chưa chạy Bộ thử 20 người thật | S6 |
+| [ ] E11 | *(Từ S0.)* Nút “Mục lục” ở đầu trang tạm là liên kết tới `/muc-luc`. S1 đổi thành nút mở lớp phủ trên trang chủ; S2 dựng trang `/muc-luc`. | S1, S2 |
+| [ ] E12 | *(Từ S0.)* Đầu trang và chân trang đã trỏ vào các route ở docs/02 (`/tam`, `/tri`, `/than`, `/gui-cau-hoi`, `/khai-minh`, `/minh-bach`, bốn trang chính sách). Các route này chưa dựng nên hiện còn ra trang 404. | S2, S4, S5 |
+| [ ] E13 | *(Từ S0.)* Khi `hotlineDaXacNhan` là `false`, chân trang chỉ nhắc 115 và người thân, chưa nhắc Ngày Mai. Bật cờ trong `site.config.ts` sau khi xong D5 thì câu đầy đủ của bản mẫu hiện lại. | Sau D5 |
+| [ ] E14 | *(Từ S0.)* Liên hệ, mạng xã hội, chủ sở hữu nhãn hiệu, pháp nhân, ngày cập nhật: chân trang đang hiện ô nét đứt như bản mẫu. Điền vào `site.config.ts` khi có D1, C7, C8. **Không ra mắt khi còn ô trống.** | S4, S7 |
+| [ ] E15 | *(Từ S0.)* `npm run check:words` đang báo 3 chỗ “cần xem” (không làm hỏng CI): “trị liệu” trong khối Miễn trừ, “duy nhất” hai lần trong chặng 1. Cả ba đều nằm trong câu phủ định, nên tôi đề nghị giữ. | S1 |
+| [ ] E16 | *(Từ S0.)* Phiên S0 làm trên nhánh `claude/bold-volta-yy6w5v` do Claude Code trên web cấp, chưa theo quy ước `phien/S<số>-<tên-ngắn>`. Từ S1, khi mở phiên mới, có thể dặn Claude dùng đúng tên nhánh. | — |
 
 ## F. Vận hành
 
@@ -102,4 +112,4 @@ Cập nhật ngày 09/10/2026. Claude Code cập nhật bảng này cuối mỗi
 | [ ] F1 | Ai giữ hộp thư câu hỏi, và hẹn trả lời trong bao lâu | Hiến chương: "không mở một lối nào trên web khi chưa có người giữ nó" |
 | [ ] F2 | Người soát nguồn kinh và nhãn tin cậy (cố vấn Phật học, dự kiến mời trước 31/12/2026); lịch đăng bài mỗi tuần | Không có người soát thì không có bài `da-dang` |
 | [ ] F3 | Ai được bật cờ lập chỉ mục và gộp pull request vào nhánh chính | Tránh ra mắt nhầm |
-| [ ] F4 | Quyền truy cập: GitHub (cài Claude GitHub App cho kho mới), Vercel (tạo dự án mới) | S0 |
+| [ ] F4 | Quyền truy cập: GitHub (cài Claude GitHub App cho kho mới), Vercel (tạo dự án mới) | S0. **GitHub đã chạy được.** Vercel còn chờ anh: tạo dự án từ kho này theo README bước 4, đặt `NEXT_PUBLIC_CHO_PHEP_LAP_CHI_MUC=false`. Bản xem trước của Vercel luôn `noindex`, kể cả khi cờ bật. |
