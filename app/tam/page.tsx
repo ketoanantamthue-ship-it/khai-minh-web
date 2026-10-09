@@ -1,0 +1,239 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
+import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
+import { LienKetNgoai } from "@/components/trang-con/LienKetNgoai";
+import { LoiMoiGuiCauHoi } from "@/components/trang-con/LoiMoiGuiCauHoi";
+import { ManDau } from "@/components/trang-con/ManDau";
+import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
+import { doors, doorStyle } from "@/lib/doors";
+import { siteConfig } from "@/site.config";
+import "@/styles/trang-con.css";
+
+export const metadata: Metadata = {
+  title: "Cửa Tâm – An Tâm Mệnh",
+  description:
+    "Nếu bạn đã hỏi nhiều nơi mà lòng vẫn chưa yên, An Tâm Mệnh là nơi Khai Minh và những người đồng hành ngồi cùng bạn, cho tới ngày bạn tự bước đi được.",
+  alternates: { canonical: "/tam" },
+};
+
+/**
+ * Cửa Tâm (phiên S2): chuyển prototypes/cua-tam.html (K1.9.16), giữ nguyên chữ,
+ * màu cửa và mọi phần. Liên kết "#" của bản mẫu được nối vào route ở docs/02;
+ * địa chỉ ở antammenh.com chưa chốt thì giữ chữ và gắn `data-can` (docs/07, A6).
+ */
+export default function CuaTam() {
+  const { lienKetNgoai } = siteConfig;
+
+  return (
+    <main id="main" className="km-con" data-door="tam" style={doorStyle("tam")}>
+      <ManDau
+        nhan={
+          <>
+            <span className="dk-seal" aria-hidden="true">
+              {doors.tam.han}
+            </span>
+            CỬA TÂM · AN TÂM MỆNH
+          </>
+        }
+        tieuDe="Khi lòng chưa yên, bạn không phải đi một mình."
+        soi="Có thể bạn đã hỏi nhiều nơi, nghe nhiều lời phán, và mỗi lần trở về nhà, nỗi lo lại nặng thêm một chút."
+        moDau="Nếu bạn đã hỏi nhiều nơi mà lòng vẫn chưa yên, An Tâm Mệnh là nơi tôi và những người đồng hành ngồi cùng bạn, cho tới ngày bạn tự bước đi được."
+      >
+        <a className="btn" href="#bac-thang">
+          Bắt đầu bằng bảng tự soi
+        </a>
+        <Link className="soft" href="/hien-chuong">
+          Đọc Hiến chương trước khi bắt đầu
+        </Link>
+      </ManDau>
+      <NguongBinhMinh cau="Lòng người không yên lại chỉ sau một đêm. Nó lắng dần, như mặt sơn qua từng lần mài." />
+
+      <section className="s">
+        <div className="wrap">
+          <h2>Con đường đi qua bốn chặng, và đích đến là ngày bạn không cần tôi nữa.</h2>
+          <p className="lede">
+            Tâm thường đi từ lúc bị cuốn đi, tới lúc biết dừng lại, rồi chuyển hóa, và tìm về sự an. Mỗi chặng dưới đây
+            là một bước trên con đường ấy.
+          </p>
+          <div className="grid g4">
+            <article className="card">
+              <span className="n">1</span>
+              <h3>Soi</h3>
+              <p>Bạn tự quan sát mình trước bằng một bảng hỏi ngắn, rồi chúng ta mới đặt lá số bên cạnh.</p>
+            </article>
+            <article className="card">
+              <span className="n">2</span>
+              <h3>Thấu</h3>
+              <p>Trong hai mươi mốt ngày, bạn ghi lại những lúc tâm mình bị cuốn đi, để thấy nó thường bắt đầu từ đâu.</p>
+            </article>
+            <article className="card">
+              <span className="n">3</span>
+              <h3>Chuyển</h3>
+              <p>Chúng ta cùng chọn một thực tập vừa sức, rồi chỉnh dần theo những gì bạn ghi được.</p>
+            </article>
+            <article className="card">
+              <span className="n">4</span>
+              <h3>Tốt nghiệp</h3>
+              <p>Bạn tự đọc được mình. Ở buổi cuối, tôi trao lại cho bạn mọi điều chúng ta đã cùng ghi.</p>
+            </article>
+          </div>
+          <div className="grid g73 g-tiep">
+            {/* Video giới thiệu: chờ chất liệu thật (docs/07, mục B11). */}
+            <div className="slot r169" role="img" aria-label="Video giới thiệu" data-can="B11">
+              <div>
+                <b>Video giới thiệu</b>Khai Minh tự kể về con đường bốn chặng, khoảng hai phút, có phụ đề
+              </div>
+            </div>
+            <div className="card">
+              <h3>Vì sao lại là tốt nghiệp?</h3>
+              <p>
+                Một người đồng hành tốt là người dần trở nên không cần thiết. Tôi đo mình bằng số người đã tự bước đi
+                được, chứ không bằng số người còn phải quay lại.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="s" id="bac-thang">
+        <div className="wrap">
+          <h2>Bạn có thể bắt đầu từ bước nhẹ nhất, và chỉ đi tiếp khi bạn muốn.</h2>
+          <p className="lede">
+            Trong hai năm đầu dựng ngôi nhà này, tôi đồng hành cùng bạn mà không nhận tiền. Thay cho học phí là{" "}
+            <Link className="more" href="/#loi-hen">
+              bốn lời hẹn
+            </Link>
+            : có mặt, thực tập, nói thật và trao lại. Bạn có thể dừng lại ở bất cứ bước nào mà không cần giải thích.
+          </p>
+          <div className="grid g3">
+            <article className="card">
+              <h3>Bảng tự soi</h3>
+              <p>
+                Ba mươi câu hỏi giúp bạn nhìn lại cách tâm mình thường phản ứng. Bạn làm một mình, ở nhà, vào một buổi
+                tối yên tĩnh.
+              </p>
+              <span className="tag">Không thu phí</span>
+              <LienKetNgoai lk={lienKetNgoai.bangTuSoi} className="more">
+                Bắt đầu bảng tự soi
+              </LienKetNgoai>
+            </article>
+            <article className="card">
+              <h3>Hồ sơ Soi</h3>
+              <p>
+                Tôi đặt lá số của bạn cạnh những gì bạn tự quan sát, và chỉ rõ cho bạn cả chỗ khớp lẫn chỗ không khớp.
+              </p>
+              <span className="tag">Không nhận tiền · hẹn nói thật</span>
+            </article>
+            <article className="card">
+              <h3>Hành trình đồng hành</h3>
+              <p>
+                Tám đến mười tuần đi qua bốn chặng Soi, Thấu, Chuyển và Tốt nghiệp, có người đồng hành và có nhóm cùng
+                thực tập.
+              </p>
+              <span className="tag">Không nhận tiền · bốn lời hẹn</span>
+            </article>
+            <article className="card">
+              <h3>Trà thất</h3>
+              <p>
+                Những cuộc trò chuyện riêng và kín đáo, dành cho người muốn đi sâu hơn. Mỗi tháng tôi chỉ nhận tối đa ba
+                người mới.
+              </p>
+              <span className="tag">Không nhận tiền · đã qua Hồ sơ Soi</span>
+            </article>
+            <article className="card">
+              <h3>Chứng nhận Tổng Mệnh Học™</h3>
+              <p>
+                Chương trình dành cho người đã tốt nghiệp và muốn đồng hành cùng người khác. Chương trình sẽ mở khi đã
+                đủ điều kiện.
+              </p>
+              <span className="tag">Sắp mở</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="s">
+        <div className="wrap">
+          <h2>Bên trong ngôi nhà có hai căn phòng và một khoảng sân chung.</h2>
+          <div className="grid g3">
+            <article className="card">
+              <h3>Phòng soi Khai Mệnh</h3>
+              <p>
+                Nơi bạn lập lá số và đọc những điều các môn cổ học nói về mình, luôn kèm lời nhắc rằng đó là giả thuyết
+                để bạn tự kiểm.
+              </p>
+              <LienKetNgoai lk={lienKetNgoai.khaiMenh} className="more">
+                Ghé phòng soi
+              </LienKetNgoai>
+            </article>
+            <article className="card">
+              <h3>Phòng chuyển Khai Tâm</h3>
+              <p>Nơi giữ những thực tập theo từng trạng thái của tâm, cùng cuốn nhật ký hai mươi mốt ngày.</p>
+              <LienKetNgoai lk={lienKetNgoai.khaiTam} className="more">
+                Ghé phòng chuyển
+              </LienKetNgoai>
+            </article>
+            <article className="card">
+              <h3>Khoảng sân chung</h3>
+              <p>Cộng đồng nơi mọi người cùng học, cùng thực tập, và hỏi nhau những điều khó nói với người ngoài.</p>
+              <LienKetNgoai lk={lienKetNgoai.congDong} className="more">
+                Ghé khoảng sân
+              </LienKetNgoai>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="s">
+        <div className="wrap grid g73 g-dau">
+          <div>
+            <h2>Một buổi Soi kéo dài khoảng chín mươi phút, và bạn luôn biết trước điều gì sẽ diễn ra.</h2>
+            <ul className="list">
+              <li>Chúng ta thống nhất những gì sẽ làm, và những gì được giữ kín.</li>
+              <li>Bạn tự trả lời một bảng quan sát nhỏ về chính mình.</li>
+              <li>Chúng ta mở lá số và đặt nó cạnh điều bạn vừa thấy về mình.</li>
+              <li>Tôi chỉ cho bạn cả chỗ khớp lẫn chỗ không khớp.</li>
+              <li>Bạn ra về với một thực tập nhỏ cho hai mươi mốt ngày.</li>
+            </ul>
+          </div>
+          {/* Ảnh trà thất: chờ chất liệu thật (docs/07, mục B11). */}
+          <div className="slot r45" role="img" aria-label="Ảnh trà thất" data-can="B11">
+            <div>
+              <b>Ảnh trà thất</b>Bàn gỗ, ánh chiều, ấm trà, không có khách
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="s">
+        <div className="wrap">
+          <h2>Có sáu điều tôi đã nguyện sẽ không bao giờ làm.</h2>
+          <ul className="list">
+            <li>Tôi không tiên đoán, và không đoán ngày mất hay thọ yểu của bất kỳ ai.</li>
+            <li>Tôi không ngăn cản một cuộc hôn nhân vì tuổi, và không nói một người con “khắc” cha mẹ mình.</li>
+            <li>
+              Tôi không bán lễ giải hạn, không dọa về vong, mồ mả hay sao hạn, và không kiếm tiền từ nỗi sợ.
+            </li>
+            <li>Tôi không xem khổ đau là sự trừng phạt, và không phán xét nghiệp của bất kỳ ai.</li>
+            <li>
+              Tôi không thay thế bác sĩ, luật sư hay nhà tâm lý, và không bao giờ khuyên bạn ngừng điều trị.
+            </li>
+            <li>Tôi không xưng là bậc thầy tâm linh, và không trục lợi từ lòng tin của bạn.</li>
+          </ul>
+          <p className="hc-link">
+            <Link href="/hien-chuong">Đọc Hiến chương đầy đủ, có nguồn lời dạy của Đức Phật cho từng điều</Link>
+          </p>
+        </div>
+      </section>
+
+      <BaCuaKhac
+        hienTai="tam"
+        tieuDe="Ngôi nhà này còn hai cánh cửa khác."
+        loiDan="Cả ba cánh cửa cùng mở vào một ngôi nhà. Khi bạn cần, bạn cứ sang cửa bên cạnh."
+      />
+      <LoiMoiGuiCauHoi />
+      <HieuUngTrangCon />
+    </main>
+  );
+}

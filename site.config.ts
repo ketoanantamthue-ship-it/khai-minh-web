@@ -56,6 +56,8 @@ export const siteConfig = {
     hoSoSoi: { ten: "Hồ sơ Soi", url: null, can: "A6" },
     traThat: { ten: "Trà thất", url: null, can: "A6" },
     hienChuongGoc: { ten: "Hiến chương bản gốc", url: null, can: "A6" },
+    /** Cộng đồng ở antammenh.com ("Khoảng sân chung" trên trang Cửa Tâm). */
+    congDong: { ten: "Khoảng sân chung", url: null, can: "A6" },
   } satisfies Record<string, LienKet>,
 
   /** Kênh chính thức (docs/07, mục C7). */
