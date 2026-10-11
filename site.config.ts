@@ -59,8 +59,8 @@ const laBanThat = !hienBanNhap;
 
 /**
  * Nơi nhận thư của các biểu mẫu (docs/07, mục A5; nối ở phiên S5). Khi còn
- * `null`, bản thật không được báo “đã nhận được lá thư”; bản xem trước vẫn
- * hiện lời báo của bản mẫu như cũ.
+ * `null`, bản thật ẩn lá thư, các ô nhận thư và mọi lối dẫn tới chúng (anh
+ * chốt ở docs/07, mục A18); bản xem trước vẫn giữ như bản mẫu.
  */
 const noiNhanThu: string | null = null;
 
@@ -72,8 +72,13 @@ export const siteConfig = {
   hienBanNhap,
   laBanThat,
   noiNhanThu,
-  /** Biểu mẫu có được báo “đã nhận” hay không (xem `noiNhanThu`). */
-  baoDaNhanThu: noiNhanThu !== null || hienBanNhap,
+  /**
+   * Lối gửi thư đang mở: lá thư “Gửi một câu hỏi”, ô “Nhận thư hằng tháng”,
+   * ô “Báo cho tôi khi sách ra đời” và mọi nút dẫn tới chúng (xem `noiNhanThu`).
+   * Thành phần chạy ở trình duyệt nhận giá trị này qua prop, vì biến môi
+   * trường của bản thật không có ở phía trình duyệt.
+   */
+  moLoiThu: noiNhanThu !== null || hienBanNhap,
 
   /**
    * Thực thể Person “Khai Minh” trong JSON-LD (docs/05, mục 4; docs/10, mục R2).

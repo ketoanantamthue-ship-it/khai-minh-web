@@ -25,7 +25,7 @@
 | LCP | dưới 2,5 giây ở trang chủ (sau cổng) và trang bài |
 | CLS | dưới 0,1 |
 | INP | dưới 200 ms |
-| JS ban đầu của trang bài | dưới 100 KB (đã nén) |
+| JS của trang con (trang bài, chặng, cửa…) | dưới 160 KB (đã nén gzip, gồm cả phần tải trước khi mở trang). Riêng khung React và Next.js đã khoảng 137 KB, nên mức cũ 100 KB không đạt được với nền tảng đã chốt; anh chốt mức mới ngày 11/10/2026 (docs/10, mục R12; docs/07, mục A19) |
 | Ảnh cổng | preload đúng một bản theo khổ màn hình |
 
 Hiệu ứng nặng (canvas sao, đom đóm) chỉ tải khi phần đó sắp vào màn hình. Không chạy hiệu ứng khi tab ẩn.

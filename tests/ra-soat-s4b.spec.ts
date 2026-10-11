@@ -169,3 +169,36 @@ test.describe("R11, R13 · Trang chủ nhẹ hơn lúc mở", () => {
     expect(css).toContain(".km-tc .cosmos{position:absolute;inset:-3vh -3% -3%;");
   });
 });
+
+test.describe("R12 · Dung lượng JS của trang con", () => {
+  /** Ngân sách anh chốt ngày 11/10/2026 (docs/05, mục 2; docs/07, mục A19). */
+  const NGAN_SACH = 160 * 1024;
+
+  test("mỗi trang con tải dưới 160 KB JS đã nén, kể cả phần tải trước", async ({ page }, info) => {
+    test.skip(info.project.name !== "may-tinh-1366", "dung lượng JS không đổi theo khổ màn hình");
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("km-gate", "1");
+      } catch {}
+    });
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Network.enable");
+    await cdp.send("Network.setCacheDisabled", { cacheDisabled: true });
+    const loai = new Map<string, string>();
+    let tong = 0;
+    cdp.on("Network.responseReceived", (e) => loai.set(e.requestId, e.type));
+    cdp.on("Network.loadingFinished", (e) => {
+      if (loai.get(e.requestId) === "Script") tong += e.encodedDataLength;
+    });
+    const ketQua: string[] = [];
+    for (const duong of ["/chang/tuoi-giua-doi", "/tam", "/khai-minh", "/hoi", "/muc-luc", "/sach"]) {
+      tong = 0;
+      await page.goto(duong, { waitUntil: "networkidle" });
+      await page.waitForTimeout(300);
+      ketQua.push(`${duong}: ${(tong / 1024).toFixed(1)} KB`);
+      expect(tong, ketQua.at(-1)).toBeGreaterThan(0);
+      expect(tong, ketQua.at(-1)).toBeLessThan(NGAN_SACH);
+    }
+    info.annotations.push({ type: "JS đã nén", description: ketQua.join(" · ") });
+  });
+});

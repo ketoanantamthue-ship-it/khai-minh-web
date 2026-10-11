@@ -232,9 +232,14 @@ export function LoiHua({ noiKhac }: { noiKhac?: boolean } = {}) {
           <ol>
             <li>
               <b>Bạn gửi cho tôi một dòng.</b>Bạn ghi số của điều ấy và điều bạn đã thấy, ở mục{" "}
-              <a href={hrefGuiCauHoi(noiKhac, "hc")} data-topic="hc">
-                Gửi câu hỏi
-              </a>
+              {siteConfig.moLoiThu ? (
+                <a href={hrefGuiCauHoi(noiKhac, "hc")} data-topic="hc">
+                  Gửi câu hỏi
+                </a>
+              ) : (
+                // Chữ Hiến chương giữ nguyên; bản thật chưa có lá thư nên không dẫn đi đâu (docs/07, mục A18).
+                <span data-can="A18">Gửi câu hỏi</span>
+              )}
               .
             </li>
             <li>

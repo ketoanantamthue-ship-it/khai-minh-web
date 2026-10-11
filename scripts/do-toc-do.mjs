@@ -3,7 +3,7 @@
  *
  * Cách dùng: dựng và chạy bản production ở cổng 3100 (hoặc đặt URL_THU),
  * rồi chạy `node scripts/do-toc-do.mjs`. Lệnh in ra:
- * - JS đã nén mà mỗi trang tải (R12, ngân sách 100 KB);
+ * - JS đã nén mà mỗi trang tải (R12, ngân sách 160 KB, docs/05 mục 2);
  * - CLS của trang chủ lần đầu và khi đã qua cổng (R11, ngưỡng 0,1);
  * - LCP trên điện thoại giả lập 4G chậm, CPU chậm 4 lần (R13, ngưỡng 2,5 giây).
  *
@@ -109,7 +109,7 @@ async function doTrangChu({ daQuaCong }) {
 const giua = (a) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)];
 
 console.log(`Đo ${GOC}\n`);
-console.log("JS đã nén (R12, ngân sách 100 KB):");
+console.log("JS đã nén (R12, ngân sách 160 KB):");
 for (const p of process.env.BO_JS ? [] : TRANG_JS) {
   const b = await doJs(p);
   console.log(`  ${p.padEnd(24)} ${(b / 1024).toFixed(1)} KB`);

@@ -62,9 +62,9 @@ Mọi con số dưới đây đều đo được. Riêng **tỉ lệ sẵn sàng
 
 | Mã | Vấn đề | Đo được | Cách sửa | Ai làm |
 | --- | --- | --- | --- | --- |
-| R11 | **Trang chủ xô lệch bố cục** khi tải | CLS 0,106 (ngưỡng tốt là 0,1) | Giữ chỗ cố định cho ảnh nền, khối chín chặng, phông; tìm phần tử gây xô bằng PerformanceObserver<br>**✓ Xong ở S4b:** CLS 0,029 (xem mục 6). | S4b |
-| R12 | **JavaScript nặng ở mọi trang** | Trang chặng tải 176 KB JS (đã nén), ngân sách là 100 KB | Hiệu ứng trang chủ (sao, đom đóm, mài sơn, cổng) chỉ tải ở trang chủ; trang con không kéo theo. Dùng `next/dynamic` và kiểm tra lại `layout.tsx`<br>**⚠ Chưa đạt ở S4b:** trang con còn 145–151 KB; riêng khung React/Next đã là 137 KB (xem mục 6). Cần anh chọn hướng. | S4b, S6 |
-| R13 | Trang chủ lần đầu (có cổng): LCP 3,3 giây trên 4G chậm | Ngưỡng 2,5 giây | Preload đúng một ảnh cổng theo khổ màn hình; hạ chất lượng WebP bản 720; trì hoãn canvas sao tới khi khách đã qua cổng<br>**✓ Xong ở S4b:** LCP lần đầu 1,4 giây (xem mục 6). | S4b |
+| R11 | **Trang chủ xô lệch bố cục** khi tải | CLS 0,106 (ngưỡng tốt là 0,1) | Giữ chỗ cố định cho ảnh nền, khối chín chặng, phông; tìm phần tử gây xô bằng PerformanceObserver<br>**✓ Xong ở S4b:** CLS 0,027 (xem mục 6). | S4b |
+| R12 | **JavaScript nặng ở mọi trang** | Trang chặng tải 176 KB JS (đã nén), ngân sách là 100 KB | Hiệu ứng trang chủ (sao, đom đóm, mài sơn, cổng) chỉ tải ở trang chủ; trang con không kéo theo. Dùng `next/dynamic` và kiểm tra lại `layout.tsx`<br>**✓ Xong ở S4b:** trang con còn 145–151 KB; riêng khung React/Next đã là 137 KB (xem mục 6). Anh chốt nâng ngân sách lên 160 KB (docs/05, mục 2); có bài kiểm thử tự động. | S4b, S6 |
+| R13 | Trang chủ lần đầu (có cổng): LCP 3,3 giây trên 4G chậm | Ngưỡng 2,5 giây | Preload đúng một ảnh cổng theo khổ màn hình; hạ chất lượng WebP bản 720; trì hoãn canvas sao tới khi khách đã qua cổng<br>**✓ Xong ở S4b:** LCP lần đầu 1,2 giây (xem mục 6). | S4b |
 | R14 | Trang chặng mới có BreadcrumbList | Không có dữ liệu nói "trang này là gì, của ai" | Thêm `WebPage` hoặc `Article` kèm `author` là Person và `about` là chủ đề chặng<br>**✓ Xong ở S4b:** `WebPage` có `author`, `about` (tên chặng và độ tuổi), `breadcrumb`. | S4b |
 | R15 | Mô tả trang chủ 168 ký tự | Google cắt ở khoảng 155–160 | Rút gọn<br>**✓ Xong ở S4b:** 140 ký tự. | S4b |
 | R16 | Chưa có công cụ đo | — | Search Console, Bing Webmaster, Vercel Web Analytics (không dùng cookie, nên không cần bảng hỏi cookie) | S7 |
@@ -89,7 +89,7 @@ Mọi con số dưới đây đều đo được. Riêng **tỉ lệ sẵn sàng
 ## 5. Thứ tự đề xuất
 
 1. **S4**: trang còn lại, nối liên kết.
-2. **S4b**: sửa R2, R4, R5, R6, R7, R11–R15 (câu lệnh ở `prompts/cac-cau-lenh-theo-phien.md`). **Đã làm**, kết quả ở mục 6; R12 chờ anh chọn hướng.
+2. **S4b**: sửa R2, R4, R5, R6, R7, R11–R15 (câu lệnh ở `prompts/cac-cau-lenh-theo-phien.md`). **Đã làm**, kết quả ở mục 6.
 3. **Song song, việc của anh:** A6 (địa chỉ trang ở antammenh.com), A9 (tên miền), C7 (tiểu sử và kênh), D1 (pháp nhân, liên hệ), D5 (gọi thử đường dây nóng), luật sư (R10), ảnh chân dung và ghi âm.
 4. **Lô bài đầu tiên.**
 5. **S5** (form, thư), **S6** (kiểm thử trên máy thật, Bộ thử 20 người), **S7** (ra mắt).
@@ -100,16 +100,16 @@ Mọi con số dưới đây đều đo được. Riêng **tỉ lệ sẵn sàng
 - **4G chậm của Lighthouse**: độ trễ 150 ms, 1,6 Mbps (mặc định của lệnh);
 - **4G chậm khắt khe hơn**: độ trễ 562,5 ms (`DO_TRE=562.5`), gần với số của lần rà soát.
 
-Số “trước” đo lại trên bản của nhánh chính trước phiên này, cùng máy, cùng cách đo.
+Số “trước” đo lại trên bản của nhánh chính trước phiên này, cùng máy, cùng cách đo. Số “sau” đo trên bản cuối của phiên (đã ẩn lá thư theo A18).
 
 | Mã | Chỉ số | Ngưỡng | Trước | Sau |
 | --- | --- | --- | --- | --- |
-| R11 | CLS trang chủ, lần đầu (có cổng) | < 0,1 | 0,000 / **0,143** | 0,026 / **0,029** |
+| R11 | CLS trang chủ, lần đầu (có cổng) | < 0,1 | 0,000 / **0,143** | 0,026 / **0,027** |
 | R11 | CLS trang chủ, đã qua cổng | < 0,1 | 0,000 / **0,143** | 0,002 / 0,002 |
-| R13 | LCP trang chủ, lần đầu (có cổng) | < 2,5 s | **4,95 s** / **6,53 s** | **1,41 s** / **2,08 s** |
-| R13 | LCP trang chủ, đã qua cổng (để so) | — | 5,94 s / 3,17 s | 2,42 s / 3,62 s |
-| R12 | JS đã nén, trang chặng 5 | < 100 KB | 178 KB | **151 KB** |
-| R12 | JS đã nén, `/tam` · `/khai-minh` · `/hoi` | < 100 KB | 176 · 177 · 172 KB | 149 · 150 · 145 KB |
+| R13 | LCP trang chủ, lần đầu (có cổng) | < 2,5 s | **4,95 s** / **6,53 s** | **1,16 s** / **2,13 s** |
+| R13 | LCP trang chủ, đã qua cổng (để so) | — | 5,94 s / 3,17 s | 1,94 s / 3,30 s |
+| R12 | JS đã nén, trang chặng 5 | < 160 KB (cũ: 100 KB) | 178 KB | **151 KB** |
+| R12 | JS đã nén, `/tam` · `/khai-minh` · `/hoi` | < 160 KB | 176 · 177 · 172 KB | 149 · 150 · 145 KB |
 | R12 | JS đã nén, trang chủ | — | 167 KB | 167 KB |
 
 Ô có hai số: số trước là 4G chậm của Lighthouse, số sau là mức khắt khe hơn.
@@ -124,10 +124,10 @@ Số “trước” đo lại trên bản của nhánh chính trước phiên n�
 - Không tải trước phông nữa: 12 tệp phông, khoảng 190 KB, đang chiếm băng thông của ảnh đêm.
 - Bầu trời sao phía sau không vẽ khi cổng còn che trang.
 
-**R12: chưa đạt, và không đạt được nếu giữ Next.js.** Đã bỏ việc trang con tải trước toàn bộ hiệu ứng trang chủ (cổng, sao, đom đóm, Mục lục), bớt được 25–27 KB mỗi trang. Phần còn lại gần như toàn là khung chạy của React và Next.js: 137 KB khi nén gzip, khoảng 117 KB khi nén brotli như Vercel. Con số này đã vượt ngân sách 100 KB trước khi có dòng mã nào của web. Thử dựng bằng webpack thay Turbopack cũng ra cùng mức, khoảng 142 KB. Muốn dưới 100 KB phải đổi hẳn cách dựng trang con. Các hướng anh có thể chọn nằm trong pull request của phiên này.
+**R12: mức 100 KB không đạt được nếu giữ Next.js; anh đã chốt ngân sách mới 160 KB.** Đã bỏ việc trang con tải trước toàn bộ hiệu ứng trang chủ (cổng, sao, đom đóm, Mục lục), bớt được 25–27 KB mỗi trang. Phần còn lại gần như toàn là khung chạy của React và Next.js: 137 KB khi nén gzip, khoảng 117 KB khi nén brotli như Vercel. Con số này đã vượt ngân sách 100 KB trước khi có dòng mã nào của web. Thử dựng bằng webpack thay Turbopack cũng ra cùng mức, khoảng 142 KB. Muốn dưới 100 KB phải đổi hẳn cách dựng trang con. Ngày 11/10/2026 anh chọn nâng ngân sách lên 160 KB đã nén (docs/05, mục 2; docs/07, mục A19). Bài kiểm thử `tests/ra-soat-s4b.spec.ts` đo sáu trang con mỗi lần chạy CI.
 
 **Ngoài các mục R.**
 - Trang khung (`/sach`, `/bao-chi`, `/tro-nang`, `/noi-chuyen`, `/ngoi-lang`, `/tu-sach`, bốn trang chính sách, và `/du-lieu`): ở bản thật không dựng các mục chỉ có ô chờ, trang để `noindex, follow` và không vào sitemap. Danh sách trang nằm ở `lib/trang-khung.ts`.
-- Lá thư và các ô nhận thư: ở bản thật, khi chưa có nơi nhận thư (A5), web không báo “đã nhận” và giữ nguyên chữ khách đã viết. Chữ mời liên hệ qua kênh khác chưa có, xem docs/07 mục A18.
+- Lá thư và các ô nhận thư: ở bản thật, khi chưa có nơi nhận thư (A5), web ẩn hẳn lá thư, các ô nhận thư và mọi lối dẫn tới chúng; `/gui-cau-hoi` để `noindex, follow`. Bản xem trước giữ nguyên. Danh sách chỗ đã ẩn ở docs/07, mục A18.
 - Đường dẫn nhỏ của `/khai-minh` nay ghi “Khai Minh”, cả trong BreadcrumbList.
 - CI kiểm phần bản thật bằng `npm run kiem:bai -- --sau-build`.

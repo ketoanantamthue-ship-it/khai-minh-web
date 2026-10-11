@@ -194,8 +194,20 @@ function Lop({ kieu, lop, id, tieuDe, thanLop, children }: {
  *   Ngồi lặng ngay trên trang chủ; trang /muc-luc dùng liên kết.
  * - `goc`: tiền tố cho các neo của trang chủ (`#dong-hanh`…). Lớp phủ nằm
  *   trên trang chủ nên để trống; trang /muc-luc đặt "/".
+ * - `moLoiThu`: lối gửi thư đang mở (siteConfig.moLoiThu, truyền từ server vì
+ *   lớp phủ chạy ở trình duyệt). Tắt thì bỏ dòng “Gửi một câu hỏi” (docs/07, mục A18).
  */
-export function CacLopSau({ kieu, nutNgoiLang, goc }: { kieu: KieuMucLuc; nutNgoiLang: ReactNode; goc: "" | "/" }) {
+export function CacLopSau({
+  kieu,
+  nutNgoiLang,
+  goc,
+  moLoiThu,
+}: {
+  kieu: KieuMucLuc;
+  nutNgoiLang: ReactNode;
+  goc: "" | "/";
+  moLoiThu: boolean;
+}) {
   return (
     <>
       <Lop
@@ -398,17 +410,19 @@ export function CacLopSau({ kieu, nutNgoiLang, goc }: { kieu: KieuMucLuc; nutNgo
           ten="Câu chuyện của tôi"
           phu="Từ nghề dược đến người khai vấn"
         />
-        <Dong
-          href={`${goc}#gui-cau-hoi`}
-          icon={
-            <>
-              <rect x="3" y="6" width="18" height="12" rx="1.5" />
-              <path d="M3.5 7l8.5 6 8.5-6" />
-            </>
-          }
-          ten="Gửi một câu hỏi"
-          phu="Tôi đọc từng câu hỏi bạn gửi"
-        />
+        {moLoiThu ? (
+          <Dong
+            href={`${goc}#gui-cau-hoi`}
+            icon={
+              <>
+                <rect x="3" y="6" width="18" height="12" rx="1.5" />
+                <path d="M3.5 7l8.5 6 8.5-6" />
+              </>
+            }
+            ten="Gửi một câu hỏi"
+            phu="Tôi đọc từng câu hỏi bạn gửi"
+          />
+        ) : null}
         <Dong
           href="/bao-chi"
           icon={

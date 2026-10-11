@@ -6,6 +6,7 @@ import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { ManDau } from "@/components/trang-con/ManDau";
 import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { BiaTuSach, LOI_TU_SACH, TIEU_DE_TU_SACH } from "@/components/trang-con/TuSach";
+import { siteConfig } from "@/site.config";
 import { doors, doorStyle } from "@/lib/doors";
 import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
@@ -36,9 +37,12 @@ export default function CuaTri() {
         soi="Có thể bạn từng nghe một lời đồn về tuổi hạn hay số mệnh, và nó cứ nằm trong đầu bạn suốt nhiều năm, dù bạn không chắc nó đúng."
         moDau="Tôi viết sách, soạn từ điển, và đọc cùng bạn những cuốn sách đáng đọc. Tôi làm việc này để những điều xưa không bị phủ bởi lời đồn, và để ai cũng tìm đọc được."
       >
-        <a className="btn" href="#thu">
-          Nhận thư hằng tháng của tôi
-        </a>
+        {/* Bản thật chưa có nơi nhận thư: không mời nhận thư (docs/07, mục A18). */}
+        {siteConfig.moLoiThu ? (
+          <a className="btn" href="#thu">
+            Nhận thư hằng tháng của tôi
+          </a>
+        ) : null}
         <a className="soft" href="#sach">
           Xem những cuốn sách tôi đang viết
         </a>

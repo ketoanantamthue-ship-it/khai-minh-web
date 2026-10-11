@@ -146,7 +146,8 @@ const THU_TU = ["CÂU THỨ NHẤT", "CÂU THỨ HAI", "CÂU THỨ BA"];
  * (bản mẫu K1.9.6). Khi chưa có JavaScript, cả ba câu xếp dọc.
  * `noiKhac`: đặt ở trang /khai-minh, lời mời gửi thư dẫn sang /gui-cau-hoi.
  */
-export function NgoiLaiCauHoi({ noiKhac }: { noiKhac?: boolean } = {}) {
+/** `moLoiThu`: lối gửi thư đang mở (siteConfig.moLoiThu, truyền từ server; docs/07, mục A18). */
+export function NgoiLaiCauHoi({ noiKhac, moLoiThu = true }: { noiKhac?: boolean; moLoiThu?: boolean } = {}) {
   const js = useCoJs();
   const [i, setI] = useState(0);
   const [xong, setXong] = useState(false);
@@ -205,9 +206,11 @@ export function NgoiLaiCauHoi({ noiKhac }: { noiKhac?: boolean } = {}) {
           Những câu hỏi như thế là việc tôi làm mỗi ngày. Tôi không trả lời thay bạn. Tôi giữ câu hỏi ấy cùng bạn, đủ lâu
           để bạn tự thấy câu trả lời của mình.
         </div>
-        <a className="kp-ego" href={hrefGuiCauHoi(noiKhac, "q")} data-topic="q">
-          Gửi tôi câu hỏi bạn đang mang ›
-        </a>
+        {moLoiThu ? (
+          <a className="kp-ego" href={hrefGuiCauHoi(noiKhac, "q")} data-topic="q">
+            Gửi tôi câu hỏi bạn đang mang ›
+          </a>
+        ) : null}
       </div>
     </div>
   );

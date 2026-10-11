@@ -2,6 +2,7 @@ import Link from "next/link";
 import { KhoiGiay, MucGiay, TrangKhung } from "@/components/khung/TrangKhung";
 import { OCan } from "@/components/trang-con/OCan";
 import { taoMetadata } from "@/lib/seo";
+import { siteConfig } from "@/site.config";
 
 /**
  * Báo chí và hợp tác /bao-chi (phiên S4; docs/02, mục 3). Khung theo Bản cuối:
@@ -20,9 +21,12 @@ export default function BaoChi() {
       ]}
       tieuDe="Báo chí và hợp tác"
       moi={
-        <Link className="btn" href="/gui-cau-hoi">
-          Gửi lời mời hợp tác
-        </Link>
+        // Bản thật chưa có nơi nhận thư: chưa có lối gửi lời mời (docs/07, mục A18).
+        siteConfig.moLoiThu ? (
+          <Link className="btn" href="/gui-cau-hoi">
+            Gửi lời mời hợp tác
+          </Link>
+        ) : undefined
       }
     >
       <KhoiGiay>

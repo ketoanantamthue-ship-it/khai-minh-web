@@ -3,6 +3,7 @@ import { CacLopSau, DauMucLuc, ICON_CHIN_CHANG, NoiDungNgoiLang, TieuDeLop } fro
 import { CuuCungTrang } from "@/components/muc-luc/CuuCungTrang";
 import { docChinChang, duongDanChang } from "@/lib/chang";
 import { taoMetadata } from "@/lib/seo";
+import { siteConfig } from "@/site.config";
 import "@/styles/muc-luc.css";
 
 export const metadata = taoMetadata({
@@ -57,6 +58,7 @@ export default function TrangMucLuc() {
           <CacLopSau
             kieu="trang"
             goc="/"
+            moLoiThu={siteConfig.moLoiThu}
             nutNgoiLang={
               <Link className="ix-a" href="/ngoi-lang">
                 <NoiDungNgoiLang />

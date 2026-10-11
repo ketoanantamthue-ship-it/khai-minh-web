@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DOOR_KEYS } from "@/lib/doors";
+import { siteConfig } from "@/site.config";
 import { NutChuLon } from "./HienThiToggle";
 import { LienKetCua } from "./LienKetCua";
 import { NutMucLuc } from "./NutMucLuc";
@@ -34,9 +35,12 @@ export function SiteHeader() {
           {DOOR_KEYS.map((k) => (
             <LienKetCua key={k} cua={k} />
           ))}
-          <Link className="ask-link" href="/gui-cau-hoi">
-            Gửi một câu hỏi
-          </Link>
+          {/* Bản thật chưa có nơi nhận thư thì không có lối gửi thư (docs/07, mục A18). */}
+          {siteConfig.moLoiThu ? (
+            <Link className="ask-link" href="/gui-cau-hoi">
+              Gửi một câu hỏi
+            </Link>
+          ) : null}
         </nav>
         <NutChuLon nhan="Chữ lớn" />
         <NutMucLuc id="openIndex" />

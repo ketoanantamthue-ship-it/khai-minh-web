@@ -22,7 +22,16 @@ type ChangMuc = { ten: string; han: string; cauHoi: string };
  * hoặc thanh rút gọn; đóng bằng Esc, nút "Đóng mục lục" hay "Quay lại trang".
  * Trang /muc-luc (app/muc-luc) là bản đầy đủ cho máy đọc được (docs/02).
  */
-export function MucLuc({ chang, duongDanChang }: { chang: ChangMuc[]; duongDanChang: string[] }) {
+export function MucLuc({
+  chang,
+  duongDanChang,
+  moLoiThu = true,
+}: {
+  chang: ChangMuc[];
+  duongDanChang: string[];
+  /** Lối gửi thư đang mở (siteConfig.moLoiThu, truyền từ server; docs/07, mục A18). */
+  moLoiThu?: boolean;
+}) {
   const [mo, setMo] = useState(false);
   const [chon, setChon] = useState(4);
   const hop = useRef<HTMLDivElement>(null);
@@ -198,6 +207,7 @@ export function MucLuc({ chang, duongDanChang }: { chang: ChangMuc[]; duongDanCh
           <CacLopSau
             kieu="lop-phu"
             goc=""
+            moLoiThu={moLoiThu}
             nutNgoiLang={
               <button
                 className="ix-a"

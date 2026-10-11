@@ -153,12 +153,15 @@ export function SiteFooter() {
             Tôi không nói trước đời bạn, không gieo nỗi sợ, và luôn nói thật, kể cả khi lá số và đời bạn
             không khớp nhau.
           </p>
-          <div className="ft-act">
-            <Link className="ft-letter" href="/gui-cau-hoi">
-              Gửi tôi một lá thư ›
-            </Link>
-            <span className="ft-reply">Tôi hồi âm mọi lời nhắn trong ngày.</span>
-          </div>
+          {/* Bản thật chưa có nơi nhận thư: không mời gửi thư, không hứa hồi âm (docs/07, mục A18). */}
+          {siteConfig.moLoiThu ? (
+            <div className="ft-act">
+              <Link className="ft-letter" href="/gui-cau-hoi">
+                Gửi tôi một lá thư ›
+              </Link>
+              <span className="ft-reply">Tôi hồi âm mọi lời nhắn trong ngày.</span>
+            </div>
+          ) : null}
         </div>
 
         <KhoiNguyHiem />
@@ -188,10 +191,13 @@ export function SiteFooter() {
                   {lienHe.thanhPho} · <O giaTri={lienHe.diaChi} nhan="Địa chỉ cụ thể" can="D1: địa chỉ" />
                 </dd>
               </div>
-              <div>
-                <dt>Hồi âm</dt>
-                <dd>Mọi lời nhắn đều được hồi âm trong ngày.</dd>
-              </div>
+              {/* Lời hứa hồi âm chỉ hiện khi đã có nơi nhận thư (docs/07, mục A18). */}
+              {siteConfig.moLoiThu ? (
+                <div>
+                  <dt>Hồi âm</dt>
+                  <dd>Mọi lời nhắn đều được hồi âm trong ngày.</dd>
+                </div>
+              ) : null}
             </dl>
             <div className="ft-soc" role="group" aria-label="Mạng xã hội">
               {mangXaHoi.map((m) => (

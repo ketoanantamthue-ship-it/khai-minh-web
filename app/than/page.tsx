@@ -120,16 +120,21 @@ export default function CuaThan() {
       <section className="end" id="thu">
         <div className="wrap">
           <h2>Với mọi câu hỏi về bệnh, bác sĩ của bạn luôn là người nên hỏi đầu tiên.</h2>
-          <p>
-            Còn nếu bạn muốn hiểu thêm về cách sống thuận tự nhiên, mỗi tháng tôi gửi một lá thư, trong đó có một bài
-            dưỡng sinh có dẫn nguồn.
-          </p>
-          <FormNhanThu
-            id="thu-thang"
-            nut="Gửi thư cho tôi mỗi tháng"
-            camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
-            baoDaNhan={siteConfig.baoDaNhanThu}
-          />
+          {/* Lời mời nhận thư: bản thật chưa có nơi nhận thư thì không dựng, câu nhắc
+              hỏi bác sĩ vẫn giữ (docs/07, mục A18). */}
+          {siteConfig.moLoiThu ? (
+            <>
+              <p>
+                Còn nếu bạn muốn hiểu thêm về cách sống thuận tự nhiên, mỗi tháng tôi gửi một lá thư, trong đó có một
+                bài dưỡng sinh có dẫn nguồn.
+              </p>
+              <FormNhanThu
+                id="thu-thang"
+                nut="Gửi thư cho tôi mỗi tháng"
+                camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
+              />
+            </>
+          ) : null}
         </div>
       </section>
       <HieuUngTrangCon />

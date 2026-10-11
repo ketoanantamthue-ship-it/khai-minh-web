@@ -10,8 +10,9 @@
  * không bài nào chưa `da-dang` được dựng thành trang, và sitemap chỉ có bài
  * `da-dang` (docs/08, “Trạng thái bài”). Kiểm thêm phần bản thật của phiên
  * S4b (docs/10, mục R7 và “Thêm sau S4”): trang khung và trang chặng chưa đủ
- * năm tầng không còn ô “Đang soạn” và không vào sitemap; lá thư không báo “đã
- * nhận” khi chưa có nơi nhận thư.
+ * năm tầng không còn ô “Đang soạn” và không vào sitemap; khi chưa có nơi nhận
+ * thư (docs/07, mục A18), không trang nào còn lá thư, ô nhận thư hay lối dẫn
+ * tới chúng, và /gui-cau-hoi không vào sitemap.
  *
  * Chạy thẳng bằng Node (Node 22.18 trở lên tự đọc được TypeScript).
  */
@@ -20,6 +21,14 @@ import { join } from "node:path";
 import matter from "gray-matter";
 import { docKho, timThamChieu } from "../lib/noi-dung.ts";
 import { TRANG_CHUA_DU_CHU } from "../lib/trang-khung.ts";
+import { siteConfig } from "../site.config.ts";
+
+/** Mọi tệp .html trong một thư mục, kể cả thư mục con. */
+function tepHtml(thuMuc: string): string[] {
+  return readdirSync(thuMuc, { withFileTypes: true }).flatMap((m) =>
+    m.isDirectory() ? tepHtml(join(thuMuc, m.name)) : m.name.endsWith(".html") ? [join(thuMuc, m.name)] : [],
+  );
+}
 
 const kho = docKho();
 
@@ -57,10 +66,28 @@ if (process.argv.includes("--sau-build")) {
     if (/Đang soạn|Đang chờ luật sư/.test(html)) loi.push(`${p}: bản thật còn ô “Đang soạn”.`);
     if (sitemap.includes(`${p}<`)) loi.push(`${p}: trang còn khung mà vẫn có trong sitemap.`);
   }
-  // Lá thư: chưa có nơi nhận thư thì không được báo “đã nhận” (docs/07, mục A5).
-  for (const p of ["index", "gui-cau-hoi"]) {
-    const html = readFileSync(join(goc, `${p}.html`), "utf8");
-    if (!html.includes("chờ chữ mời liên hệ kênh khác")) loi.push(`/${p === "index" ? "" : p}: lá thư vẫn báo “đã nhận”.`);
+  // Chưa có nơi nhận thư: không còn lá thư, ô nhận thư hay lối dẫn tới chúng (docs/07, mục A18).
+  const LOI_THU = [
+    ['href="/gui-cau-hoi', "liên kết tới /gui-cau-hoi"],
+    ['href="#gui-cau-hoi"', "liên kết tới #gui-cau-hoi"],
+    ['id="gui-cau-hoi"', "phần lá thư"],
+    ['id="askForm"', "lá thư"],
+    ['class="signup"', "ô nhận thư"],
+    ['href="#thu"', "lời mời nhận thư"],
+    ['href="/tri#thu"', "lời mời nhận thư"],
+    ["hồi âm trong ngày", "lời hứa hồi âm"],
+    ["hồi âm mọi lời nhắn", "lời hứa hồi âm"],
+    ["trả lời mọi lời nhắn", "lời hứa hồi âm"],
+  ] as const;
+  let soTrangThu = 0;
+  if (siteConfig.noiNhanThu === null) {
+    for (const tep of tepHtml(goc)) {
+      soTrangThu++;
+      const html = readFileSync(tep, "utf8");
+      const trang = `/${tep.slice(goc.length + 1).replace(/\.html$/, "").replace(/^index$/, "")}`;
+      for (const [chuoi, ten] of LOI_THU) if (html.includes(chuoi)) loi.push(`${trang}: bản thật còn ${ten}.`);
+    }
+    if (sitemap.includes("/gui-cau-hoi<")) loi.push("/gui-cau-hoi: chưa có nơi nhận thư mà vẫn có trong sitemap.");
   }
   if (loi.length > 0) {
     console.error(`✗ Bản build production chưa đúng:\n  - ${loi.join("\n  - ")}`);
@@ -69,7 +96,12 @@ if (process.argv.includes("--sau-build")) {
   const nhap = kho.filter((b) => b.trangThai !== "da-dang").length;
   console.log(`✓ Bản build production chỉ có bài đã đăng (${kho.length - nhap} bài); ${nhap} bài chưa đăng không có trang.`);
   console.log(
-    `✓ ${TRANG_CHUA_DU_CHU.size} trang khung và ${changThieu.length} trang chặng chưa đủ năm tầng không còn ô “Đang soạn”, không vào sitemap; lá thư không báo “đã nhận”.`,
+    `✓ ${TRANG_CHUA_DU_CHU.size} trang khung và ${changThieu.length} trang chặng chưa đủ năm tầng không còn ô “Đang soạn”, không vào sitemap.`,
+  );
+  console.log(
+    siteConfig.noiNhanThu === null
+      ? `✓ Chưa có nơi nhận thư: ${soTrangThu} trang HTML không còn lá thư, ô nhận thư hay lối dẫn tới chúng.`
+      : "· Đã có nơi nhận thư: bỏ qua bước kiểm lá thư.",
   );
   process.exit(0);
 }

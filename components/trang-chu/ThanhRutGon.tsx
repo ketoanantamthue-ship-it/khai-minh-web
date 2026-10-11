@@ -7,7 +7,8 @@ import { NutChuLon } from "../HienThiToggle";
 import { VetMai } from "../VetMai";
 
 /** Thanh đầu trang rút gọn: hiện lại khi khách cuộn ngược lên (bản mẫu: `.minibar`). */
-export function ThanhRutGon() {
+/** `moLoiThu`: lối gửi thư đang mở (siteConfig.moLoiThu, truyền từ server; docs/07, mục A18). */
+export function ThanhRutGon({ moLoiThu = true }: { moLoiThu?: boolean } = {}) {
   const [hien, setHien] = useState(false);
 
   useEffect(() => {
@@ -43,9 +44,11 @@ export function ThanhRutGon() {
             </a>
           ))}
         </nav>
-        <a className="ask-l" href="#gui-cau-hoi">
-          Gửi một câu hỏi
-        </a>
+        {moLoiThu ? (
+          <a className="ask-l" href="#gui-cau-hoi">
+            Gửi một câu hỏi
+          </a>
+        ) : null}
         <NutChuLon nhan="Chữ lớn" />
         <button
           className="index-btn"

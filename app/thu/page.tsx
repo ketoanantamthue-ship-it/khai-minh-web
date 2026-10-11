@@ -6,6 +6,7 @@ import { doorStyle } from "@/lib/doors";
 import { khoHienThi } from "@/lib/kho";
 import { baiCongKhai, locLoai, TEN_LOAI } from "@/lib/noi-dung";
 import { doThi, nutDuongDan, SO_BAI_DE_LAP_CHI_MUC, taoMetadata, type MucDuongDan } from "@/lib/seo";
+import { siteConfig } from "@/site.config";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 
@@ -35,11 +36,14 @@ export default function TrangThu() {
     <main id="main" className="km-con km-bai" data-door="tri" style={doorStyle("tri")}>
       <JsonLd duLieu={doThi(nutDuongDan(VUN))} />
       <ManDauBai duongDan={VUN} nhan="CỬA TRÍ" tieuDe={TEN_LOAI.thu}>
-        <div className="cta">
-          <a className="btn" href="#thu">
-            Nhận thư hằng tháng của tôi
-          </a>
-        </div>
+        {/* Bản thật chưa có nơi nhận thư: không mời nhận thư (docs/07, mục A18). */}
+        {siteConfig.moLoiThu ? (
+          <div className="cta">
+            <a className="btn" href="#thu">
+              Nhận thư hằng tháng của tôi
+            </a>
+          </div>
+        ) : null}
       </ManDauBai>
       <section className="s">
         <div className="wrap bai-doc">
