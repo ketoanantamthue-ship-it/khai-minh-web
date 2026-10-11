@@ -1,9 +1,10 @@
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
-import { FormNhanThu } from "@/components/trang-con/FormNhanThu";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
+import { KhoiSach } from "@/components/trang-con/KhoiSach";
 import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { ManDau } from "@/components/trang-con/ManDau";
 import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
+import { BiaTuSach, LOI_TU_SACH, TIEU_DE_TU_SACH } from "@/components/trang-con/TuSach";
 import { doors, doorStyle } from "@/lib/doors";
 import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
@@ -43,40 +44,7 @@ export default function CuaTri() {
       </ManDau>
       <NguongBinhMinh cau="Hiểu biết xưa cũng như mặt sơn: phải mài bỏ lớp bụi của lời đồn, mới thấy lại ánh sáng gốc." />
 
-      <section className="s" id="sach">
-        <div className="wrap grid g73 g-dau g-tren">
-          <div>
-            <h2>Tôi đang viết cuốn sách Soi – Thấu – Chuyển.</h2>
-            <p className="lede">
-              Cuốn sách nói về sáu trạng thái của tâm và con đường tự soi. Phần đầu, Tri Thiên Mệnh, bàn về chữ “mệnh”
-              trong cổ học và trong lời Phật dạy.
-            </p>
-            <p className="lede">
-              Bản thảo của những cuốn dưới đây đang được hoàn thiện. Mỗi cuốn chỉ ra mắt sau khi đã được người có chuyên
-              môn đọc soát.
-            </p>
-            <ul className="list">
-              <li>Thần Số Học Khai Minh</li>
-              <li>Đại Luận Về Tâm</li>
-              <li>Bách Khoa Cầm Tướng Học</li>
-              <li>Bộ sách KHAI MỆNH, gồm nhiều tập ra dần theo năm tháng</li>
-            </ul>
-            <div className="ky-form">
-              <FormNhanThu
-                id="thu-sach"
-                nut="Báo cho tôi khi sách ra đời"
-                camOn="Cảm ơn bạn. Tôi sẽ báo cho bạn khi sách ra đời."
-              />
-            </div>
-          </div>
-          {/* Bìa sách: chờ thiết kế bìa (docs/07, mục B11). */}
-          <div className="slot r23" role="img" aria-label="Bìa sách" data-can="B11">
-            <div>
-              <b>Bìa sách</b>Soi – Thấu – Chuyển, khi đã có thiết kế
-            </div>
-          </div>
-        </div>
-      </section>
+      <KhoiSach />
 
       <section className="s">
         <div className="wrap">
@@ -110,21 +78,10 @@ export default function CuaTri() {
 
       <section className="s">
         <div className="wrap">
-          <h2>Mỗi chặng đời, tôi gợi ý ba cuốn sách đáng đọc.</h2>
-          <p className="lede">
-            Tôi không nhận tiền để giới thiệu sách. Nếu có liên kết mua sách mang lại lợi ích cho tôi, tôi ghi rõ ngay ở
-            đầu bài.
-          </p>
+          <h2>{TIEU_DE_TU_SACH}</h2>
+          <p className="lede">{LOI_TU_SACH}</p>
           {/* Ba bìa sách cho chặng Tuổi giữa đời: chờ danh sách Tủ sách (docs/07, mục B7). */}
-          <div className="grid g3">
-            {["thứ nhất", "thứ hai", "thứ ba"].map((t) => (
-              <div key={t} className="slot r23" role="img" aria-label={`Bìa sách ${t}`} data-can="B7">
-                <div>
-                  <b>Bìa sách {t}</b>Cho chặng Tuổi giữa đời
-                </div>
-              </div>
-            ))}
-          </div>
+          <BiaTuSach tenChang="Tuổi giữa đời" />
         </div>
       </section>
 

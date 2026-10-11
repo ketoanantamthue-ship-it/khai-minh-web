@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useCheDoTinh, useCoJs } from "@/lib/dung-moi-truong";
+import { hrefGuiCauHoi } from "@/lib/lien-ket";
 
 /**
  * Khung ảnh chân dung, phủ một lớp sơn để khách mài lộ người viết
@@ -143,8 +144,9 @@ const THU_TU = ["CÂU THỨ NHẤT", "CÂU THỨ HAI", "CÂU THỨ BA"];
 /**
  * "Trước khi đọc tiếp": ba câu hỏi để ngồi lại, hiện từng câu một
  * (bản mẫu K1.9.6). Khi chưa có JavaScript, cả ba câu xếp dọc.
+ * `noiKhac`: đặt ở trang /khai-minh, lời mời gửi thư dẫn sang /gui-cau-hoi.
  */
-export function NgoiLaiCauHoi() {
+export function NgoiLaiCauHoi({ noiKhac }: { noiKhac?: boolean } = {}) {
   const js = useCoJs();
   const [i, setI] = useState(0);
   const [xong, setXong] = useState(false);
@@ -203,7 +205,7 @@ export function NgoiLaiCauHoi() {
           Những câu hỏi như thế là việc tôi làm mỗi ngày. Tôi không trả lời thay bạn. Tôi giữ câu hỏi ấy cùng bạn, đủ lâu
           để bạn tự thấy câu trả lời của mình.
         </div>
-        <a className="kp-ego" href="#gui-cau-hoi" data-topic="q">
+        <a className="kp-ego" href={hrefGuiCauHoi(noiKhac, "q")} data-topic="q">
           Gửi tôi câu hỏi bạn đang mang ›
         </a>
       </div>
