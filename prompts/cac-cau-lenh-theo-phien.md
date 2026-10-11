@@ -73,6 +73,25 @@ Nối hết các liên kết "#". Trang chính sách chỉ dựng khung và ghi 
 Xong thì mở pull request, kèm danh sách mọi ô CẦN còn lại.
 ```
 
+## S4b · Sửa theo bản rà soát (docs/10)
+
+```
+Đọc docs/10-ra-soat-truoc-ra-mat.md. Làm các mục R2, R4, R5, R6, R7, R11, R12, R13, R14, R15. Với mỗi mục, đo lại sau khi sửa và ghi số đo vào PR.
+
+- R2: mở rộng JSON-LD Person và Organization, lấy dữ liệu từ site.config.ts. Trường nào chưa có chất liệu thì bỏ qua, không bịa.
+- R4: icon.svg, apple-icon.png, manifest.webmanifest theo hệ màu docs/03.
+- R5: trang danh sách có dưới 3 bài đã đăng thì noindex, follow; viết mô tả chỉ bằng chữ đã có trong docs/nguon, chỗ thiếu để CẦN.
+- R6: gộp danh sách bài của mỗi cửa vào cuối /tam, /tri, /than (mục #bai-viet), rồi chuyển hướng 301 /cua/* về đó.
+- R7: ở production, ẩn khối "Đang soạn" và noindex trang chặng chưa đủ năm tầng; bản xem trước giữ nguyên.
+- R11, R12, R13: đưa CLS trang chủ dưới 0,1; JS trang con dưới 100 KB nén; LCP trang chủ lần đầu dưới 2,5 giây trên 4G chậm.
+- R14, R15: thêm WebPage/Article cho trang chặng; rút mô tả trang chủ dưới 160 ký tự.
+- Thêm sau S4: các trang khung mới (/sach, /bao-chi, /tro-nang, /noi-chuyen, /ngoi-lang, /tu-sach, bốn trang chính sách) ở production cũng ẩn khối “Đang soạn” và để noindex, follow cho tới khi có chữ đã duyệt; bản xem trước giữ nguyên.
+- Thêm sau S4: lá thư ở trang chủ và /gui-cau-hoi hiện báo “Tôi đã nhận được lá thư của bạn” dù thư chưa gửi đi đâu. Ở production, khi chưa nối nơi nhận thư (A5), không được báo đã nhận. Hãy dùng đúng chữ đã có trong bản mẫu hoặc docs/nguon để mời người đọc liên hệ qua kênh khác; chưa có chữ thì để CẦN và hỏi tôi. Bản xem trước giữ như cũ.
+- Thêm sau S4: đường dẫn nhỏ (breadcrumb) của /khai-minh đang ghi “Câu chuyện của tôi”, trong khi tiêu đề trang là “Khai Minh”; đổi cho khớp, cả trong JSON-LD BreadcrumbList.
+
+Cập nhật docs/07 và docs/10 (đánh dấu xong). Xong thì mở pull request.
+```
+
 ## S5 · Biểu mẫu
 
 ```
