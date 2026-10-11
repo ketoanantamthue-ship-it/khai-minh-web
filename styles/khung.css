@@ -1,0 +1,28 @@
+/*
+ * Các trang phiên S4 (components/khung/TrangKhung.tsx). Phần lớn kiểu đã có ở
+ * styles/trang-con.css, styles/bai.css (khối giấy, màn đầu gọn) và
+ * styles/trang-chu.css (khối lấy từ trang chủ). Tệp này chỉ thêm vài chỗ nối.
+ */
+.km-khung{display:block;background:var(--lac)}
+/* Khối trang chủ đặt ngay sau màn đầu gọn: bỏ khoảng trống dành cho đầu trang cố định của trang chủ. */
+.km-khung .km-tc{background:transparent}
+/* Chỗ chờ luật sư: khung chất liệu, rộng bằng cột đọc. */
+.km-bai .cho-luat-su{min-height:96px;max-width:66ch}
+/* Danh sách chín chặng của Tủ sách */
+.km-bai .tu-sach-chang+.tu-sach-chang{margin-top:clamp(36px,6vh,56px)}
+.km-bai .tu-sach-chang h2{font-size:clamp(23px,2.2vw,30px)}
+/* Kênh chính thức trên trang tác giả */
+.km-bai .kenh{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 0;padding:0;list-style:none}
+.km-bai .kenh a:not([href]){text-decoration:none;color:var(--body-ink)}
+/* Bản sửa đổi Hiến chương */
+.km-bai .sua-doi{margin:18px 0 0}
+/* Báo cáo minh bạch: ba ô */
+.km-bai .bao-cao{display:grid;gap:14px;margin:24px 0 0;padding:0;list-style:none}
+@media (min-width:760px){.km-bai .bao-cao{grid-template-columns:repeat(3,1fr)}}
+.km-bai .bao-cao li{display:grid;gap:4px;padding:16px 18px;border:1px solid rgba(124,90,30,.28);background:#FBF7EE}
+.km-bai .bao-cao b{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--ink)}
+.km-bai .bao-cao span{font-size:16px;color:var(--body-ink)}
+/* Trang 404 */
+.km-bai .hero-bai .lien-404 a{color:var(--cream-gold)}
+/* Hai nút cách hiển thị ở màn đầu trang /tro-nang */
+.km-bai .hero-bai .prefs{display:flex;flex-wrap:wrap;gap:10px}

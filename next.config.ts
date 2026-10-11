@@ -14,9 +14,14 @@ export default function nextConfig(phase: string): NextConfig {
     poweredByHeader: false,
     // Ảnh bìa video YouTube (components/bai/VideoYouTube.tsx).
     images: { remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }] },
-    // /chang/1 … /chang/9 chuyển hướng 301 về đường dẫn có chữ (docs/02, mục 1).
+    // /chang/1 … /chang/9 chuyển hướng 301 về đường dẫn có chữ (docs/02, mục 1);
+    // /cau-chuyen về trang tác giả.
     async redirects() {
-      return chuyenHuongChang();
+      return [
+        ...chuyenHuongChang(),
+        // Trang tác giả duy nhất là /khai-minh, có mục “Câu chuyện của tôi” (docs/01, mục E3).
+        { source: "/cau-chuyen", destination: "/khai-minh#cau-chuyen", statusCode: 301 },
+      ];
     },
     async headers() {
       // Lớp chặn thứ hai, bên cạnh thẻ meta robots và robots.txt.

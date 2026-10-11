@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { doors } from "@/lib/doors";
+import { hrefGuiCauHoi } from "@/lib/lien-ket";
 import { ConDuongTabs } from "./ConDuongTabs";
 
 /**
@@ -56,7 +57,11 @@ function BangTram({
   );
 }
 
-export function DongHanh() {
+/**
+ * `noiKhac`: khối được đặt ở trang khác trang chủ (trang /cach-toi-dong-hanh),
+ * nên lời mời gửi thư dẫn sang trang /gui-cau-hoi.
+ */
+export function DongHanh({ noiKhac }: { noiKhac?: boolean } = {}) {
   const bangTuSoi = `${doors.tam.href}#bac-thang`;
 
   return (
@@ -110,7 +115,7 @@ export function DongHanh() {
               mangVe="Một bản hồ sơ viết bằng lời đời thường, kèm vài câu hỏi để bạn tự soi tiếp."
               loiHen="Bạn làm bảng tự soi một cách trung thực, và nói thật với tôi chỗ nào đúng, chỗ nào chưa đúng."
             >
-              <a className="lp-go" href="#gui-cau-hoi" data-topic="hoso">
+              <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "hoso")} data-topic="hoso">
                 Gửi thư xin Hồ sơ Soi ›
               </a>
             </BangTram>,
@@ -124,7 +129,7 @@ export function DongHanh() {
               mangVe="Một nếp thực tập bạn tự giữ được, và một ngày tốt nghiệp, khi bạn không còn cần tôi cầm đèn nữa."
               loiHen="Bạn giữ trọn bốn lời hẹn được viết ở bên dưới."
             >
-              <a className="lp-go" href="#gui-cau-hoi" data-topic="dong">
+              <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "dong")} data-topic="dong">
                 Gửi thư xin đi cùng ›
               </a>
             </BangTram>,
@@ -138,7 +143,7 @@ export function DongHanh() {
               mangVe="Một chỗ an toàn để bạn nói hết, và những bước tiếp theo do chính bạn chọn."
               loiHen="Bạn đã đi qua Hồ sơ Soi, để chúng ta có chung một ngôn ngữ trước khi ngồi riêng."
             >
-              <a className="lp-go" href="#gui-cau-hoi" data-topic="tra">
+              <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "tra")} data-topic="tra">
                 Hỏi về Trà thất ›
               </a>
             </BangTram>,
@@ -209,7 +214,7 @@ export function DongHanh() {
             </div>
           </div>
           <div className="lp-cta">
-            <a className="lp-go" href="#gui-cau-hoi" data-topic="dong">
+            <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "dong")} data-topic="dong">
               Gửi thư xin đồng hành ›
             </a>
             <a className="lp-alt" href={bangTuSoi}>

@@ -1,3 +1,4 @@
+import { hrefGuiCauHoi } from "@/lib/lien-ket";
 import { siteConfig } from "@/site.config";
 import { MoCaChinDieu } from "./MoCaChinDieu";
 
@@ -6,7 +7,7 @@ import { MoCaChinDieu } from "./MoCaChinDieu";
  * Mỗi điều là một <details>: đọc được trọn khi không có JavaScript.
  */
 
-type Dieu = {
+export type Dieu = {
   dau: string;
   ten: string;
   phu: string;
@@ -17,6 +18,20 @@ type Dieu = {
 };
 
 const { ngayMai } = siteConfig.khanCap;
+
+/** Báo cáo minh bạch hằng năm: dùng ở đây và ở trang /minh-bach#bao-cao. */
+export const LOI_BAO_CAO =
+  "Tôi không đặt ở đây những con số đẹp nhưng chưa có thật. Mỗi năm, tôi công bố một báo cáo minh bạch, kể cả khi kết quả không đẹp.";
+export const BAO_CAO = [
+  { ten: "Kết quả kiểm chứng", khi: "Công bố sau đợt đồng hành đầu tiên" },
+  { ten: "Số người tốt nghiệp", khi: "Cập nhật mỗi năm" },
+  { ten: "Lợi ích kinh doanh của tôi", khi: "Công khai ở một trang riêng" },
+];
+
+/** Hai điều 8 và 9, dùng lại ở trang /du-lieu và /minh-bach. */
+export function dieuSo(so: number): Dieu {
+  return NHOM.flatMap((g) => g.dieu)[so - 1]!;
+}
 
 const NHOM: { so: string; ten: string; dieu: Dieu[] }[] = [
   {
@@ -123,7 +138,8 @@ const NHOM: { so: string; ten: string; dieu: Dieu[] }[] = [
   },
 ];
 
-export function LoiHua() {
+/** `noiKhac`: khối được đặt ở trang /hien-chuong; lời góp ý dẫn sang /gui-cau-hoi. */
+export function LoiHua({ noiKhac }: { noiKhac?: boolean } = {}) {
   let so = 0;
   return (
     <section className="promises" id="loi-hua" aria-labelledby="h-prom">
@@ -216,7 +232,7 @@ export function LoiHua() {
           <ol>
             <li>
               <b>Bạn gửi cho tôi một dòng.</b>Bạn ghi số của điều ấy và điều bạn đã thấy, ở mục{" "}
-              <a href="#gui-cau-hoi" data-topic="hc">
+              <a href={hrefGuiCauHoi(noiKhac, "hc")} data-topic="hc">
                 Gửi câu hỏi
               </a>
               .
@@ -231,26 +247,15 @@ export function LoiHua() {
           </ol>
         </div>
         <div className="transp">
-          <p className="tp-h">
-            Tôi không đặt ở đây những con số đẹp nhưng chưa có thật. Mỗi năm, tôi công bố một báo cáo minh bạch, kể cả
-            khi kết quả không đẹp.
-          </p>
+          <p className="tp-h">{LOI_BAO_CAO}</p>
           <div className="tp-row">
-            <div>
-              <span className="tv">—</span>
-              <b>Kết quả kiểm chứng</b>
-              <span>Công bố sau đợt đồng hành đầu tiên</span>
-            </div>
-            <div>
-              <span className="tv">—</span>
-              <b>Số người tốt nghiệp</b>
-              <span>Cập nhật mỗi năm</span>
-            </div>
-            <div>
-              <span className="tv">—</span>
-              <b>Lợi ích kinh doanh của tôi</b>
-              <span>Công khai ở một trang riêng</span>
-            </div>
+            {BAO_CAO.map((b) => (
+              <div key={b.ten}>
+                <span className="tv">—</span>
+                <b>{b.ten}</b>
+                <span>{b.khi}</span>
+              </div>
+            ))}
           </div>
           <a className="tp-link" href="/hien-chuong#lich-su-sua-doi">
             Đọc Hiến chương đầy đủ, kèm lịch sử sửa đổi
