@@ -120,10 +120,15 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     await expect(page.locator("main h1")).toHaveText(TIEU_DE_Q001);
     await expect(page.locator(".dai-nhap")).toContainText("Bản nháp");
     await expect(page.locator(".hero .soi")).toContainText("Bạn đã có mái nhà");
-    await expect(page.locator(".tl-ngan")).toContainText("Nó cần được nhìn rõ, chưa cần lấp đầy.");
+    await expect(page.locator(".tl-ngan")).toContainText("Khoảng trống này cần được nhìn rõ, chưa cần lấp đầy.");
     const h2 = await page.locator("main h2").allTextContents();
-    expect(h2.slice(0, 5)).toEqual([...BUOC_HOI]);
+    // Năm bước bắt buộc có mặt, đúng thứ tự; bài được thêm phần riêng xen giữa.
+    expect(h2.filter((t) => (BUOC_HOI as readonly string[]).includes(t))).toEqual([...BUOC_HOI]);
     expect(BUOC_HOI).toHaveLength(5);
+    // Ba điều cần nhớ đặt ngay đầu thân bài, trước mọi tiêu đề.
+    await expect(page.locator(".y-chinh")).toBeVisible();
+    await expect(page.locator(".y-chinh li")).toHaveCount(3);
+    await expect(page.locator(".bai-than h3")).toContainText(["Khủng hoảng tuổi trung niên có thật không?"]);
     // Nhãn riêng của bước huyền học và khoa học, rồi ba nhãn của bảng soi ba lớp.
     await expect(page.locator(".bai-than .label")).toHaveText([
       "Luận giải mệnh lý: giả thuyết để bạn tự kiểm chứng",
@@ -152,14 +157,22 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     await expect(page.locator(".phut-doc")).toHaveText(/^Bạn đọc bài này trong khoảng \d+ phút\.$/);
     await expect(page.getByRole("navigation", { name: "Bài này có các phần:" })).toBeVisible();
     const muc = page.locator("nav.muc-bai a");
-    await expect(muc).toHaveText([...BUOC_HOI, "Trước khi bạn gấp lá thư này"]);
+    await expect(muc).toHaveText([
+      "Dấu hiệu bạn đang ở trong khoảng trống này",
+      ...BUOC_HOI,
+      "Câu hỏi thường gặp",
+      "Trước khi bạn gấp lá thư này",
+    ]);
     for (const href of await muc.evaluateAll((as) => as.map((a) => a.getAttribute("href")!))) {
       await expect(page.locator(`main h2${href}`)).toHaveCount(1);
     }
-    await muc.nth(2).click();
+    await muc.nth(3).click();
     await expect(page).toHaveURL(/#khoa-hoc-noi-gi$/);
-    // Chưa có video, bản đọc, ảnh đầu bài: không hiện khung nào. Bảng soi ba lớp có chữ nên hiện.
+    // Chưa có video, bản đọc, ảnh: không hiện trình phát hay ảnh nào. Bảng soi ba lớp có chữ nên hiện.
     await expect(page.locator(".video-yt, .am-thanh, .anh-bai")).toHaveCount(0);
+    // Bản xem trước hiện khung chờ cho video bài giảng (B12), ảnh đầu bài và ảnh giữa bài (B13).
+    await expect(page.locator(".khung-cho-video[data-can='B12']")).toHaveCount(1);
+    await expect(page.locator(".khung-cho-anh[data-can='B13']")).toHaveCount(2);
     await expect(page.locator(".ba-lop .ba-lop-o")).toHaveCount(3);
   });
 
@@ -191,7 +204,7 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
   test("chữ nằm sẵn trong HTML do server dựng (không cần JavaScript)", async ({ request }) => {
     const html = (await (await request.get(Q001)).text()).replace(/&quot;/g, '"');
     expect(html).toContain(`<h1>${TIEU_DE_Q001}</h1>`);
-    expect(html).toContain("Khoảng trống giữa đời là lúc tâm bắt đầu hỏi đúng câu.");
+    expect(html).toContain("thường được gọi là khủng hoảng tuổi trung niên");
     expect(html).toContain("Diễn ý Kinh Thiện Sinh, Trường Bộ 31");
   });
 

@@ -6,6 +6,7 @@ import { Children, isValidElement, type ReactNode } from "react";
 import { OCan } from "@/components/trang-con/OCan";
 import { lopTinCay } from "@/lib/nhan";
 import { taoNeo } from "@/lib/noi-dung";
+import { siteConfig } from "@/site.config";
 import { VideoYouTube } from "./VideoYouTube";
 
 /**
@@ -57,6 +58,36 @@ export function DangSoan({ ma }: { ma: string }) {
   return <OCan ma={ma} />;
 }
 
+/**
+ * Khung chờ chất liệu (ảnh, video): chỉ hiện trên bản xem trước, để anh và đội
+ * viết thấy chỗ sẽ đặt. Trên web thật, chưa có chất liệu thì không hiện gì.
+ */
+export function KhungCho({ loai, moTa }: { loai: "anh" | "video"; moTa: string }) {
+  if (!siteConfig.hienBanNhap) return null;
+  const ten = loai === "video" ? "Chỗ đặt video bài giảng YouTube" : "Chỗ đặt ảnh";
+  return (
+    <figure className={`khung-cho khung-cho-${loai}`} data-can={loai === "video" ? "B12" : "B13"}>
+      <div className="khung-cho-o" role="img" aria-label={ten}>
+        <b>{ten}</b>
+        <span>{moTa}</span>
+      </div>
+    </figure>
+  );
+}
+
+/**
+ * Hộp “Ba điều cần nhớ”: vài ý cốt lõi của bài, đặt ở đầu thân bài để người
+ * đọc nắm và nhớ trước khi đọc sâu. Nội dung là một danh sách Markdown.
+ */
+export function YChinh({ tieuDe = "Ba điều cần nhớ", children }: { tieuDe?: string; children: ReactNode }) {
+  return (
+    <aside className="y-chinh" aria-label={tieuDe}>
+      <p className="y-chinh-tieu">{tieuDe}</p>
+      {children}
+    </aside>
+  );
+}
+
 /** “Nghe Khai Minh đọc bài này”: bản ghi âm trong public/. Không có tệp thì không hiện gì. */
 export function AmThanh({ src, thoiLuong }: { src?: string; thoiLuong?: string }) {
   if (!src) return null;
@@ -76,8 +107,19 @@ export function AmThanh({ src, thoiLuong }: { src?: string; thoiLuong?: string }
  * khung ảnh giữ đúng tỉ lệ khi trang đang tải. Thiếu src, thiếu alt, hay không
  * tìm thấy tệp thì không hiện gì.
  */
-export function Anh({ src, alt, chuThich }: { src?: string; alt?: string; chuThich?: string }) {
-  if (!src || !alt || !src.startsWith("/")) return null;
+export function Anh({
+  src,
+  alt,
+  chuThich,
+  cho,
+}: {
+  src?: string;
+  alt?: string;
+  chuThich?: string;
+  /** Mô tả ảnh cần chụp hay vẽ: chỉ hiện thành khung chờ trên bản xem trước. */
+  cho?: string;
+}) {
+  if (!src || !alt || !src.startsWith("/")) return cho ? <KhungCho loai="anh" moTa={cho} /> : null;
   let kichThuoc: { width: number; height: number };
   try {
     kichThuoc = imageSize(readFileSync(join(/*turbopackIgnore: true*/ process.cwd(), "public", src)));
@@ -160,6 +202,8 @@ export const THANH_PHAN_MDX = {
   NhanTinCay,
   LoiAnToan,
   DangSoan,
+  KhungCho,
+  YChinh,
   AmThanh,
   Anh,
   BangSoiBaLop,
