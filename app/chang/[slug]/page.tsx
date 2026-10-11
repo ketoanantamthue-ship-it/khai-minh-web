@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cauHoiCungChang, DanhSachCauHoi } from "@/components/bai/LienQuan";
+import { JsonLd } from "@/components/JsonLd";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
 import { LoiMoiGuiCauHoi } from "@/components/trang-con/LoiMoiGuiCauHoi";
@@ -9,6 +11,9 @@ import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { OCan } from "@/components/trang-con/OCan";
 import { docChang, docChinChang, duongDanChang, lopNhanTinCay, type Chang, type TangSoi } from "@/lib/chang";
 import { doors } from "@/lib/doors";
+import { khoHienThi } from "@/lib/kho";
+import { catMoTa } from "@/lib/noi-dung";
+import { doThi, nutDuongDan, taoMetadata } from "@/lib/seo";
 import { SAU_TANG, thangSauTang } from "@/lib/sau-tang";
 import "@/styles/trang-con.css";
 
@@ -43,11 +48,12 @@ export async function generateMetadata({ params }: PageProps<"/chang/[slug]">): 
   const { slug } = await params;
   const c = docChang(slug);
   if (!c) return {};
-  return {
-    title: `${c.ten} – Chặng ${c.so}`,
-    description: c.trang?.mo_ta ?? `${c.cau_hoi_chinh} ${c.soi}`,
-    alternates: { canonical: duongDanChang(c) },
-  };
+  return taoMetadata({
+    tieuDe: `${c.ten} – Chặng ${c.so}`,
+    moTa: catMoTa(c.trang?.mo_ta ?? `${c.cau_hoi_chinh} ${c.soi}`),
+    duongDan: duongDanChang(c),
+    coAnhRieng: true,
+  });
 }
 
 export default async function TrangChang({ params }: PageProps<"/chang/[slug]">) {
@@ -60,10 +66,18 @@ export default async function TrangChang({ params }: PageProps<"/chang/[slug]">)
   const goiTen = trang?.goi_ten ?? c.ten.toLowerCase();
   const truoc = chin[c.so - 2];
   const sau = chin[c.so];
-  const cauHoiKhac = trang?.cau_hoi_khac ?? c.cau_hoi_lien_quan;
+  const cauHoi = cauHoiCungChang(c.so, khoHienThi());
 
   return (
     <main id="main" className="km-con">
+      <JsonLd
+        duLieu={doThi(
+          nutDuongDan([
+            { ten: "Trang chủ", duongDan: "/" },
+            { ten: `Chặng ${c.so}: ${c.ten}`, duongDan: duongDanChang(c) },
+          ]),
+        )}
+      />
       <ManDau
         nhan={
           // Một khối duy nhất: .hero .k là flex (dành cho dấu cửa), chữ phải xuống dòng liền mạch.
@@ -145,14 +159,8 @@ export default async function TrangChang({ params }: PageProps<"/chang/[slug]">)
       <section className="s">
         <div className="wrap">
           <h2>Những câu hỏi khác người ta hay mang ở chặng này</h2>
-          <ul className="list">
-            {cauHoiKhac.map((q) => (
-              <li key={q}>
-                {/* Chưa có bài hỏi – đáp nào (docs/07, mục C1). */}
-                <a data-can="C1">{q}</a>
-              </li>
-            ))}
-          </ul>
+          {/* Câu đã có bài hỏi – đáp thì thành liên kết; câu chưa có bài là chữ thường (docs/07, mục C1). */}
+          <DanhSachCauHoi ds={cauHoi} />
           <div className="cta cta-cuoi">
             {truoc ? (
               <Link className="soft" href={duongDanChang(truoc)}>

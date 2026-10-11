@@ -12,9 +12,22 @@ import { MucLuc } from "@/components/trang-chu/MucLuc";
 import { NguoiGiu } from "@/components/trang-chu/NguoiGiu";
 import { ThanhRutGon, VongChuong } from "@/components/trang-chu/ThanhRutGon";
 import { TieuVuTru } from "@/components/trang-chu/TieuVuTru";
+import { JsonLd } from "@/components/JsonLd";
 import { docChinChang, duongDanChang } from "@/lib/chang";
+import { doThi, nutNguoi, nutToChuc, nutWeb, taoMetadata } from "@/lib/seo";
 import "@/styles/trang-chu.css";
 import "@/styles/trang-chu-them.css";
+
+/** Tiêu đề và mô tả lấy từ layout; trang chủ thêm canonical và Open Graph. */
+export const metadata = {
+  ...taoMetadata({
+    tieuDe: "Khai Minh – Người Khai Vấn",
+    moTa: "Đời người có chín chặng, và chặng nào cũng có những câu hỏi ta chỉ dám hỏi mình lúc nửa đêm. Khai Minh không trả lời thay bạn; tôi ngồi cùng bạn, đủ lâu để bạn tự thấy.",
+    duongDan: "/",
+    coAnhRieng: true,
+  }),
+  title: { absolute: "Khai Minh – Người Khai Vấn" },
+};
 
 /**
  * Trang chủ (phiên S1): chuyển prototypes/index.html (K1.9.16) sang Next.js
@@ -36,6 +49,8 @@ export default function TrangChu() {
 
   return (
     <div className="km-tc">
+      {/* Một thực thể rõ ràng: WebSite, Person và Organization (docs/05, mục 1 và 4). */}
+      <JsonLd duLieu={doThi(nutWeb(), nutNguoi(), nutToChuc())} />
       <CanhCong />
 
       <main id="main">

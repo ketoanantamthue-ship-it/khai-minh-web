@@ -1,18 +1,18 @@
-import type { Metadata } from "next";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { FormNhanThu } from "@/components/trang-con/FormNhanThu";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
+import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { ManDau } from "@/components/trang-con/ManDau";
 import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { doors, doorStyle } from "@/lib/doors";
+import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
 
-export const metadata: Metadata = {
-  title: "Cửa Trí – Sách và những gì tôi giữ gìn",
-  description:
-    "Khai Minh viết sách, soạn từ điển và đọc cùng bạn những cuốn sách đáng đọc, để hiểu biết xưa được giữ lại cho đúng.",
-  alternates: { canonical: "/tri" },
-};
+export const metadata = taoMetadata({
+  tieuDe: "Cửa Trí – Sách và những gì tôi giữ gìn",
+  moTa: "Khai Minh viết sách, soạn từ điển và đọc cùng bạn những cuốn sách đáng đọc, để hiểu biết xưa được giữ lại cho đúng.",
+  duongDan: "/tri",
+});
 
 /**
  * Cửa Trí (phiên S2): chuyển prototypes/cua-tri.html (K1.9.16), giữ nguyên chữ,
@@ -153,20 +153,7 @@ export default function CuaTri() {
         tieuDe="Ngôi nhà này còn hai cánh cửa khác."
         loiDan="Cả ba cánh cửa cùng mở vào một ngôi nhà. Khi bạn cần, bạn cứ sang cửa bên cạnh."
       />
-      <section className="end" id="thu">
-        <div className="wrap">
-          <h2>Mỗi tháng, tôi gửi bạn một lá thư.</h2>
-          <p>
-            Lá thư kể về một câu hỏi đời người tôi đang ngồi cùng, một trang sách tôi vừa đọc lại, và một thực tập nhỏ
-            cho tháng ấy.
-          </p>
-          <FormNhanThu
-            id="thu-thang"
-            nut="Gửi thư cho tôi mỗi tháng"
-            camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
-          />
-        </div>
-      </section>
+      <LoiMoiNhanThu />
       <HieuUngTrangCon />
     </main>
   );

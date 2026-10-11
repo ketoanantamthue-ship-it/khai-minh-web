@@ -69,27 +69,41 @@ slug: "bon-muoi-tuoi-thay-trong-rong"
 chang: 5
 tang: "hieu"
 cua: ["tam"]
+tinh_canh: "…"             # (từ S3) bước 2: hai câu nói lại tình cảnh người đọc
 tra_loi_ngan: "…"          # 40–60 chữ, hiện ngay dưới tiêu đề
 ma_cau_hoi: "Q003"         # khớp cột A của data/bang-loc-cau-hoi-noi-dau.xlsx
 nguon: [{ ten: "Tăng Chi Bộ 1.51", loai: "kinh", dien_y: true }]
 muc_tin_cay: "…"
 ngay_viet: 2026-11-02
-ngay_kiem_lai: 2027-05-02
+ngay_kiem_lai: 2027-05-02   # ngày người soát đã đọc lại gần nhất (docs/01, mục F6)
 nguoi_soat: "…"            # bắt buộc khi trang_thai = da-dang
 trang_thai: "ban-nhap"
 lien_quan: ["tu-dien/tam-tai", "hoi/…"]
 ```
 
-**Khuôn chín bước của thân bài** (theo Chiến lược 2–10 năm):
+**Khuôn mười bước của thân bài** (theo Chiến lược 2–10 năm; bước 6 thêm theo quyết định docs/01, mục F7):
 1. Tiêu đề là câu hỏi nguyên văn của khách.
 2. Hai câu nói lại tình cảnh người đọc.
 3. Trả lời ngắn 40–60 chữ. Đây là đoạn AI dễ trích nhất.
 4. Nhân quả nói gì: lời dạy có nguồn kinh, ghi rõ "diễn ý".
-5. Huyền học nói gì: nêu như giả thuyết, có nhãn tin cậy.
-6. Ba việc bạn làm được từ hôm nay.
-7. Khi nào cần gặp bác sĩ, chuyên gia tâm lý hoặc luật sư.
-8. Câu hỏi liên quan cùng chặng và các mục Từ điển.
-9. Tác giả, ngày viết, ngày kiểm lại và nguồn.
+5. Huyền học nói gì: nêu như giả thuyết, có nhãn tin cậy riêng.
+6. Khoa học nói gì: điều nghiên cứu đã biết hoặc đang tìm hiểu, kể cả góc dược sĩ, có nhãn tin cậy riêng.
+7. Ba việc bạn làm được từ hôm nay.
+8. Khi nào cần gặp bác sĩ, chuyên gia tâm lý hoặc luật sư.
+9. Câu hỏi liên quan cùng chặng và các mục Từ điển.
+10. Tác giả, ngày viết, ngày kiểm lại và nguồn.
+
+*(Từ S3.)* Bước 1–3 nằm ở frontmatter (`tieu_de`, `tinh_canh`, `tra_loi_ngan`). Bước 4–8 là năm tiêu đề `##` đúng chữ, đúng thứ tự trong thân MDX; dưới “Huyền học nói gì” và “Khoa học nói gì” phải có thẻ `<NhanTinCay>` (hoặc `<BangSoiBaLop>`). Bước 9–10 do trang tự dựng từ frontmatter và chặng. Schema và luật kiểm ở `lib/noi-dung.ts`: tên tệp phải trùng `slug`; bài `da-dang` phải đủ mọi bước, có người soát, nguồn, nhãn tin cậy và không còn dấu CẦN, nếu không thì build báo lỗi. Hướng dẫn cho đội viết: **docs/09**.
+
+*(Sau S3.)* Đầu mỗi bài, trang tự hiện thời gian đọc (220 chữ mỗi phút) và mục lục nhỏ theo các tiêu đề `##`. Ba trường tuỳ chọn, chung cho mọi loại bài, hiện ở đầu bài khi có:
+
+```yaml
+video: { id: "…", tieu_de: "…", loi_thoai: "…", ngay_dang: 2026-11-02, thoi_luong: "PT8M30S" }
+am_thanh: { src: "/am-thanh/….mp3", thoi_luong: "8 phút" }   # “Nghe Khai Minh đọc bài này”
+anh_bia: { src: "/assets/img/….webp", alt: "…", chu_thich: "…" }  # cũng là ảnh chia sẻ của bài
+```
+
+Thẻ dùng được trong thân MDX: `<Trich>`, `<NhanTinCay>`, `<LoiAnToan>`, `<DangSoan>`, `<VideoYouTube id tieuDe loiThoai>` (chỉ hiện ảnh bìa, bấm mới tải trình phát youtube-nocookie; lời thoại thu gọn bên dưới; có JSON-LD VideoObject), `<AmThanh src thoiLuong>`, `<Anh src alt chuThich>` (next/image, alt tiếng Việt), `<BangSoiBaLop nhanQua khoaHoc huyenHoc tinCayNhanQua tinCayKhoaHoc tinCayHuyenHoc>`. Thẻ thiếu dữ liệu thì không hiện gì.
 
 ### `content/tu-dien/*.mdx`
 
@@ -97,15 +111,19 @@ Gồm `thuat_ngu`, `slug`, `dinh_nghia` (1–2 câu, đặt đầu trang), `kinh
 
 ### `content/ngo-nhan/*.mdx`
 
-Gồm `niem_tin`, `slug`, `su_that` (đặt trước), `nguon`, `muc_tin_cay`, ba nhãn, `trang_thai`. Tư liệu sẵn có: 238 niềm tin sai về cầm tướng (bản V3) và các bài nhân tướng. **Các tệp này không nằm trong gói** (xem docs/07, mục C5).
+Gồm `niem_tin`, `slug`, `su_that` (đặt trước), `nguon`, `muc_tin_cay`, ba nhãn, `trang_thai`.
+
+*(Từ S3.)* Thêm ba loại: `content/viet/` (`tieu_de`, `tom_tat`), `content/thu/` (`tieu_de`, `ngay_gui`, `tom_tat`; tên tệp dạng `2026-11`) và `content/phuong-phap/` (`ten`, `dinh_nghia`, `ngay_cong_bo`, `phien_ban`). Mọi loại đều mang ba nhãn và các trường chung `nguon`, `muc_tin_cay`, `ngay_viet`, `ngay_kiem_lai`, `nguoi_soat`, `lien_quan`, `mo_ta`, `lang`. Khuôn để chép: `content/<loại>/_mau.mdx`.
+
+Tư liệu sẵn có: 238 niềm tin sai về cầm tướng (bản V3) và các bài nhân tướng. **Các tệp này không nằm trong gói** (xem docs/07, mục C5).
 
 ## 5. Quy trình từ câu hỏi đến bài đăng
 
 1. Đội vận hành thu câu hỏi nguyên văn và chấm năm tiêu chí trong `data/bang-loc-cau-hoi-noi-dau.xlsx`.
 2. Câu nào có kết luận "Viết" thì mở tệp `content/hoi/<slug>.mdx` với `trang_thai: ban-nhap` và `ma_cau_hoi` khớp bảng.
-3. Viết theo khuôn chín bước, rồi chạy `npm run check:words`.
+3. Viết theo khuôn mười bước, rồi chạy `npm run check:words`.
 4. Người soát kiểm nguồn kinh và nhãn tin cậy, điền `nguoi_soat`, chuyển sang `da-soat`.
-5. Anh duyệt và chuyển sang `da-dang`. **Chỉ bài `da-dang` mới được build ra trang công khai.** Bài ở trạng thái khác chỉ hiện trên bản xem trước.
+5. Anh duyệt và chuyển sang `da-dang`. **Chỉ bài `da-dang` mới được build ra trang công khai.** Bài ở trạng thái khác chỉ hiện trên bản xem trước, kèm dải “Bản nháp”. *(Từ S3: biến `hienBanNhap` trong `site.config.ts`; production của Vercel và lúc cờ lập chỉ mục bật thì không bao giờ hiện bài nháp. CI dựng thêm một bản như production và kiểm bằng `npm run kiem:bai -- --sau-build`.)*
 6. Thứ tự viết: hai cụm thử trước (chặng 5 và năm hạn), mỗi cụm 15–20 bài, đăng đều mỗi tuần.
 
 ## 6. Chữ đã có sẵn và chữ còn thiếu

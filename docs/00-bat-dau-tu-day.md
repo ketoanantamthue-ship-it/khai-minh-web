@@ -16,6 +16,7 @@ Bộ hồ sơ này gom mọi thứ đã làm cho web Khai Minh tới ngày 09/10
 | `docs/06-lo-trinh-phien.md` | Tám phiên dựng web, tiêu chí xong của từng phiên | Cả hai |
 | `docs/07-con-thieu-gi.md` | **Bảng rà soát còn thiếu**: quyết định, chất liệu, pháp lý, kỹ thuật | Anh trước tiên |
 | `docs/08-kiem-thu.md` | Tiêu chí nghiệm thu | Claude Code |
+| `docs/09-cach-them-bai-moi.md` | Cách thêm một bài mới, từ câu hỏi trong bảng lọc tới bài được đăng | Đội viết |
 | `docs/nguon/` | Tài liệu gốc: Bản cuối, chiến lược 2–10 năm, Hiến chương, hệ nhận diện, chín chặng, giọng văn W1/W2, hiệu ứng sơn mài, brief hoạ sĩ | Tra cứu |
 | `prototypes/` | Bản mẫu HTML K1.9.16 đã duyệt: trang chủ, ba trang cửa, trang chặng 5, kèm ảnh | Nguồn chuẩn về hình thức |
 | `content/chang/` | Chín tệp MDX gốc cho chín chặng, tách từ bản mẫu | Điểm khởi đầu của kho nội dung |

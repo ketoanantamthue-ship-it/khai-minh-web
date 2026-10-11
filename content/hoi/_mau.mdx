@@ -1,0 +1,66 @@
+---
+# KHUÔN BÀI HỎI – ĐÁP (MƯỜI BƯỚC). Chép tệp này thành content/hoi/<slug>.mdx rồi điền.
+# Tệp bắt đầu bằng “_” không thành trang. Cách làm từng bước: docs/09.
+
+# Bước 1: câu hỏi đúng nguyên văn lời khách (cột D của bảng lọc).
+tieu_de: "…"
+# Đường dẫn: chữ thường không dấu, nối bằng gạch ngang; trùng tên tệp.
+slug: "…"
+# Mã câu hỏi ở cột A của data/bang-loc-cau-hoi-noi-dau.xlsx.
+ma_cau_hoi: "Q000"
+
+# Ba nhãn: chặng 1–9 hoặc "cat-ngang"; tầng; một hay nhiều cửa.
+chang: 5
+tang: "hieu"        # cham | hieu | soi | chuyen | dong-hanh | tot-nghiep
+cua: ["tam"]        # tam | tri | than
+
+# Bước 2: hai câu nói lại tình cảnh người đọc.
+tinh_canh: "…"
+# Bước 3: trả lời ngắn, 40–60 chữ.
+tra_loi_ngan: "…"
+
+# Bước 10: nguồn, nhãn tin cậy, ngày, người soát.
+nguon:
+  - { ten: "…", loai: "kinh", dien_y: true }   # loai: kinh | co-thu | sach | nghien-cuu | bao | khac
+muc_tin_cay: "Niềm tin truyền thống"          # hoặc: Luận giải mệnh lý | Đang được nghiên cứu | Điều đã được kiểm chứng
+ngay_viet: 2026-01-01
+# ngay_kiem_lai: 2026-01-01     # ngày người soát đọc lại gần nhất
+# nguoi_soat: "…"               # bắt buộc khi đăng
+trang_thai: "ban-nhap"          # ban-nhap → da-soat → da-dang
+
+# Bước 9: bài liên quan ngoài các câu hỏi cùng chặng (trang tự thêm câu hỏi cùng chặng).
+lien_quan: []                   # ví dụ: ["tu-dien/tam-tai", "hoi/nam-tuoi-co-nen-lam-nha"]
+
+# Tuỳ chọn, hiện ở đầu bài. Bỏ trống thì trang không hiện gì (docs/09, mục 4).
+# video: { id: "mã 11 ký tự", tieu_de: "…", loi_thoai: "…", ngay_dang: 2026-01-01, thoi_luong: "PT8M30S" }
+# am_thanh: { src: "/am-thanh/<slug>.mp3", thoi_luong: "8 phút" }
+# anh_bia: { src: "/assets/img/<tệp>.webp", alt: "Mô tả ảnh bằng tiếng Việt", chu_thich: "…" }
+---
+
+## Nhân quả nói gì
+
+<Trich nguon="Diễn ý …">
+Lời dạy, ghi rõ nguồn kinh.
+</Trich>
+
+## Huyền học nói gì
+
+Nêu như giả thuyết, kèm nhãn tin cậy.
+
+<NhanTinCay chu="Niềm tin truyền thống" />
+
+## Khoa học nói gì
+
+Điều nghiên cứu đã biết, hay còn đang tìm hiểu. Luôn kèm nhãn tin cậy riêng.
+
+<NhanTinCay chu="Đang được nghiên cứu" />
+
+## Ba việc bạn làm được từ hôm nay
+
+1. …
+2. …
+3. …
+
+## Khi nào cần gặp bác sĩ, chuyên gia tâm lý hoặc luật sư
+
+…

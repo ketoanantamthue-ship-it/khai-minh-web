@@ -55,7 +55,6 @@ const CHO_PHIEN_SAU = [
   "/bao-mat",
   "/cookie",
   "/tro-nang",
-  "/tang/",
 ];
 
 const chuanHoa = (s: string) => s.replace(/[\s ]+/g, " ").trim();

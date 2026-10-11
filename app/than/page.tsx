@@ -1,18 +1,17 @@
-import type { Metadata } from "next";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { FormNhanThu } from "@/components/trang-con/FormNhanThu";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
 import { ManDau } from "@/components/trang-con/ManDau";
 import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { doors, doorStyle } from "@/lib/doors";
+import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
 
-export const metadata: Metadata = {
-  title: "Cửa Thân – Dưỡng sinh Trần Y Thư",
-  description:
-    "Khai Minh là dược sĩ. Ở cửa Thân, anh chia sẻ cách chăm sóc thân thể thuận tự nhiên, có dẫn nguồn cổ thư và nhãn mức tin cậy.",
-  alternates: { canonical: "/than" },
-};
+export const metadata = taoMetadata({
+  tieuDe: "Cửa Thân – Dưỡng sinh Trần Y Thư",
+  moTa: "Khai Minh là dược sĩ. Ở cửa Thân, anh chia sẻ cách chăm sóc thân thể thuận tự nhiên, có dẫn nguồn cổ thư và nhãn mức tin cậy.",
+  duongDan: "/than",
+});
 
 /**
  * Cửa Thân (phiên S2): chuyển prototypes/cua-than.html (K1.9.16), giữ nguyên

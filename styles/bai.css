@@ -1,0 +1,121 @@
+/*
+ * Trang bài và trang danh sách của kho (phiên S3): /hoi, /tu-dien, /ngo-nhan,
+ * /viet, /thu, /phuong-phap và các trang nhãn.
+ *
+ * Dựng trên bộ CSS trang con (styles/trang-con.css, lớp .km-con): màn đầu sơn
+ * mài tối, thân trang trên giấy sáng, thẻ nhãn tin cậy, lời trích, khung
+ * “Đang soạn”. Tệp này chỉ thêm phần riêng của trang bài, bọc trong .km-bai.
+ * Bản mẫu chưa có trang bài; mọi màu và cỡ chữ lấy từ token và trang con.
+ */
+
+/* Màn đầu gọn: câu trả lời ngắn phải nằm ngay dưới tiêu đề (docs/04, bước 3). */
+.km-bai .hero.hero-bai{min-height:0;align-content:start;padding:clamp(120px,16vh,150px) 0 clamp(48px,8vh,72px)}
+.km-bai .hero-bai h1{font-size:clamp(32px,4.2vw,58px);line-height:1.12;max-width:22ch}
+.km-bai .hero-bai .k{margin-top:18px}
+
+/* Dải đường dẫn, khớp BreadcrumbList */
+.km-bai .vun ol{display:flex;flex-wrap:wrap;gap:4px 0;margin:0 0 6px;padding:0;list-style:none;font-size:15px;color:var(--on-2)}
+.km-bai .vun li{display:inline-flex;align-items:center}
+.km-bai .vun li+li::before{content:"›";margin:0 10px;color:var(--gold-ink)}
+.km-bai .vun a{color:var(--on-2);text-decoration-color:rgba(232,214,174,.45)}
+.km-bai .vun a:hover{color:var(--on)}
+.km-bai .hero-bai .wrap{min-width:0;width:100%}
+.km-bai .vun [aria-current]{color:var(--on-3);max-width:min(40ch,100%);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block}
+
+/* Dải “Bản nháp”: chỉ có ở bản xem trước */
+.km-bai .dai-nhap{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 22px;padding:10px 16px;border:1px dashed var(--gold-ink);border-radius:4px;background:rgba(196,151,59,.1);color:var(--on);font-size:15px}
+.km-bai .dai-nhap b{font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink)}
+
+/* Câu trả lời ngắn, định nghĩa, sự thật: đoạn đầu dễ trích nhất */
+.km-bai .tl-ngan{margin:22px 0 0;padding:18px 22px;border-radius:4px;background:rgba(244,236,221,.06);border:1px solid rgba(196,151,59,.28);font-size:clamp(18px,1.45vw,21px);line-height:1.7;color:var(--on);max-width:56ch}
+.km-bai .tl-ngan+.tl-ngan{margin-top:12px}
+
+/* Cột đọc */
+.km-bai .bai-doc{max-width:860px}
+.km-bai section.s{padding:clamp(52px,8vh,88px) 0}
+.km-bai .bai-doc h2{max-width:32ch}
+.km-bai .bai-than h2{margin-top:clamp(40px,6vh,64px)}
+.km-bai .bai-than h2:first-child{margin-top:0}
+.km-bai .bai-than h3{margin:28px 0 8px;font-size:22px}
+/* Thân bài: 17 px ở mọi khổ, giãn dòng 1,75, cột chữ tối đa khoảng 66 ký tự. */
+.km-bai .bai-than p,.km-bai .bai-than li{font-size:17px;line-height:1.75;max-width:66ch}
+.km-bai .bai-than ul,.km-bai .bai-than ol{margin:0 0 18px;padding-left:1.4em;max-width:66ch}
+.km-bai .bai-than li{margin:0 0 8px;color:var(--body-ink)}
+.km-bai .bai-than li::marker{color:var(--gold-text)}
+.km-bai .bai-than .quote{margin:22px 0 18px}
+.km-bai .bai-than .quote p{margin:0;font-size:inherit;color:var(--ink)}
+.km-bai .bai-than .safe p{margin:0}
+.km-bai .bai-than .o-can{margin:12px 0 18px}
+.km-bai .bai-than h2{scroll-margin-top:24px}
+
+/* Đầu bài: thời gian đọc, bản đọc, mục lục nhỏ */
+.km-bai .dau-bai{max-width:66ch;margin:0 0 clamp(36px,6vh,56px)}
+.km-bai .bai-than .phut-doc{margin:0 0 14px;font-size:15px;letter-spacing:.04em;color:var(--body-ink)}
+.km-bai .muc-bai{margin:0;padding:14px 0 4px;border-top:1px solid rgba(124,90,30,.25);border-bottom:1px solid rgba(124,90,30,.25)}
+.km-bai .bai-than .muc-bai-dan{margin:0 0 6px;font-size:16px;color:var(--ink)}
+.km-bai .muc-bai ol{margin:0 0 10px;padding-left:1.4em}
+.km-bai .bai-than .muc-bai li{margin:0 0 4px;font-size:16px;line-height:1.6}
+.km-bai .muc-bai a{color:var(--ink);text-decoration-color:var(--gold-text)}
+
+/* Bản đọc của Khai Minh */
+.km-bai .am-thanh{margin:0 0 18px;padding:14px 16px;border:1px solid rgba(124,90,30,.28);border-radius:4px;background:#FBF7EE}
+.km-bai .am-thanh figcaption{margin:0 0 10px;font-family:var(--serif);font-size:18px;color:var(--ink)}
+.km-bai .am-thanh .am-tl{font-family:var(--sans);font-size:15px;color:var(--body-ink)}
+.km-bai .am-thanh audio{display:block;width:100%}
+
+/* Ảnh và video trong bài */
+.km-bai .anh-bai,.km-bai .video-yt{margin:26px 0;max-width:760px}
+.km-bai .anh-bai img{display:block;width:100%;height:auto;border-radius:3px}
+.km-bai .anh-bai figcaption,.km-bai .video-yt figcaption{margin-top:8px;font-size:15px;color:var(--body-ink)}
+.km-bai .video-khung{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:3px;background:var(--lac)}
+.km-bai .video-khung a{position:absolute;inset:0;display:block}
+.km-bai .video-khung img{object-fit:cover}
+.km-bai .video-khung iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.km-bai .video-nut{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(18,14,11,.78);color:var(--egg);box-shadow:0 0 0 2px rgba(232,214,174,.6)}
+.km-bai .video-khung a:hover .video-nut,.km-bai .video-khung a:focus-visible .video-nut{background:var(--son)}
+.km-bai .loi-thoai{margin-top:10px;padding:10px 14px;border:1px solid rgba(124,90,30,.25);border-radius:4px;background:#FBF7EE}
+.km-bai .loi-thoai summary{cursor:pointer;font-weight:600;color:var(--ink)}
+.km-bai .loi-thoai p{margin:10px 0 0}
+
+/* Bảng soi ba lớp: ba ô cạnh nhau, mỗi ô một nhãn tin cậy */
+.km-bai .ba-lop{display:grid;gap:14px;margin:24px 0}
+@media (min-width:760px){.km-bai .ba-lop{grid-auto-flow:column;grid-auto-columns:1fr}}
+.km-bai .ba-lop-o{padding:16px 18px;border:1px solid rgba(124,90,30,.28);border-top:3px solid var(--dc,var(--gold-text));background:#FBF7EE}
+.km-bai .bai-than .ba-lop-o h3{margin:0 0 6px;font-size:20px}
+.km-bai .bai-than .ba-lop-o p{font-size:16px;margin:0 0 10px}
+.km-bai .ba-lop-o .label{margin:0}
+
+/* Tác giả, ngày và nguồn (bước 9) */
+/* Ảnh chân dung bên cạnh ngày và người soát */
+.km-bai .tg-luoi{display:grid;gap:18px 28px;margin-top:22px;max-width:760px}
+@media (min-width:600px){.km-bai .tg-luoi{grid-template-columns:150px 1fr;align-items:start}}
+.km-bai .tg-anh{width:150px}
+.km-bai .tg-ds{display:grid;gap:0;margin:0;max-width:62ch}
+.km-bai .tg-ds>div{display:grid;grid-template-columns:minmax(120px,30%) 1fr;gap:4px 18px;padding:12px 0;border-top:1px solid rgba(124,90,30,.2)}
+.km-bai .tg-ds dt{font-weight:600;color:var(--ink);font-size:16px}
+.km-bai .tg-ds dd{margin:0;color:var(--body-ink);font-size:16.5px}
+.km-bai .tg-ds .label{margin:0}
+.km-bai .tg-nguon,.km-bai .lq-h{margin:30px 0 0;font-size:22px}
+.km-bai .bai-tg .list,.km-bai .bai-lq .list{margin-top:12px}
+
+/* Danh sách bài */
+.km-bai .ds-nhom+.ds-nhom{margin-top:clamp(36px,6vh,56px)}
+.km-bai .ds-bai li{display:grid;gap:4px}
+.km-bai .ds-t{font-family:var(--serif);font-size:clamp(19px,1.6vw,22px);line-height:1.4}
+.km-bai .ds-c,.km-bai .ds-m{font-size:15.5px;color:var(--body-ink)}
+.km-bai .ds-nhap{justify-self:start;padding:1px 8px;border:1px dashed var(--gold-text);border-radius:3px;font-size:13.5px;color:var(--gold-text)}
+.km-bai section.s h2 a{text-decoration:none}
+.km-bai section.s h2 a:hover{text-decoration:underline}
+
+/* Bộ lọc ba nhãn của /viet */
+.km-bai .loc{display:flex;flex-wrap:wrap;gap:12px 18px;margin:0 0 18px}
+.km-bai .loc-o{display:grid;gap:4px;font-size:15px;color:var(--ink)}
+.km-bai .loc-o select{min-height:44px;padding:8px 10px;border:1px solid #8D8273;border-radius:4px;background:#FBF7EF;color:var(--ink);font:inherit;font-size:16px}
+
+/* Chữ lớn */
+.easy .km-bai .tl-ngan,.easy .km-bai .bai-than p,.easy .km-bai .bai-than li,.easy .km-bai .tg-ds dd,.easy .km-bai .ds-c,.easy .km-bai .ds-m{font-size:21px!important;line-height:1.75!important}
+.easy .km-bai .vun ol,.easy .km-bai .dai-nhap,.easy .km-bai .tg-ds dt,.easy .km-bai .phut-doc,.easy .km-bai .muc-bai-dan,.easy .km-bai .muc-bai li,.easy .km-bai .ba-lop-o p{font-size:18px!important}
+
+/* Liên kết chữ trên giấy: chữ màu mực, gạch chân màu cửa (màu xanh ngọc của
+   Cửa Thân trên nền giấy sẫm chưa đạt tương phản AA). */
+.km-bai section.s .hc-link a{color:var(--ink);text-decoration-color:var(--dc,var(--gold-text))}

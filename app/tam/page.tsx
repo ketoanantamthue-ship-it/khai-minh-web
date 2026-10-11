@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
@@ -8,14 +7,14 @@ import { ManDau } from "@/components/trang-con/ManDau";
 import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { doors, doorStyle } from "@/lib/doors";
 import { siteConfig } from "@/site.config";
+import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
 
-export const metadata: Metadata = {
-  title: "Cửa Tâm – An Tâm Mệnh",
-  description:
-    "Nếu bạn đã hỏi nhiều nơi mà lòng vẫn chưa yên, An Tâm Mệnh là nơi Khai Minh và những người đồng hành ngồi cùng bạn, cho tới ngày bạn tự bước đi được.",
-  alternates: { canonical: "/tam" },
-};
+export const metadata = taoMetadata({
+  tieuDe: "Cửa Tâm – An Tâm Mệnh",
+  moTa: "Nếu bạn đã hỏi nhiều nơi mà lòng vẫn chưa yên, An Tâm Mệnh là nơi Khai Minh và những người đồng hành ngồi cùng bạn, cho tới ngày bạn tự bước đi được.",
+  duongDan: "/tam",
+});
 
 /**
  * Cửa Tâm (phiên S2): chuyển prototypes/cua-tam.html (K1.9.16), giữ nguyên chữ,
