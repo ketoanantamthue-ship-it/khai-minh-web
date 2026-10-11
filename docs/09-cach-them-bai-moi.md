@@ -101,7 +101,7 @@ anh_bia: { src: "/assets/img/<tệp>.webp", alt: "Mô tả ảnh bằng tiếng 
 ```
 
 - Mã video là 11 ký tự sau `watch?v=` trong địa chỉ YouTube. Ngày đăng và thời lượng giúp Google hiểu video; thời lượng viết kiểu `PT8M30S` (8 phút 30 giây).
-- Lời thoại hiện thu gọn dưới video, để người không xem được video vẫn đọc được. Hãy dán đủ lời thoại.
+- Lời thoại hiện thu gọn dưới video, sau nút “Đọc lời trong video”, để người không xem được video vẫn đọc được. Hãy dán đủ lời thoại.
 - Tệp ghi âm và ảnh đặt trong thư mục `public/` (nhờ Claude Code tải lên nếu cần); đường dẫn bắt đầu bằng `/`.
 - `alt` là câu tả ảnh bằng tiếng Việt cho người không nhìn thấy ảnh. Thiếu `alt` thì ảnh không hiện.
 

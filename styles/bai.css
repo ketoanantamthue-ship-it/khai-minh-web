@@ -52,6 +52,7 @@
 .km-bai .dau-bai{max-width:66ch;margin:0 0 clamp(36px,6vh,56px)}
 .km-bai .bai-than .phut-doc{margin:0 0 14px;font-size:15px;letter-spacing:.04em;color:var(--body-ink)}
 .km-bai .muc-bai{margin:0;padding:14px 0 4px;border-top:1px solid rgba(124,90,30,.25);border-bottom:1px solid rgba(124,90,30,.25)}
+.km-bai .bai-than .muc-bai-dan{margin:0 0 6px;font-size:16px;color:var(--ink)}
 .km-bai .muc-bai ol{margin:0 0 10px;padding-left:1.4em}
 .km-bai .bai-than .muc-bai li{margin:0 0 4px;font-size:16px;line-height:1.6}
 .km-bai .muc-bai a{color:var(--ink);text-decoration-color:var(--gold-text)}
@@ -113,7 +114,7 @@
 
 /* Chữ lớn */
 .easy .km-bai .tl-ngan,.easy .km-bai .bai-than p,.easy .km-bai .bai-than li,.easy .km-bai .tg-ds dd,.easy .km-bai .ds-c,.easy .km-bai .ds-m{font-size:21px!important;line-height:1.75!important}
-.easy .km-bai .vun ol,.easy .km-bai .dai-nhap,.easy .km-bai .tg-ds dt,.easy .km-bai .phut-doc,.easy .km-bai .muc-bai li,.easy .km-bai .ba-lop-o p{font-size:18px!important}
+.easy .km-bai .vun ol,.easy .km-bai .dai-nhap,.easy .km-bai .tg-ds dt,.easy .km-bai .phut-doc,.easy .km-bai .muc-bai-dan,.easy .km-bai .muc-bai li,.easy .km-bai .ba-lop-o p{font-size:18px!important}
 
 /* Liên kết chữ trên giấy: chữ màu mực, gạch chân màu cửa (màu xanh ngọc của
    Cửa Thân trên nền giấy sẫm chưa đạt tương phản AA). */

@@ -67,3 +67,4 @@ Claude Code làm theo cột "Mặc định" cho tới khi anh chốt khác. Mụ
 | F5 | *(Sau phiên S1.)* Cánh cổng chỉ hiện lần đầu trên mỗi máy (lưu ở localStorage `km-gate`). | A10 |
 | F6 | *(Sau phiên S3.)* Trường `ngay_kiem_lai` là **ngày người soát đã đọc lại bài gần nhất**, không phải ngày hẹn kiểm lại. Ngày này hiện trên trang, vào sitemap và `dateModified` của JSON-LD. | A16 |
 | F7 | *(Sau phiên S3.)* Khuôn bài hỏi – đáp có **mười bước**: thêm bước riêng “Khoa học nói gì”, đặt giữa “Huyền học nói gì” và “Ba việc bạn làm được từ hôm nay”, có nhãn tin cậy riêng. Đã cập nhật docs/04, docs/09 và `content/hoi/_mau.mdx`. | A17 |
+| F8 | *(Sau phiên S3.)* Chữ giao diện của trang bài: thời gian đọc là “Bạn đọc bài này trong khoảng {n} phút.”; nút mở lời thoại video là “Đọc lời trong video”; mục lục nhỏ đầu bài có dòng dẫn “Bài này có các phần:”. Giữ nguyên “Xem video: {tiêu đề}” (tên đọc cho máy đọc màn hình) và ba tên ô “Nhân quả”, “Khoa học”, “Huyền học”. | E30 |

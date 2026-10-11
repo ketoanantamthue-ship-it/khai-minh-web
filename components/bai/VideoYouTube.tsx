@@ -52,7 +52,7 @@ export function VideoYouTube({ id, tieuDe, loiThoai }: { id?: string; tieuDe?: s
       <figcaption>{tieuDe}</figcaption>
       {loiThoai ? (
         <details className="loi-thoai">
-          <summary>Lời thoại</summary>
+          <summary>Đọc lời trong video</summary>
           {loiThoai.split(/\n\s*\n/).map((d) => (
             <p key={d}>{d}</p>
           ))}

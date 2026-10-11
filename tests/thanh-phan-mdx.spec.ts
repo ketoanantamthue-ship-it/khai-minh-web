@@ -48,7 +48,7 @@ test.describe("Thẻ MDX có dữ liệu", () => {
     expect(html).toContain('href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"');
     expect(html).toContain("i.ytimg.com%2Fvi%2FdQw4w9WgXcQ%2Fhqdefault.jpg");
     expect(html).toContain('aria-label="Xem video: Tiêu đề thử"');
-    expect(html).toContain("<details class=\"loi-thoai\"><summary>Lời thoại</summary><p>Đoạn một.</p><p>Đoạn hai.</p></details>");
+    expect(html).toContain("<details class=\"loi-thoai\"><summary>Đọc lời trong video</summary><p>Đoạn một.</p><p>Đoạn hai.</p></details>");
   });
 
   test("AmThanh: “Nghe Khai Minh đọc bài này”, không tải trước", () => {

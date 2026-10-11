@@ -120,10 +120,13 @@ function DauBai({ bai }: { bai: Bai }) {
   const { am_thanh, anh_bia, video } = bai.fm;
   return (
     <div className="dau-bai">
-      <p className="phut-doc">{phutDoc(bai)} phút đọc</p>
+      <p className="phut-doc">Bạn đọc bài này trong khoảng {phutDoc(bai)} phút.</p>
       <AmThanh src={am_thanh?.src} thoiLuong={am_thanh?.thoi_luong} />
       {muc.length >= 2 ? (
-        <nav className="muc-bai" aria-label="Các phần của bài">
+        <nav className="muc-bai" aria-labelledby="muc-bai-dan">
+          <p className="muc-bai-dan" id="muc-bai-dan">
+            Bài này có các phần:
+          </p>
           <ol>
             {muc.map((m) => (
               <li key={m}>

@@ -147,7 +147,8 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
 
   test("đầu bài có thời gian đọc và mục lục nhỏ dẫn tới từng tiêu đề", async ({ page }) => {
     await page.goto(Q001);
-    await expect(page.locator(".phut-doc")).toHaveText(/^\d+ phút đọc$/);
+    await expect(page.locator(".phut-doc")).toHaveText(/^Bạn đọc bài này trong khoảng \d+ phút\.$/);
+    await expect(page.getByRole("navigation", { name: "Bài này có các phần:" })).toBeVisible();
     const muc = page.locator("nav.muc-bai a");
     await expect(muc).toHaveText([...BUOC_HOI]);
     for (const href of await muc.evaluateAll((as) => as.map((a) => a.getAttribute("href")!))) {
