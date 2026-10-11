@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BaiVietCua } from "@/components/trang-con/BaiVietCua";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
 import { BuoiSoi, SauDieuKhongLam } from "@/components/trang-con/KhoiCuaTam";
@@ -101,7 +102,7 @@ export default function CuaTam() {
           <h2>Bạn có thể bắt đầu từ bước nhẹ nhất, và chỉ đi tiếp khi bạn muốn.</h2>
           <p className="lede">
             Trong hai năm đầu dựng ngôi nhà này, tôi đồng hành cùng bạn mà không nhận tiền. Thay cho học phí là{" "}
-            <Link className="more" href="/#loi-hen">
+            <Link className="more" href="/#loi-hen" prefetch={false}>
               bốn lời hẹn
             </Link>
             : có mặt, thực tập, nói thật và trao lại. Bạn có thể dừng lại ở bất cứ bước nào mà không cần giải thích.
@@ -188,6 +189,8 @@ export default function CuaTam() {
       <BuoiSoi />
 
       <SauDieuKhongLam />
+
+      <BaiVietCua cua="tam" />
 
       <BaCuaKhac
         hienTai="tam"

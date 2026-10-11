@@ -126,6 +126,15 @@ export function duongDanChang(c: Pick<Chang, "slug">): string {
   return `/chang/${c.slug}`;
 }
 
+/**
+ * Chặng đã đủ năm tầng soi: có trường `trang` theo khuôn chang-5.html (schema
+ * buộc đủ năm tầng). Chặng chưa đủ thì ở bản thật để `noindex, follow` và
+ * không vào sitemap (docs/10, mục R7).
+ */
+export function duNamTang(c: Pick<Chang, "trang">): boolean {
+  return c.trang?.nam_tang.length === 5;
+}
+
 /** Một chặng theo slug, hoặc `undefined` khi không có. */
 export function docChang(slug: string): Chang | undefined {
   return docChinChang().find((c) => c.slug === slug);

@@ -1,4 +1,5 @@
 import { FormNhanThu } from "./FormNhanThu";
+import { siteConfig } from "@/site.config";
 
 /**
  * Lời mời “Nhận thư hằng tháng” (`section.end#thu` của prototypes/cua-tri.html).
@@ -19,6 +20,7 @@ export function LoiMoiNhanThu({ id = "thu", oId = "thu-thang" }: { id?: string; 
           id={oId}
           nut="Gửi thư cho tôi mỗi tháng"
           camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
+          baoDaNhan={siteConfig.baoDaNhanThu}
         />
       </div>
     </section>

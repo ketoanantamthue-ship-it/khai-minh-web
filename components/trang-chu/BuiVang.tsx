@@ -263,6 +263,12 @@ export function BuiVang() {
         skyLast = 0;
         return;
       }
+      // Cánh cổng đang che trang (body.mzs-lock): chưa vẽ bầu trời, để máy dành
+      // sức cho cổng và ảnh đầu tiên (docs/10, mục R13).
+      if (document.body.classList.contains("mzs-lock")) {
+        skyRaf = requestAnimationFrame(skyLoop);
+        return;
+      }
       if (now - skyLast > 33) {
         SKY = ((now - skyT0) / 1000) * ((2 * Math.PI) / 2400);
         drawDust();

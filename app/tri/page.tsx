@@ -1,3 +1,4 @@
+import { BaiVietCua } from "@/components/trang-con/BaiVietCua";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
 import { KhoiSach } from "@/components/trang-con/KhoiSach";
@@ -104,6 +105,8 @@ export default function CuaTri() {
           </div>
         </div>
       </section>
+
+      <BaiVietCua cua="tri" />
 
       <BaCuaKhac
         hienTai="tri"

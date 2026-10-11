@@ -6,8 +6,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { LoiMoiGuiCauHoi } from "@/components/trang-con/LoiMoiGuiCauHoi";
 import { docChinChang, duongDanChang } from "@/lib/chang";
 import { khoHienThi } from "@/lib/kho";
-import { locLoai, TEN_LOAI } from "@/lib/noi-dung";
-import { doThi, nutDuongDan, taoMetadata, type MucDuongDan } from "@/lib/seo";
+import { baiCongKhai, locLoai, TEN_LOAI } from "@/lib/noi-dung";
+import { doThi, nutDuongDan, SO_BAI_DE_LAP_CHI_MUC, taoMetadata, type MucDuongDan } from "@/lib/seo";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 
@@ -22,7 +22,16 @@ const VUN: MucDuongDan[] = [
   { ten: TEN_LOAI.hoi, duongDan: "/hoi" },
 ];
 
-export const metadata = taoMetadata({ tieuDe: TEN_LOAI.hoi, duongDan: "/hoi" });
+/**
+ * Mô tả: hai câu mở của trang chủ (bản mẫu), vì trang này gom câu hỏi của chín
+ * chặng. Ít hơn ba bài đã đăng thì `noindex, follow` (docs/10, mục R5).
+ */
+export const metadata = taoMetadata({
+  tieuDe: TEN_LOAI.hoi,
+  moTa: "Đời người có chín chặng. Chặng nào cũng có những câu hỏi ta chỉ dám hỏi mình lúc nửa đêm.",
+  duongDan: "/hoi",
+  mong: locLoai(baiCongKhai(), "hoi").length < SO_BAI_DE_LAP_CHI_MUC,
+});
 
 export default function TrangHoi() {
   const hienThi = khoHienThi();

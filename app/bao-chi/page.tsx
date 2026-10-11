@@ -26,20 +26,20 @@ export default function BaoChi() {
       }
     >
       <KhoiGiay>
-        <MucGiay id="tieu-su" tieuDe="Tiểu sử">
+        <MucGiay id="tieu-su" tieuDe="Tiểu sử" cho>
           <OCan ma="C7" />
         </MucGiay>
-        <MucGiay id="anh" tieuDe="Ảnh tải về">
+        <MucGiay id="anh" tieuDe="Ảnh tải về" cho>
           <div className="slot r45 tg-anh" role="img" aria-label="Ảnh chân dung" data-can="B2">
             <div>
               <b>Ảnh chân dung</b>Khổ 4:5, ánh sáng cửa sổ
             </div>
           </div>
         </MucGiay>
-        <MucGiay id="chu-de" tieuDe="Chủ đề nói chuyện">
+        <MucGiay id="chu-de" tieuDe="Chủ đề nói chuyện" cho>
           <OCan ma="C13" />
         </MucGiay>
-        <MucGiay id="nguyen-tac" tieuDe="Nguyên tắc nhận lời">
+        <MucGiay id="nguyen-tac" tieuDe="Nguyên tắc nhận lời" cho>
           <OCan ma="C13" />
         </MucGiay>
       </KhoiGiay>

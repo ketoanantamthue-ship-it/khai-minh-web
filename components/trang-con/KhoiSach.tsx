@@ -1,4 +1,5 @@
 import { FormNhanThu } from "./FormNhanThu";
+import { siteConfig } from "@/site.config";
 
 export const TIEU_DE_SACH = "Tôi đang viết cuốn sách Soi – Thấu – Chuyển.";
 
@@ -41,6 +42,7 @@ export function KhoiSach({
               id={oId}
               nut="Báo cho tôi khi sách ra đời"
               camOn="Cảm ơn bạn. Tôi sẽ báo cho bạn khi sách ra đời."
+              baoDaNhan={siteConfig.baoDaNhanThu}
             />
           </div>
         </div>

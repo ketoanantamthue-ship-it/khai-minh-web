@@ -37,7 +37,10 @@ export function ManDauBai({
             <ol>
               {duongDan.slice(0, -1).map((m) => (
                 <li key={m.duongDan}>
-                  <Link href={m.duongDan}>{m.ten}</Link>
+                  {/* Về trang chủ thì không tải trước hiệu ứng của trang chủ (docs/10, mục R12). */}
+                  <Link href={m.duongDan} prefetch={m.duongDan === "/" ? false : undefined}>
+                    {m.ten}
+                  </Link>
                 </li>
               ))}
               <li aria-current="page">{duongDan.at(-1)?.ten}</li>

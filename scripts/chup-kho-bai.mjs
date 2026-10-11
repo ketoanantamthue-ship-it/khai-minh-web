@@ -25,7 +25,7 @@ const DUONG_DAN = process.argv.slice(3);
 const TRANG_MAC_DINH = [
   ["hoi-q001", "/hoi/bon-muoi-tuoi-du-day-sao-long-chua-yen"],
   ["hoi", "/hoi"],
-  ["cua-tam", "/cua/tam"],
+  ["cua-tam", "/tam"],
   ["chang-5-hoi", "/chang/tuoi-giua-doi/hoi"],
 ];
 const TRANG =

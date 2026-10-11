@@ -5,7 +5,8 @@ import { ChuTham, ThuGuiToi } from "./GuiCauHoiForm";
  * Phần IX · Gửi một câu hỏi (`#gui-cau-hoi`).
  *
  * Biểu mẫu vẫn là bản xem trước như bản mẫu: chưa gửi thư đi đâu. Phiên S5
- * nối nơi nhận thư (docs/07, mục A5 và E3).
+ * nối nơi nhận thư (docs/07, mục A5 và E3). Bản thật không báo “đã nhận”
+ * khi chưa có nơi nhận thư (site.config.ts, `baoDaNhanThu`).
  */
 export function GuiCauHoi() {
   const { capCuu, ngayMai } = siteConfig.khanCap;
@@ -54,7 +55,7 @@ export function GuiCauHoi() {
             </div>
           )}
         </div>
-        <ThuGuiToi />
+        <ThuGuiToi baoDaNhan={siteConfig.baoDaNhanThu} />
       </div>
     </section>
   );

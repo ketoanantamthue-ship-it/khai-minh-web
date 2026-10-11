@@ -1,3 +1,4 @@
+import { BaiVietCua } from "@/components/trang-con/BaiVietCua";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { FormNhanThu } from "@/components/trang-con/FormNhanThu";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
@@ -6,6 +7,7 @@ import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { doors, doorStyle } from "@/lib/doors";
 import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
+import { siteConfig } from "@/site.config";
 
 export const metadata = taoMetadata({
   tieuDe: "Cửa Thân – Dưỡng sinh Trần Y Thư",
@@ -108,6 +110,8 @@ export default function CuaThan() {
         </div>
       </section>
 
+      <BaiVietCua cua="than" />
+
       <BaCuaKhac
         hienTai="than"
         tieuDe="Ngôi nhà này còn hai cánh cửa khác."
@@ -124,6 +128,7 @@ export default function CuaThan() {
             id="thu-thang"
             nut="Gửi thư cho tôi mỗi tháng"
             camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
+            baoDaNhan={siteConfig.baoDaNhanThu}
           />
         </div>
       </section>

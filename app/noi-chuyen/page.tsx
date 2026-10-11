@@ -1,4 +1,4 @@
-import { KhoiGiay, TrangKhung } from "@/components/khung/TrangKhung";
+import { KhoiCho, KhoiGiay, TrangKhung } from "@/components/khung/TrangKhung";
 import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { taoMetadata } from "@/lib/seo";
 
@@ -7,6 +7,7 @@ import { taoMetadata } from "@/lib/seo";
  * video nào (docs/07, mục B9), nên trang là khung với ô “Đang soạn”. Khi có
  * video, đặt bằng thẻ <VideoYouTube> (lời thoại nằm sẵn trong HTML, có
  * JSON-LD VideoObject). Lời mời chính: nhận thư hằng tháng (Bản cuối).
+ * Bản thật ẩn khung video và để trang `noindex, follow` (docs/10, mục R7).
  */
 export const metadata = taoMetadata({ tieuDe: "Nói chuyện", duongDan: "/noi-chuyen" });
 
@@ -21,16 +22,18 @@ export default function NoiChuyen() {
       tieuDe="Nói chuyện"
     >
       <KhoiGiay>
-        <section className="s" aria-label="Video và bài nói">
-          <div className="wrap bai-doc">
-            {/* Video chính và danh sách bài nói (docs/07, mục B9; W2, mục 4). */}
-            <div className="slot r169" role="img" aria-label="Khung video" data-can="B9">
-              <div>
-                <b>Đang soạn</b>
+        <KhoiCho>
+          <section className="s" aria-label="Video và bài nói">
+            <div className="wrap bai-doc">
+              {/* Video chính và danh sách bài nói (docs/07, mục B9; W2, mục 4). */}
+              <div className="slot r169" role="img" aria-label="Khung video" data-can="B9">
+                <div>
+                  <b>Đang soạn</b>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </KhoiCho>
         <LoiMoiNhanThu />
       </KhoiGiay>
     </TrangKhung>

@@ -7,8 +7,10 @@ import { useState, type FormEvent } from "react";
  *
  * Như bản mẫu, đây mới là bản xem trước: bấm gửi thì hiện lời cảm ơn nhưng
  * địa chỉ thư chưa được gửi đi đâu (docs/07, mục A5 và E18; phiên S5).
+ * Bản thật chưa có nơi nhận thư thì không hiện lời cảm ơn hứa gửi thư, và giữ
+ * nguyên địa chỉ người đọc đã điền (site.config.ts, `baoDaNhanThu`).
  */
-export function FormNhanThu({ id, nut, camOn }: { id: string; nut: string; camOn: string }) {
+export function FormNhanThu({ id, nut, camOn, baoDaNhan }: { id: string; nut: string; camOn: string; baoDaNhan: boolean }) {
   const [loi, setLoi] = useState(false);
   const [bao, setBao] = useState("");
 
@@ -22,6 +24,11 @@ export function FormNhanThu({ id, nut, camOn }: { id: string; nut: string; camOn
       return;
     }
     setLoi(false);
+    if (!baoDaNhan) {
+      // CẦN: lời mời liên hệ qua kênh khác khi chưa có nơi nhận thư (docs/07, mục A5).
+      setBao("");
+      return;
+    }
     setBao(camOn);
     o.value = "";
   };

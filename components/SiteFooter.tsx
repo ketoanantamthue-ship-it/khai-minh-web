@@ -61,8 +61,9 @@ function LienKetChu({ href, can, className, children }: {
     );
   }
   if (href.startsWith("/")) {
+    // Liên kết về trang chủ không tải trước hiệu ứng của trang chủ (docs/10, mục R12).
     return (
-      <Link className={className} href={href}>
+      <Link className={className} href={href} prefetch={href === "/" || href.startsWith("/#") ? false : undefined}>
         {children}
       </Link>
     );

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <!-- Dấu “vết mài” của Khai Minh (components/VetMai.tsx), màu theo docs/03: sơn mài tối, vàng thếp, vỏ trứng. -->
+  <rect x="1" y="1" width="38" height="38" rx="5" fill="#120E0B" stroke="#C4973B" stroke-width="1.6"/>
+  <rect x="4.5" y="4.5" width="31" height="31" rx="2" fill="none" stroke="#C4973B" stroke-opacity=".35"/>
+  <path d="M9 27 Q19 16 32 19.5" fill="none" stroke="#EFE6D2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M11 25.6 Q19.5 17.4 30 19.6" fill="none" stroke="#FFF8EA" stroke-width="1" stroke-linecap="round"/>
+</svg>

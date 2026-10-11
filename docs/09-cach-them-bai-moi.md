@@ -68,7 +68,7 @@ Phần nằm giữa hai dòng `---` ở đầu tệp gọi là phần đầu. M�
 | `tang` | một trong sáu tầng: `cham`, `hieu`, `soi`, `chuyen`, `dong-hanh`, `tot-nghiep` | `tang: "hieu"` |
 | `cua` | một hay nhiều cửa: `tam`, `tri`, `than` | `cua: ["tam"]` |
 
-Thiếu một nhãn thì web không dựng được. Nhãn quyết định bài hiện ở đâu: trang câu hỏi của chặng (`/chang/<chặng>/hoi`), trang tầng (`/tang/hieu`) và trang cửa (`/cua/tam`). Những trang này tự cập nhật, bạn không phải sửa gì.
+Thiếu một nhãn thì web không dựng được. Nhãn quyết định bài hiện ở đâu: trang câu hỏi của chặng (`/chang/<chặng>/hoi`), trang tầng (`/tang/hieu`) và mục “Bài viết của Cửa …” ở cuối trang cửa (`/tam#bai-viet`). Những trang này tự cập nhật, bạn không phải sửa gì.
 
 ### Các trường của bài hỏi – đáp
 

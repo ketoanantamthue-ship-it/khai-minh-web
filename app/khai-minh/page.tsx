@@ -28,7 +28,8 @@ export default function TrangTacGia() {
     <TrangKhung
       vun={[
         { ten: "Trang chủ", duongDan: "/" },
-        { ten: "Câu chuyện của tôi", duongDan: TRANG_TAC_GIA },
+        // Khớp tiêu đề trang (h1 “Khai Minh”), cả trên trang lẫn trong BreadcrumbList.
+        { ten: siteConfig.ten, duongDan: TRANG_TAC_GIA },
       ]}
       nhan="NGƯỜI KHAI VẤN · AN TÂM MỆNH"
       tieuDe="Khai Minh"

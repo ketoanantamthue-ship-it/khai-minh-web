@@ -709,7 +709,8 @@ a {
 .lacquer::before {
   content: "";
   position: absolute;
-  inset: -10%;
+  /* Mép trên theo vh để lớp nền không dời khi màn đầu cao thêm (docs/10, mục R11). */
+  inset: -10vh -10% -10%;
   z-index: -2;
   background:
     radial-gradient(120% 80% at 18% 30%, rgba(58, 20, 16, .55), transparent 60%),

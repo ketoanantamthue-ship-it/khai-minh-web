@@ -1,18 +1,38 @@
 import type { Metadata, Viewport } from "next";
-import { Be_Vietnam_Pro, Noto_Serif } from "next/font/google";
+import { Be_Vietnam_Pro } from "next/font/google";
 import localFont from "next/font/local";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { MO_TA_TRANG_CHU } from "@/lib/seo";
 import { siteConfig } from "@/site.config";
 import "@/styles/tokens.css";
 import "@/styles/globals.css";
 
-const notoSerif = Noto_Serif({
-  subsets: ["vietnamese", "latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+/**
+ * Noto Serif cho tiêu đề (docs/03, mục 3), tự lưu trong app/fonts/: mỗi kiểu
+ * (thẳng, nghiêng) là một tệp duy nhất gồm chữ Latin và đủ chữ Việt, trục độ
+ * đậm 400–600. Tải từ Google Fonts bằng tham số `text=` (giấy phép SIL Open
+ * Font License).
+ *
+ * Vì sao không dùng next/font/google như Be Vietnam Pro: Google tách mỗi kiểu
+ * thành tệp “latin” và tệp “vietnamese”. Hai tệp về lúc khác nhau, nên giữa
+ * chừng tiêu đề vẽ nửa bằng Noto Serif, nửa bằng phông dự phòng, xuống dòng
+ * khác đi rồi trở lại: trang chủ bị xô lệch bố cục (docs/10, mục R11). Một tệp
+ * cho mỗi kiểu thì chữ đổi phông đúng một lần.
+ *
+ * Không tải trước (`preload: false`): tải trước cả hai kiểu chiếm băng thông
+ * của ảnh cánh cổng và làm LCP chậm (docs/10, mục R13).
+ */
+const notoSerif = localFont({
+  src: [
+    { path: "./fonts/noto-serif.woff2", weight: "400 600", style: "normal" },
+    { path: "./fonts/noto-serif-nghieng.woff2", weight: "400 600", style: "italic" },
+  ],
   display: "swap",
   variable: "--font-noto-serif",
+  preload: false,
+  adjustFontFallback: "Times New Roman",
+  fallback: ["Noto Serif", "Georgia", "serif"],
 });
 
 const beVietnamPro = Be_Vietnam_Pro({
@@ -20,6 +40,10 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600"],
   display: "swap",
   variable: "--font-be-vietnam-pro",
+  // Không tải trước: nhường băng thông cho ảnh đầu tiên (docs/10, mục R13).
+  // Mỗi độ đậm vẫn tách hai tệp latin và vietnamese, nhưng chữ thân bài đổi
+  // phông không làm xô lệch bố cục (đã đo).
+  preload: false,
 });
 
 /**
@@ -41,8 +65,7 @@ export const metadata: Metadata = {
     default: "Khai Minh – Người Khai Vấn",
     template: "%s – Khai Minh",
   },
-  description:
-    "Đời người có chín chặng, và chặng nào cũng có những câu hỏi ta chỉ dám hỏi mình lúc nửa đêm. Khai Minh không trả lời thay bạn; tôi ngồi cùng bạn, đủ lâu để bạn tự thấy.",
+  description: MO_TA_TRANG_CHU,
   // Chưa ra mắt thì không lập chỉ mục (CLAUDE.md, quy tắc 12).
   robots: siteConfig.choPhepLapChiMuc
     ? { index: true, follow: true }

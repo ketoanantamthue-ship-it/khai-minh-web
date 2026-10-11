@@ -16,10 +16,16 @@ export function tenChang(chang: MaChang): string {
  * chữ, kèm chặng và đoạn mô tả. Bài chưa đăng (chỉ có ở bản xem trước) mang
  * thêm nhãn trạng thái.
  *
- * `nhom`: chia theo loại bài (Hỏi – đáp, Từ điển…), mỗi nhóm một tiêu đề h2.
+ * `nhom`: chia theo loại bài (Hỏi – đáp, Từ điển…), mỗi nhóm một tiêu đề h2
+ * (`capNhom="h3"` khi danh sách nằm trong một mục đã có h2).
  * Danh sách rỗng thì hiện ô “Đang soạn” (docs/07, mục C1).
  */
-export function DanhSachBai({ ds, nhom = false, an = [] }: { ds: Bai[]; nhom?: boolean; an?: ("chang" | "mo-ta")[] }) {
+export function DanhSachBai({ ds, nhom = false, an = [], capNhom: TieuDeNhom = "h2" }: {
+  ds: Bai[];
+  nhom?: boolean;
+  an?: ("chang" | "mo-ta")[];
+  capNhom?: "h2" | "h3";
+}) {
   if (ds.length === 0) return <OCan ma="C1" />;
   if (!nhom) return <CacBai ds={ds} an={an} />;
   return (
@@ -29,7 +35,7 @@ export function DanhSachBai({ ds, nhom = false, an = [] }: { ds: Bai[]; nhom?: b
         if (cua.length === 0) return null;
         return (
           <div key={loai} className="ds-nhom">
-            <h2>{TEN_LOAI[loai]}</h2>
+            <TieuDeNhom>{TEN_LOAI[loai]}</TieuDeNhom>
             <CacBai ds={cua} an={an} />
           </div>
         );

@@ -75,8 +75,10 @@ const DIEU = [
  * Các liên kết có `data-topic` ở khắp trang chủ chọn sẵn chủ đề tương ứng; ở
  * trang /gui-cau-hoi, chủ đề đến từ tham số `?chu-de=` của địa chỉ.
  *
- * Bản xem trước: chưa gửi đi đâu, như bản mẫu. Phiên S5 nối nơi nhận thư,
- * chống spam và trang cảm ơn (docs/06; docs/07, mục A5, E3).
+ * Chưa gửi đi đâu: phiên S5 nối nơi nhận thư, chống spam và trang cảm ơn
+ * (docs/06; docs/07, mục A5, E3). Bản xem trước hiện lời báo “đã nhận” như bản
+ * mẫu. Bản thật chưa có nơi nhận thư (`baoDaNhan` tắt) thì không được báo đã
+ * nhận, và giữ nguyên chữ người đọc đã viết (docs/10, “Thêm sau S4”).
  */
 const khongDoi = () => () => {};
 
@@ -85,7 +87,7 @@ function docChuDeTuDiaChi(): ChuDeThu | null {
   return ma && ma in CHU_DE_THU ? (ma as ChuDeThu) : null;
 }
 
-export function ThuGuiToi() {
+export function ThuGuiToi({ baoDaNhan }: { baoDaNhan: boolean }) {
   // Trang /gui-cau-hoi: chủ đề do liên kết ở trang khác mang theo (lib/lien-ket.ts).
   const tuDiaChi = useSyncExternalStore(khongDoi, docChuDeTuDiaChi, () => null);
   const [daChon, setChuDe] = useState<ChuDeThu | null>(null);
@@ -119,6 +121,12 @@ export function ThuGuiToi() {
       ok.focus();
       return;
     }
+    if (!baoDaNhan) {
+      // CẦN: lời mời liên hệ qua kênh khác khi chưa có nơi nhận thư (docs/07, mục A5).
+      // Bản mẫu và docs/nguon chưa có chữ này, nên tạm thời không báo gì.
+      setLoiNhan(null);
+      return;
+    }
     setLoiNhan({
       chu: "Tôi đã nhận được lá thư của bạn. Cảm ơn bạn đã tin mà gửi cho tôi. Tôi sẽ hồi âm trong ngày.",
       loi: false,
@@ -130,7 +138,7 @@ export function ThuGuiToi() {
 
   return (
     // Biểu mẫu chưa gửi thư đi đâu (docs/07, mục A5, E3).
-    <form id="askForm" noValidate onSubmit={gui} data-can="A5: chưa có nơi nhận thư">
+    <form id="askForm" noValidate onSubmit={gui} data-can={baoDaNhan ? "A5: chưa có nơi nhận thư" : "A5: chưa có nơi nhận thư; chờ chữ mời liên hệ kênh khác"}>
       <fieldset className="sd-topic">
         <legend>Bạn viết thư về điều gì?</legend>
         <div className="sd-chips">

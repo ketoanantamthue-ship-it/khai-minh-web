@@ -28,10 +28,10 @@ export default function TroNang() {
       }
     >
       <KhoiGiay>
-        <MucGiay id="cach-dung" tieuDe="Chữ lớn, dễ đọc">
+        <MucGiay id="cach-dung" tieuDe="Chữ lớn, dễ đọc" cho>
           <OCan ma="C14" />
         </MucGiay>
-        <MucGiay id="ban-nhe" tieuDe="Bản nhẹ cho máy yếu">
+        <MucGiay id="ban-nhe" tieuDe="Bản nhẹ cho máy yếu" cho>
           <OCan ma="C14" />
         </MucGiay>
       </KhoiGiay>

@@ -6,9 +6,9 @@ import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { docChinChang } from "@/lib/chang";
 import { doors, DOOR_KEYS } from "@/lib/doors";
 import { khoHienThi } from "@/lib/kho";
-import { locLoai, TEN_LOAI } from "@/lib/noi-dung";
+import { baiCongKhai, locLoai, TEN_LOAI } from "@/lib/noi-dung";
 import { SAU_TANG } from "@/lib/sau-tang";
-import { doThi, nutDuongDan, taoMetadata, type MucDuongDan } from "@/lib/seo";
+import { doThi, nutDuongDan, SO_BAI_DE_LAP_CHI_MUC, taoMetadata, type MucDuongDan } from "@/lib/seo";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 
@@ -22,7 +22,16 @@ const VUN: MucDuongDan[] = [
   { ten: TEN_LOAI.viet, duongDan: "/viet" },
 ];
 
-export const metadata = taoMetadata({ tieuDe: "Bài viết của Khai Minh", duongDan: "/viet" });
+/**
+ * Ít hơn ba bài đã đăng thì `noindex, follow` (docs/10, mục R5).
+ * CẦN: câu mô tả cho máy tìm kiếm; bản mẫu và docs/nguon chưa có chữ cho kho
+ * bài viết (docs/07, mục C11). Tới khi có, trang dùng mô tả chung của layout.
+ */
+export const metadata = taoMetadata({
+  tieuDe: "Bài viết của Khai Minh",
+  duongDan: "/viet",
+  mong: locLoai(baiCongKhai(), "viet").length < SO_BAI_DE_LAP_CHI_MUC,
+});
 
 export default function TrangViet() {
   const ds = locLoai(khoHienThi(), "viet");

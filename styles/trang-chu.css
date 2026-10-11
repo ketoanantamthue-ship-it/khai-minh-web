@@ -29,7 +29,9 @@
 
 /* ===== Mặt sơn mài ===== */
 .km-tc .lacquer{position:relative;background:var(--lac);isolation:isolate;overflow:hidden}
-.km-tc .lacquer::before{content:"";position:absolute;inset:-10%;z-index:-2;
+/* Mép trên tính theo vh, không theo % chiều cao: khi phần mở cao thêm lúc tải
+   phông, lớp nền không bị dời xuống, nên không tính là xô lệch bố cục (docs/10, R11). */
+.km-tc .lacquer::before{content:"";position:absolute;inset:-10vh -10% -10%;z-index:-2;
   background:
    radial-gradient(120% 80% at 18% 30%, rgba(58,20,16,.55), transparent 60%),
    radial-gradient(90% 70% at 85% 75%, rgba(26,47,78,.35), transparent 65%);
@@ -51,8 +53,13 @@
 .km-tc .intro{padding:0 var(--pad);max-width:1280px}
 .km-tc .intro h1{margin:0;font-weight:400;color:var(--on)}
 .km-tc .intro h1 .a{display:block;font-size:clamp(44px,5.6vw,84px);line-height:1;letter-spacing:-.02em}
-.km-tc .intro h1 .b{display:block;margin-top:clamp(14px,2vh,22px);font-style:italic;font-size:clamp(24px,2.5vw,38px);line-height:1.28;letter-spacing:-.005em;color:var(--cream-gold);max-width:30ch}
-.km-tc .intro .second{margin:clamp(24px,3.6vh,38px) 0 0;max-width:38ch;font-size:clamp(18px,1.4vw,21px);line-height:1.62;color:var(--on-2)}
+.km-tc .intro h1 .b{display:block;margin-top:clamp(14px,2vh,22px);font-style:italic;font-size:clamp(24px,2.5vw,38px);line-height:1.28;letter-spacing:-.005em;color:var(--cream-gold);max-width:16.77em}
+/* Màn đầu đổi `ch` sang `em` theo đúng chiều rộng chữ “0” của phông (Noto Serif
+   0,559em; Be Vietnam Pro 400 là 0,676em): Chrome tính lại `ch` chậm một nhịp khi
+   phông vừa tải xong, chữ xuống dòng sai trong chốc lát rồi trở lại, làm trang
+   chủ xô lệch bố cục (docs/10, mục R11). 30ch = 16,77em; 38ch = 25,69em;
+   26ch (Noto Serif 500, 0,561em) = 14,59em; 58ch = 39,21em. */
+.km-tc .intro .second{margin:clamp(24px,3.6vh,38px) 0 0;max-width:25.69em;font-size:clamp(18px,1.4vw,21px);line-height:1.62;color:var(--on-2)}
 .km-tc .intro .second b{font-weight:500;color:var(--on)}
 .km-tc .reveal-1{opacity:0;transform:translateY(10px);filter:blur(4px);animation:rise 1.4s var(--ease) .2s forwards}
 .km-tc .reveal-2{opacity:0;transform:translateY(10px);filter:blur(4px);animation:rise 1.4s var(--ease) .55s forwards}
@@ -281,8 +288,8 @@ padding:44px var(--pad) calc(env(safe-area-inset-bottom,0px) + 40px);display:gri
 .km-tc .cta-soft:focus-visible,.km-tc .cta-main:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
 
 /* ===== Phần chọn chặng ===== */
-.km-tc .pick-h{padding:0 var(--pad);margin:0;font-weight:500;font-size:clamp(25px,2.6vw,38px);line-height:1.22;color:var(--on);max-width:26ch;scroll-margin-top:80px}
-.km-tc .pick-sub{padding:0 var(--pad);margin:12px 0 26px;font-size:clamp(16px,1.2vw,18px);line-height:1.6;color:var(--on-2);max-width:58ch}
+.km-tc .pick-h{padding:0 var(--pad);margin:0;font-weight:500;font-size:clamp(25px,2.6vw,38px);line-height:1.22;color:var(--on);max-width:14.59em;scroll-margin-top:80px}
+.km-tc .pick-sub{padding:0 var(--pad);margin:12px 0 26px;font-size:clamp(16px,1.2vw,18px);line-height:1.6;color:var(--on-2);max-width:39.21em}
 .km-tc .life .ask{font-family:var(--sans)!important;font-style:normal!important;font-size:14.5px!important;color:var(--on-2)!important;margin-bottom:12px!important}
 .km-tc .asker button{border-radius:4px!important}
 
@@ -626,7 +633,7 @@ body.mzs-lock{overflow:hidden}
 .km-tc .pn button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 
 /* ===== Nền vũ trụ ===== */
-.km-tc .cosmos{position:absolute;inset:-3%;z-index:-1;background:#0B0806 url("/assets/img/vu-tru.jpg") 0% 60%/135% auto no-repeat;opacity:.92;will-change:transform;transform:scale(1.04)}
+.km-tc .cosmos{position:absolute;inset:-3vh -3% -3%;z-index:-1;background:#0B0806 url("/assets/img/vu-tru.jpg") 0% 60%/135% auto no-repeat;opacity:.92;will-change:transform;transform:scale(1.04)}
 @media (max-width:859px){.km-tc .cosmos{background-size:cover;background-image:url("/assets/img/vu-tru-dien-thoai.jpg");background-position:center 30%}}
 .km-tc .open::before{opacity:.55}
 
