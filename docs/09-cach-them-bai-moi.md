@@ -147,6 +147,15 @@ Bước 1, 2, 3 nằm ở phần đầu tệp. Bước 9 và 10 do web tự dự
 
 Bước 5 và bước 6 mà thiếu thẻ `<NhanTinCay>` thì bài không đăng được.
 
+**Phần thêm được phép.** Ngoài năm tiêu đề trên, bạn có thể thêm tiêu đề `##` của riêng bài, miễn năm tiêu đề bắt buộc vẫn đúng chữ và đúng thứ tự. Bài Q001 là mẫu nên theo:
+
+- Mở bài bằng vài câu thư, rồi hộp `<YChinh>` với ba ý cốt lõi, để người đọc nắm ý trước khi đọc sâu.
+- `## Dấu hiệu bạn đang ở trong khoảng trống này` (đổi chữ theo bài), đặt trước bước 4: năm đến bảy cảnh đời rất cụ thể, để người đọc thấy mình.
+- `## Câu hỏi thường gặp`, đặt sau bước 8: hai đến bốn câu hỏi phụ người ta hay gõ lên Google, mỗi câu là một tiêu đề `###`, trả lời ngay câu đầu.
+- `## Trước khi bạn gấp lá thư này`: lời kết và chữ ký.
+
+Từ khóa Phật học, tâm lý học và huyền học (ví dụ: Tứ Diệu Đế, vô thường, khủng hoảng tuổi trung niên, đại vận) nên nằm tự nhiên trong câu, nhất là ở câu đầu mỗi phần. Không nhồi từ khóa vào câu không cần nó.
+
 Đầu mỗi bài, web tự hiện **thời gian đọc** và **mục lục nhỏ** dẫn tới năm tiêu đề trên. Bạn không phải viết gì thêm.
 
 Giữa các đoạn văn để một dòng trống. Muốn in nghiêng thì bọc chữ bằng `*…*`, in đậm thì `**…**`.
@@ -162,11 +171,13 @@ Giữa các đoạn văn để một dòng trống. Muốn in nghiêng thì bọ
 | Video YouTube | Một video đặt giữa bài | `<VideoYouTube id="mã 11 ký tự" tieuDe="…" loiThoai="…" />` |
 | Bản đọc | Bản ghi âm đặt giữa bài | `<AmThanh src="/am-thanh/….mp3" thoiLuong="8 phút" />` |
 | Ảnh | Một ảnh trong bài | `<Anh src="/assets/img/….webp" alt="Mô tả bằng tiếng Việt" chuThich="…" />` |
+| Ba điều cần nhớ | Ba ý cốt lõi, đặt ngay sau lời mở | `<YChinh>` xuống dòng, danh sách đánh số `1.` `2.` `3.`, xuống dòng, `</YChinh>` |
+| Chỗ đặt ảnh | Đã biết sẽ đặt ảnh gì nhưng chưa có ảnh | `<Anh cho="Mô tả ảnh cần chụp hay vẽ" />` |
 | Bảng soi ba lớp | Đặt nhân quả, khoa học, huyền học cạnh nhau | `<BangSoiBaLop nhanQua="…" tinCayNhanQua="…" khoaHoc="…" tinCayKhoaHoc="…" huyenHoc="…" tinCayHuyenHoc="…" />` |
 
 Với nhãn tin cậy có chữ khác bốn mức trên, thêm màu: `lop="l1"` (vàng), `l2` (xanh ngọc), `l3` (đỏ son), `l4` (xanh lá).
 
-Bốn thẻ cuối **không hiện gì khi thiếu dữ liệu** (thiếu mã video, thiếu tệp, thiếu `alt`, ô trống). Video chỉ hiện ảnh bìa; người đọc bấm vào mới tải trình phát của YouTube. Trong bảng soi ba lớp, ô nào có chữ thì nên có nhãn tin cậy của ô ấy.
+Video, bản đọc, ảnh và bảng soi ba lớp **không hiện gì khi thiếu dữ liệu** (thiếu mã video, thiếu tệp, thiếu `alt`, ô trống). Riêng ảnh có `cho="…"`, cùng ảnh đầu bài và video của bài hỏi – đáp, hiện thành **khung chờ có viền đứt** trên bản xem trước, để đội thấy chỗ sẽ đặt; trên web thật, khung chờ không hiện. Khi có chất liệu, điền mục `anh_bia` và `video` ở phần đầu tệp, hoặc thêm `src` và `alt` cho thẻ ảnh. Video chỉ hiện ảnh bìa; người đọc bấm vào mới tải trình phát của YouTube. Trong bảng soi ba lớp, ô nào có chữ thì nên có nhãn tin cậy của ô ấy.
 
 ### Chỗ còn thiếu
 

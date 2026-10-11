@@ -34,7 +34,7 @@ import { KhoiTacGia } from "./KhoiTacGia";
 import { LienQuan } from "./LienQuan";
 import { ManDauBai } from "./ManDauBai";
 import { ThanMdx } from "./Mdx";
-import { AmThanh, Anh } from "./ThanhPhanMdx";
+import { AmThanh, Anh, KhungCho } from "./ThanhPhanMdx";
 import { VideoYouTube } from "./VideoYouTube";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
@@ -136,8 +136,20 @@ function DauBai({ bai }: { bai: Bai }) {
           </ol>
         </nav>
       ) : null}
-      <Anh src={anh_bia?.src} alt={anh_bia?.alt} chuThich={anh_bia?.chu_thich} />
-      <VideoYouTube id={video?.id} tieuDe={video?.tieu_de} loiThoai={video?.loi_thoai} />
+      <Anh
+        src={anh_bia?.src}
+        alt={anh_bia?.alt}
+        chuThich={anh_bia?.chu_thich}
+        cho={bai.loai === "hoi" ? "Ảnh đầu bài, cũng là ảnh hiện ra khi bài được chia sẻ (mục anh_bia)." : undefined}
+      />
+      {video?.id ? (
+        <VideoYouTube id={video.id} tieuDe={video.tieu_de} loiThoai={video.loi_thoai} />
+      ) : bai.loai === "hoi" ? (
+        <KhungCho
+          loai="video"
+          moTa="Bài giảng chuyên sâu của Khai Minh cho câu hỏi này, kèm lời thoại đầy đủ (mục video)."
+        />
+      ) : null}
     </div>
   );
 }

@@ -63,6 +63,20 @@
 .km-bai .am-thanh .am-tl{font-family:var(--sans);font-size:15px;color:var(--body-ink)}
 .km-bai .am-thanh audio{display:block;width:100%}
 
+/* Hộp “Ba điều cần nhớ” */
+.km-bai .y-chinh{margin:6px 0 30px;padding:18px 20px 8px;max-width:66ch;border:1px solid rgba(124,90,30,.3);border-left:4px solid var(--gold-text);border-radius:4px;background:#FBF7EE}
+.km-bai .bai-than .y-chinh-tieu{margin:0 0 10px;font-family:var(--serif);font-size:19px;color:var(--ink)}
+.km-bai .bai-than .y-chinh ol,.km-bai .bai-than .y-chinh ul{margin:0 0 10px}
+.km-bai .bai-than .y-chinh li{font-size:17px;color:var(--ink)}
+
+/* Khung chờ chất liệu: chỉ hiện trên bản xem trước */
+.km-bai .khung-cho{margin:26px 0;max-width:760px}
+.km-bai .khung-cho-o{display:grid;place-content:center;gap:6px;padding:18px;text-align:center;border:1.5px dashed rgba(124,90,30,.55);border-radius:4px;background:repeating-linear-gradient(135deg,#F3ECDD 0 12px,#EFE6D2 12px 24px);color:var(--ink-2)}
+.km-bai .khung-cho-video .khung-cho-o{aspect-ratio:16/9}
+.km-bai .khung-cho-anh .khung-cho-o{aspect-ratio:3/2}
+.km-bai .khung-cho-o b{font-family:var(--serif);font-size:18px;font-weight:500;color:var(--ink)}
+.km-bai .khung-cho-o span{font-size:15px;max-width:44ch;margin:0 auto}
+
 /* Ảnh và video trong bài */
 .km-bai .anh-bai,.km-bai .video-yt{margin:26px 0;max-width:760px}
 .km-bai .anh-bai img{display:block;width:100%;height:auto;border-radius:3px}
