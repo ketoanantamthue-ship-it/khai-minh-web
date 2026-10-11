@@ -66,7 +66,7 @@ test.describe("Schema và trạng thái bài (lib/noi-dung.ts)", () => {
     expect(baiCongKhai().some((b) => b.trangThai !== "da-dang")).toBe(false);
   });
 
-  test("bài mẫu Q001 theo khuôn chín bước và chỉ dùng chữ của chặng 5", () => {
+  test("bài Q001 theo khuôn mười bước và không chép lại chữ của trang chặng 5", () => {
     const q = docKho().find((b) => b.duongDan === Q001)!;
     if (q.loai !== "hoi") throw new Error("Q001 phải là bài hỏi – đáp");
     expect(q.tieuDe).toBe(TIEU_DE_Q001);
@@ -76,17 +76,12 @@ test.describe("Schema và trạng thái bài (lib/noi-dung.ts)", () => {
     // Năm bước trong thân bài đủ, đúng thứ tự, phần huyền học và khoa học có nhãn riêng.
     expect(q.thieu.filter((t) => t.startsWith("bước"))).toEqual([]);
 
-    // Mọi câu khách đọc được đều có sẵn trong tệp chặng 5.
+    // Tình cảnh và trả lời ngắn viết riêng cho bài, không trùng trang chặng 5
+    // (trùng chữ thì Google chỉ chọn một trong hai trang).
     const chang5 = readFileSync(join(process.cwd(), "content", "chang", "05-tuoi-giua-doi.mdx"), "utf8");
-    const than = q.than
-      .replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
-      .replace(/<[^>]+>/g, "\n")
-      .split("\n")
-      .map((d) => d.replace(/^(##|\d+\.)\s+/, "").trim())
-      .filter((d) => d && !(BUOC_HOI as readonly string[]).includes(d));
-    const cau = [q.fm.tinh_canh!, q.fm.tra_loi_ngan!, ...than].flatMap((d) => d.match(/[^.?!]+[.?!]/g) ?? [d]);
-    const ngoai = cau.map((c) => c.trim()).filter((c) => !chang5.includes(c));
-    expect(ngoai, "câu không có trong chặng 5").toEqual([]);
+    const cau = [q.fm.tinh_canh!, q.fm.tra_loi_ngan!].flatMap((d) => d.match(/[^.?!]+[.?!]/g) ?? [d]);
+    const trung = cau.map((c) => c.trim()).filter((c) => chang5.includes(c));
+    expect(trung, "câu trùng với trang chặng 5").toEqual([]);
   });
 
   test("production chỉ có bài da-dang; bản xem trước có mọi bài; tệp “_” không thành trang", () => {
@@ -124,21 +119,28 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     await page.goto(Q001);
     await expect(page.locator("main h1")).toHaveText(TIEU_DE_Q001);
     await expect(page.locator(".dai-nhap")).toContainText("Bản nháp");
-    await expect(page.locator(".hero .soi")).toContainText("Có những tối bạn ngồi lại trong xe");
-    await expect(page.locator(".tl-ngan")).toContainText("Nó cần được nhìn cho rõ, từng lớp một.");
+    await expect(page.locator(".hero .soi")).toContainText("Bạn đã có mái nhà");
+    await expect(page.locator(".tl-ngan")).toContainText("Nó cần được nhìn rõ, chưa cần lấp đầy.");
     const h2 = await page.locator("main h2").allTextContents();
     expect(h2.slice(0, 5)).toEqual([...BUOC_HOI]);
     expect(BUOC_HOI).toHaveLength(5);
+    // Nhãn riêng của bước huyền học và khoa học, rồi ba nhãn của bảng soi ba lớp.
     await expect(page.locator(".bai-than .label")).toHaveText([
-      "Câu nói dân gian: niềm tin truyền thống",
-      "Điều đang được nghiên cứu",
+      "Luận giải mệnh lý: giả thuyết để bạn tự kiểm chứng",
+      "Đang được nghiên cứu",
+      "Niềm tin truyền thống",
+      "Đang được nghiên cứu",
+      "Luận giải mệnh lý",
     ]);
     expect(h2).toContain("Những câu hỏi khác người ta hay mang ở chặng này");
     expect(h2).toContain("Tác giả và nguồn");
     await expect(page.locator(".bai-tg")).toContainText("Người Khai Vấn (Khai Minh)");
     await expect(page.locator(".bai-tg")).toContainText("Kinh Thiện Sinh, Trường Bộ 31 (diễn ý)");
-    await expect(page.locator(".bai-than .quote cite")).toHaveText("Diễn ý Kinh Thiện Sinh, Trường Bộ 31");
-    await expect(page.locator(".bai-than .o-can[data-can='C1']")).toHaveCount(4);
+    await expect(page.locator(".bai-than .quote cite")).toHaveText([
+      "Diễn ý Kinh Chuyển Pháp Luân, Tương Ưng Bộ 56.11",
+      "Diễn ý Kinh Thiện Sinh, Trường Bộ 31",
+    ]);
+    await expect(page.locator(".bai-than .o-can")).toHaveCount(0);
     const chu = (await page.locator("main").textContent()) ?? "";
     expect(chu).not.toMatch(/CẦN|ghi_chu|Bài mẫu S3/);
     // Một lời mời chính, ở cuối trang.
@@ -150,14 +152,15 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     await expect(page.locator(".phut-doc")).toHaveText(/^Bạn đọc bài này trong khoảng \d+ phút\.$/);
     await expect(page.getByRole("navigation", { name: "Bài này có các phần:" })).toBeVisible();
     const muc = page.locator("nav.muc-bai a");
-    await expect(muc).toHaveText([...BUOC_HOI]);
+    await expect(muc).toHaveText([...BUOC_HOI, "Trước khi bạn gấp lá thư này"]);
     for (const href of await muc.evaluateAll((as) => as.map((a) => a.getAttribute("href")!))) {
       await expect(page.locator(`main h2${href}`)).toHaveCount(1);
     }
     await muc.nth(2).click();
     await expect(page).toHaveURL(/#khoa-hoc-noi-gi$/);
-    // Chưa có video, bản đọc, ảnh đầu bài: không hiện khung nào.
-    await expect(page.locator(".video-yt, .am-thanh, .anh-bai, .ba-lop")).toHaveCount(0);
+    // Chưa có video, bản đọc, ảnh đầu bài: không hiện khung nào. Bảng soi ba lớp có chữ nên hiện.
+    await expect(page.locator(".video-yt, .am-thanh, .anh-bai")).toHaveCount(0);
+    await expect(page.locator(".ba-lop .ba-lop-o")).toHaveCount(3);
   });
 
   test("thân bài 17 px, giãn dòng 1,75, cột chữ tối đa khoảng 66 ký tự", async ({ page }) => {
@@ -188,7 +191,7 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
   test("chữ nằm sẵn trong HTML do server dựng (không cần JavaScript)", async ({ request }) => {
     const html = (await (await request.get(Q001)).text()).replace(/&quot;/g, '"');
     expect(html).toContain(`<h1>${TIEU_DE_Q001}</h1>`);
-    expect(html).toContain("Khoảng trống ở giữa đời không cần lấp ngay.");
+    expect(html).toContain("Khoảng trống giữa đời là lúc tâm bắt đầu hỏi đúng câu.");
     expect(html).toContain("Diễn ý Kinh Thiện Sinh, Trường Bộ 31");
   });
 
@@ -234,7 +237,7 @@ test.describe("SEO: metadata, JSON-LD, sitemap, robots, ảnh chia sẻ", () => 
     const g = await docJsonLd(page);
     const bai = g.find((n) => n["@type"] === "Article")!;
     expect(bai.headline).toBe(await page.locator("main h1").textContent());
-    expect(bai.datePublished).toBe("2026-10-09");
+    expect(bai.datePublished).toBe("2026-10-11");
     expect((bai.author as Nut)["@id"]).toBe(g.find((n) => n["@type"] === "Person")!["@id"]);
     // Mọi tham chiếu @id đều trỏ tới một nút có trong khối.
     const ids = new Set(g.map((n) => n["@id"]).filter(Boolean));
