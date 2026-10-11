@@ -76,7 +76,8 @@ const DIEU = [
  * trang /gui-cau-hoi, chủ đề đến từ tham số `?chu-de=` của địa chỉ.
  *
  * Bản xem trước: chưa gửi đi đâu, như bản mẫu. Phiên S5 nối nơi nhận thư,
- * chống spam và trang cảm ơn (docs/06; docs/07, mục A5, E3).
+ * chống spam và trang cảm ơn (docs/06; docs/07, mục A5, E3). Bản thật chưa có
+ * nơi nhận thư thì không dựng lá thư (GuiCauHoi, `siteConfig.moLoiThu`).
  */
 const khongDoi = () => () => {};
 

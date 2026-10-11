@@ -7,6 +7,8 @@ import { useState, type FormEvent } from "react";
  *
  * Như bản mẫu, đây mới là bản xem trước: bấm gửi thì hiện lời cảm ơn nhưng
  * địa chỉ thư chưa được gửi đi đâu (docs/07, mục A5 và E18; phiên S5).
+ * Bản thật chưa có nơi nhận thư thì nơi dùng ô này không dựng nó
+ * (`siteConfig.moLoiThu`; docs/07, mục A18).
  */
 export function FormNhanThu({ id, nut, camOn }: { id: string; nut: string; camOn: string }) {
   const [loi, setLoi] = useState(false);

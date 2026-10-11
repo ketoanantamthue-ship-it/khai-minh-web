@@ -19,6 +19,9 @@ import { LOI_CHAO_CONG, NGUOI_HOI_CHU } from "./chu";
  * - Focus trap; Esc tương đương "Vào thẳng trang"; phía sau cổng là `inert`.
  * - Âm thanh mặc định tắt, lựa chọn lưu ở localStorage `km-sound`.
  * - Lựa chọn "thắp đèn cho ai" được truyền xuống trục "bạn đang lo cho ai".
+ * - Ảnh bình minh chỉ tải khi khách chạm vào cổng lần đầu (docs/10, mục R13):
+ *   lúc mở trang chỉ tải ảnh đêm, để ảnh đầu tiên hiện nhanh trên mạng chậm.
+ *   Bình minh chỉ bắt đầu sau khi khách chọn, nên ảnh luôn kịp tải.
  *
  * Trạng thái đặt trên phần tử gốc, luôn có tiền tố `mzs-` (CLAUDE.md, quy tắc 11).
  */
@@ -54,6 +57,7 @@ export function CanhCong() {
   const cham = useManHinhCham();
   const [loiChao, setLoiChao] = useState("");
   const [chon, setChon] = useState<NguoiHoi | "" | null>(null);
+  const [taiBinhMinh, setTaiBinhMinh] = useState(false);
   const goc = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -90,6 +94,15 @@ export function CanhCong() {
       });
     };
     huy.push(bayFocus(g));
+
+    /* ---------- Tải ảnh bình minh khi khách chạm cổng lần đầu ---------- */
+    const taiAnh = () => setTaiBinhMinh(true);
+    g.addEventListener("pointerdown", taiAnh, { once: true, capture: true });
+    g.addEventListener("keydown", taiAnh, { once: true, capture: true });
+    huy.push(() => {
+      g.removeEventListener("pointerdown", taiAnh, { capture: true });
+      g.removeEventListener("keydown", taiAnh, { capture: true });
+    });
 
     const art = g.querySelector<HTMLElement>(".mz-art")!;
     const lamp = g.querySelector<HTMLElement>(".mz-lamp")!;
@@ -355,6 +368,7 @@ export function CanhCong() {
 
     const choose = (a: NguoiHoi | "") => {
       if (g.classList.contains("mzs-chosen")) return;
+      setTaiBinhMinh(true);
       choice = a || null;
       revealAll();
       setChon(a);
@@ -470,8 +484,8 @@ export function CanhCong() {
         <span className="mz-warm" />
         <img
           className="mz-dawn-img"
-          src="/assets/img/mo-cua-sang.webp"
-          srcSet="/assets/img/mo-cua-sang-720.webp 720w, /assets/img/mo-cua-sang.webp 1152w"
+          src={taiBinhMinh ? "/assets/img/mo-cua-sang.webp" : undefined}
+          srcSet={taiBinhMinh ? "/assets/img/mo-cua-sang-720.webp 720w, /assets/img/mo-cua-sang.webp 1152w" : undefined}
           sizes="57vh"
           alt=""
           width={1152}

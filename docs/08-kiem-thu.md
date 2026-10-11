@@ -24,7 +24,7 @@ Chụp từng phần ở các khổ 390×844, 768×1024 và 1366×768, đặt c�
 
 ## 3. Hiệu năng (Lighthouse, giả lập điện thoại)
 
-Đạt các ngưỡng LCP, CLS, INP và dung lượng JS ở docs/05 mục 2. Điểm Accessibility và SEO của Lighthouse phải đạt 100. Điểm Performance từ 90 trở lên cho trang bài; trang chủ có cổng thì từ 80 trở lên.
+Đạt các ngưỡng LCP, CLS, INP và dung lượng JS ở docs/05 mục 2. Dung lượng JS của trang con (dưới 160 KB đã nén) được kiểm tự động trong `tests/ra-soat-s4b.spec.ts`; đo tay cả LCP, CLS và JS bằng `node scripts/do-toc-do.mjs` khi một bản đang chạy ở cổng 3100. Điểm Accessibility và SEO của Lighthouse phải đạt 100. Điểm Performance từ 90 trở lên cho trang bài; trang chủ có cổng thì từ 80 trở lên.
 
 ## 4. Bằng tay (phiên S6)
 

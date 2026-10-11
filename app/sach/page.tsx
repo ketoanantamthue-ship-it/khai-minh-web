@@ -28,10 +28,10 @@ export default function Sach() {
     >
       <KhoiGiay>
         <KhoiSach coTieuDe={false} />
-        <MucGiay id="muc-luc-du-kien" tieuDe="Mục lục dự kiến">
+        <MucGiay id="muc-luc-du-kien" tieuDe="Mục lục dự kiến" cho>
           <OCan ma="C12" />
         </MucGiay>
-        <MucGiay id="doan-trich" tieuDe="Đoạn trích">
+        <MucGiay id="doan-trich" tieuDe="Đoạn trích" cho>
           <OCan ma="C12" />
         </MucGiay>
       </KhoiGiay>

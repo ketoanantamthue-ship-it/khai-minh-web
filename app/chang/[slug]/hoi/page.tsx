@@ -6,8 +6,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { LoiMoiGuiCauHoi } from "@/components/trang-con/LoiMoiGuiCauHoi";
 import { docChang, docChinChang, duongDanChang } from "@/lib/chang";
 import { khoHienThi } from "@/lib/kho";
-import { TEN_LOAI } from "@/lib/noi-dung";
-import { doThi, nutDuongDan, taoMetadata, type MucDuongDan } from "@/lib/seo";
+import { baiCongKhai, locLoai, TEN_LOAI } from "@/lib/noi-dung";
+import { doThi, nutDuongDan, SO_BAI_DE_LAP_CHI_MUC, taoMetadata, type MucDuongDan } from "@/lib/seo";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 
@@ -41,6 +41,8 @@ export async function generateMetadata({ params }: PageProps<"/chang/[slug]/hoi"
     tieuDe: `${TEN_LOAI.hoi} – ${c.ten}`,
     moTa: c.cau_hoi_chinh,
     duongDan: `${duongDanChang(c)}/hoi`,
+    // Ít hơn ba bài hỏi – đáp đã đăng ở chặng này thì `noindex, follow` (docs/10, mục R5).
+    mong: locLoai(baiCongKhai(), "hoi").filter((b) => b.chang === c.so).length < SO_BAI_DE_LAP_CHI_MUC,
   });
 }
 

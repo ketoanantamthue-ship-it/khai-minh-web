@@ -1,4 +1,5 @@
 import { hrefGuiCauHoi } from "@/lib/lien-ket";
+import { siteConfig } from "@/site.config";
 import { NgoiLaiCauHoi, PhuChanDung } from "./NguoiGiuHieuUng";
 
 /**
@@ -59,9 +60,11 @@ export function NguoiGiu({ noiKhac }: { noiKhac?: boolean } = {}) {
             </span>
           </div>
           <div className="kp-cta">
-            <a className="kp-ask" href={hrefGuiCauHoi(noiKhac, "q")} data-topic="q">
-              Gửi tôi một câu hỏi
-            </a>
+            {siteConfig.moLoiThu ? (
+              <a className="kp-ask" href={hrefGuiCauHoi(noiKhac, "q")} data-topic="q">
+                Gửi tôi một câu hỏi
+              </a>
+            ) : null}
             <a className="go" href={cauChuyen}>
               Đọc câu chuyện của tôi
             </a>
@@ -69,7 +72,7 @@ export function NguoiGiu({ noiKhac }: { noiKhac?: boolean } = {}) {
         </div>
       </div>
 
-      <NgoiLaiCauHoi noiKhac={noiKhac} />
+      <NgoiLaiCauHoi noiKhac={noiKhac} moLoiThu={siteConfig.moLoiThu} />
 
       <div className="kp-proof">
         <h3 className="kp-ph">Bạn không cần tin lời tôi. Đây là những điều bạn có thể tự kiểm chứng.</h3>
@@ -120,9 +123,11 @@ export function NguoiGiu({ noiKhac }: { noiKhac?: boolean } = {}) {
             </span>
             <span className="kp-b">Tôi không bán lễ giải hạn, bùa hay vật phẩm.</span>
             <span className="kp-s">Nếu có ai nhân danh tôi để bán những thứ ấy, xin bạn báo cho tôi biết.</span>
-            <a className="kp-a" href={hrefGuiCauHoi(noiKhac, "md")} data-topic="md">
-              Báo cho tôi ›
-            </a>
+            {siteConfig.moLoiThu ? (
+              <a className="kp-a" href={hrefGuiCauHoi(noiKhac, "md")} data-topic="md">
+                Báo cho tôi ›
+              </a>
+            ) : null}
           </li>
         </ul>
       </div>

@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { ManDauBai } from "@/components/bai/ManDauBai";
 import { JsonLd } from "@/components/JsonLd";
 import { doThi, nutDuongDan, type MucDuongDan } from "@/lib/seo";
+import { siteConfig } from "@/site.config";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 import "@/styles/khung.css";
@@ -63,8 +64,20 @@ export function KhoiTrangChu({ children }: { children: ReactNode }) {
   return <div className="km-tc">{children}</div>;
 }
 
-/** Một mục giấy có tiêu đề h2 và cột đọc. */
-export function MucGiay({ id, tieuDe, children }: { id?: string; tieuDe: string; children: ReactNode }) {
+/**
+ * Một mục giấy có tiêu đề h2 và cột đọc.
+ *
+ * `cho`: mục chỉ có ô chờ chất liệu (“Đang soạn”, chờ luật sư, khung ảnh).
+ * Bản thật không dựng cả mục, kể cả tiêu đề; bản xem trước giữ nguyên
+ * (docs/10, mục R7).
+ */
+export function MucGiay({ id, tieuDe, cho = false, children }: {
+  id?: string;
+  tieuDe: string;
+  cho?: boolean;
+  children: ReactNode;
+}) {
+  if (cho && siteConfig.laBanThat) return null;
   return (
     <section className="s" id={id} aria-labelledby={id ? `${id}-h` : undefined}>
       <div className="wrap bai-doc">
@@ -73,4 +86,12 @@ export function MucGiay({ id, tieuDe, children }: { id?: string; tieuDe: string;
       </div>
     </section>
   );
+}
+
+/**
+ * Khối chỉ có ô chờ chất liệu, không nằm trong một <MucGiay>: chỉ dựng ở bản
+ * xem trước (docs/10, mục R7).
+ */
+export function KhoiCho({ children }: { children: ReactNode }) {
+  return siteConfig.laBanThat ? null : <>{children}</>;
 }

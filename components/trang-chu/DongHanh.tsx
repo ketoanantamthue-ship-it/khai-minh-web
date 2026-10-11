@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { doors } from "@/lib/doors";
 import { hrefGuiCauHoi } from "@/lib/lien-ket";
+import { siteConfig } from "@/site.config";
 import { ConDuongTabs } from "./ConDuongTabs";
 
 /**
@@ -63,6 +64,8 @@ function BangTram({
  */
 export function DongHanh({ noiKhac }: { noiKhac?: boolean } = {}) {
   const bangTuSoi = `${doors.tam.href}#bac-thang`;
+  // Bản thật chưa có nơi nhận thư: ẩn các lối “Gửi thư xin…” (docs/07, mục A18).
+  const { moLoiThu } = siteConfig;
 
   return (
     <section className="lp" id="dong-hanh" aria-labelledby="h-ladder">
@@ -115,9 +118,11 @@ export function DongHanh({ noiKhac }: { noiKhac?: boolean } = {}) {
               mangVe="Một bản hồ sơ viết bằng lời đời thường, kèm vài câu hỏi để bạn tự soi tiếp."
               loiHen="Bạn làm bảng tự soi một cách trung thực, và nói thật với tôi chỗ nào đúng, chỗ nào chưa đúng."
             >
-              <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "hoso")} data-topic="hoso">
-                Gửi thư xin Hồ sơ Soi ›
-              </a>
+              {moLoiThu ? (
+                <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "hoso")} data-topic="hoso">
+                  Gửi thư xin Hồ sơ Soi ›
+                </a>
+              ) : null}
             </BangTram>,
             <BangTram
               key="3"
@@ -129,9 +134,11 @@ export function DongHanh({ noiKhac }: { noiKhac?: boolean } = {}) {
               mangVe="Một nếp thực tập bạn tự giữ được, và một ngày tốt nghiệp, khi bạn không còn cần tôi cầm đèn nữa."
               loiHen="Bạn giữ trọn bốn lời hẹn được viết ở bên dưới."
             >
-              <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "dong")} data-topic="dong">
-                Gửi thư xin đi cùng ›
-              </a>
+              {moLoiThu ? (
+                <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "dong")} data-topic="dong">
+                  Gửi thư xin đi cùng ›
+                </a>
+              ) : null}
             </BangTram>,
             <BangTram
               key="4"
@@ -143,9 +150,11 @@ export function DongHanh({ noiKhac }: { noiKhac?: boolean } = {}) {
               mangVe="Một chỗ an toàn để bạn nói hết, và những bước tiếp theo do chính bạn chọn."
               loiHen="Bạn đã đi qua Hồ sơ Soi, để chúng ta có chung một ngôn ngữ trước khi ngồi riêng."
             >
-              <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "tra")} data-topic="tra">
-                Hỏi về Trà thất ›
-              </a>
+              {moLoiThu ? (
+                <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "tra")} data-topic="tra">
+                  Hỏi về Trà thất ›
+                </a>
+              ) : null}
             </BangTram>,
           ]}
         />
@@ -214,12 +223,21 @@ export function DongHanh({ noiKhac }: { noiKhac?: boolean } = {}) {
             </div>
           </div>
           <div className="lp-cta">
-            <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "dong")} data-topic="dong">
-              Gửi thư xin đồng hành ›
-            </a>
-            <a className="lp-alt" href={bangTuSoi}>
-              Hoặc bắt đầu với Bảng tự soi, không cần hẹn ›
-            </a>
+            {moLoiThu ? (
+              <>
+                <a className="lp-go" href={hrefGuiCauHoi(noiKhac, "dong")} data-topic="dong">
+                  Gửi thư xin đồng hành ›
+                </a>
+                <a className="lp-alt" href={bangTuSoi}>
+                  Hoặc bắt đầu với Bảng tự soi, không cần hẹn ›
+                </a>
+              </>
+            ) : (
+              // Bản thật chưa có lá thư: chỉ còn lối Bảng tự soi, nên bỏ chữ “Hoặc” mở đầu (docs/07, mục A18).
+              <a className="lp-go" href={bangTuSoi}>
+                Bắt đầu Bảng tự soi ›
+              </a>
+            )}
           </div>
         </div>
       </div>

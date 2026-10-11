@@ -9,12 +9,13 @@ import { LoiMoiGuiCauHoi } from "@/components/trang-con/LoiMoiGuiCauHoi";
 import { ManDau } from "@/components/trang-con/ManDau";
 import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { OCan } from "@/components/trang-con/OCan";
-import { docChang, docChinChang, duongDanChang, lopNhanTinCay, type Chang, type TangSoi } from "@/lib/chang";
+import { docChang, docChinChang, duNamTang, duongDanChang, lopNhanTinCay, type Chang, type TangSoi } from "@/lib/chang";
 import { doors } from "@/lib/doors";
 import { khoHienThi } from "@/lib/kho";
 import { catMoTa } from "@/lib/noi-dung";
-import { doThi, nutDuongDan, taoMetadata } from "@/lib/seo";
+import { doThi, nutDuongDan, nutNguoi, nutToChuc, nutTrangWeb, nutWeb, taoMetadata } from "@/lib/seo";
 import { SAU_TANG, thangSauTang } from "@/lib/sau-tang";
+import { siteConfig } from "@/site.config";
 import "@/styles/trang-con.css";
 
 /**
@@ -24,6 +25,10 @@ import "@/styles/trang-con.css";
  * Chặng 5 có đủ chữ của bản mẫu trong trường `trang`. Tám chặng còn lại
  * dùng phần seed (câu hỏi, lời soi, lời chia sẻ, nguồn, mức tin cậy, câu hỏi
  * liên quan); phần nào chưa có chữ thì để ô CẦN (docs/07, mục C2).
+ *
+ * Bản thật (docs/10, mục R7): ô “Đang soạn” không được dựng, tầng chưa có chữ
+ * bỏ cả tiêu đề, và trang chặng chưa đủ năm tầng để `noindex, follow`, không
+ * vào sitemap. Bản xem trước giữ nguyên để đội viết thấy chỗ còn thiếu.
  */
 
 /** Tên năm tầng soi, đúng thứ tự (chữ của bản mẫu chang-5.html). */
@@ -49,11 +54,20 @@ export async function generateMetadata({ params }: PageProps<"/chang/[slug]">): 
   const c = docChang(slug);
   if (!c) return {};
   return taoMetadata({
-    tieuDe: `${c.ten} – Chặng ${c.so}`,
-    moTa: catMoTa(c.trang?.mo_ta ?? `${c.cau_hoi_chinh} ${c.soi}`),
+    tieuDe: tieuDeChang(c),
+    moTa: moTaChang(c),
     duongDan: duongDanChang(c),
     coAnhRieng: true,
+    mong: !duNamTang(c),
   });
+}
+
+function tieuDeChang(c: Chang): string {
+  return `${c.ten} – Chặng ${c.so}`;
+}
+
+function moTaChang(c: Chang): string {
+  return catMoTa(c.trang?.mo_ta ?? `${c.cau_hoi_chinh} ${c.soi}`);
 }
 
 export default async function TrangChang({ params }: PageProps<"/chang/[slug]">) {
@@ -67,15 +81,27 @@ export default async function TrangChang({ params }: PageProps<"/chang/[slug]">)
   const truoc = chin[c.so - 2];
   const sau = chin[c.so];
   const cauHoi = cauHoiCungChang(c.so, khoHienThi());
+  const tenChang = `Chặng ${c.so}: ${c.ten}`;
 
   return (
     <main id="main" className="km-con">
       <JsonLd
         duLieu={doThi(
+          // Trang này là gì, của ai, nói về chặng nào (docs/10, mục R14).
+          nutTrangWeb({
+            tieuDe: tieuDeChang(c),
+            moTa: moTaChang(c),
+            duongDan: duongDanChang(c),
+            chuDe: { ten: tenChang, moTa: c.do_tuoi },
+            coAnhRieng: true,
+          }),
           nutDuongDan([
             { ten: "Trang chủ", duongDan: "/" },
-            { ten: `Chặng ${c.so}: ${c.ten}`, duongDan: duongDanChang(c) },
+            { ten: tenChang, duongDan: duongDanChang(c) },
           ]),
+          nutNguoi(),
+          nutToChuc(),
+          nutWeb(),
         )}
       />
       <ManDau
@@ -132,7 +158,7 @@ export default async function TrangChang({ params }: PageProps<"/chang/[slug]">)
               return (
                 <article key={k} className="card">
                   <h3>Cửa {ten}</h3>
-                  {loi ? <p>{loi}</p> : <OCan ma={CAN_CHU} />}
+                  {loi ? <p>{loi}</p> : <OCan ma={CAN_CHU} anOBanThat />}
                   <Link className="more" href={doors[k].href}>
                     Xem cửa {ten}
                   </Link>
@@ -214,12 +240,14 @@ function PhanSeed({ c }: { c: Chang }) {
 }
 
 function TangSoiKhoi({ so, ten, tang }: { so: number; ten: string; tang?: TangSoi }) {
+  // Bản thật: tầng chưa có chữ không hiện cả tiêu đề (docs/10, mục R7).
+  if (!tang && siteConfig.laBanThat) return null;
   return (
     <>
       <h3 className="tg-h">
         {so}. {ten}
       </h3>
-      {!tang ? <OCan ma={CAN_CHU} /> : null}
+      {!tang ? <OCan ma={CAN_CHU} anOBanThat /> : null}
       {tang?.doan?.map((d) => (
         <p key={d} className="lede">
           {d}

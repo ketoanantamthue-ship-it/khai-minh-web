@@ -1,3 +1,4 @@
+import { BaiVietCua } from "@/components/trang-con/BaiVietCua";
 import { BaCuaKhac } from "@/components/trang-con/BaCuaKhac";
 import { FormNhanThu } from "@/components/trang-con/FormNhanThu";
 import { HieuUngTrangCon } from "@/components/trang-con/HieuUngTrangCon";
@@ -6,6 +7,7 @@ import { NguongBinhMinh } from "@/components/trang-con/NguongBinhMinh";
 import { doors, doorStyle } from "@/lib/doors";
 import { taoMetadata } from "@/lib/seo";
 import "@/styles/trang-con.css";
+import { siteConfig } from "@/site.config";
 
 export const metadata = taoMetadata({
   tieuDe: "Cửa Thân – Dưỡng sinh Trần Y Thư",
@@ -108,6 +110,8 @@ export default function CuaThan() {
         </div>
       </section>
 
+      <BaiVietCua cua="than" />
+
       <BaCuaKhac
         hienTai="than"
         tieuDe="Ngôi nhà này còn hai cánh cửa khác."
@@ -116,15 +120,21 @@ export default function CuaThan() {
       <section className="end" id="thu">
         <div className="wrap">
           <h2>Với mọi câu hỏi về bệnh, bác sĩ của bạn luôn là người nên hỏi đầu tiên.</h2>
-          <p>
-            Còn nếu bạn muốn hiểu thêm về cách sống thuận tự nhiên, mỗi tháng tôi gửi một lá thư, trong đó có một bài
-            dưỡng sinh có dẫn nguồn.
-          </p>
-          <FormNhanThu
-            id="thu-thang"
-            nut="Gửi thư cho tôi mỗi tháng"
-            camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
-          />
+          {/* Lời mời nhận thư: bản thật chưa có nơi nhận thư thì không dựng, câu nhắc
+              hỏi bác sĩ vẫn giữ (docs/07, mục A18). */}
+          {siteConfig.moLoiThu ? (
+            <>
+              <p>
+                Còn nếu bạn muốn hiểu thêm về cách sống thuận tự nhiên, mỗi tháng tôi gửi một lá thư, trong đó có một
+                bài dưỡng sinh có dẫn nguồn.
+              </p>
+              <FormNhanThu
+                id="thu-thang"
+                nut="Gửi thư cho tôi mỗi tháng"
+                camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
+              />
+            </>
+          ) : null}
         </div>
       </section>
       <HieuUngTrangCon />

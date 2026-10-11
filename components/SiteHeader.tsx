@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DOOR_KEYS } from "@/lib/doors";
+import { siteConfig } from "@/site.config";
 import { NutChuLon } from "./HienThiToggle";
 import { LienKetCua } from "./LienKetCua";
 import { NutMucLuc } from "./NutMucLuc";
@@ -12,11 +13,15 @@ import { VetMai } from "./VetMai";
  *
  * "Mục lục" mở lớp phủ trên trang chủ; ở trang khác là liên kết tới /muc-luc.
  * Cửa đang xem được đánh dấu bằng `aria-current` (LienKetCua).
+ *
+ * Liên kết về trang chủ không tải trước (`prefetch={false}`): tải trước trang
+ * chủ kéo theo toàn bộ hiệu ứng của nó (cổng, sao, đom đóm) vào mọi trang con
+ * (docs/10, mục R12).
  */
 export function SiteHeader() {
   return (
     <header className="top" id="dau-trang">
-      <Link className="mark brand" href="/" aria-label="Khai Minh, về trang chủ">
+      <Link className="mark brand" href="/" prefetch={false} aria-label="Khai Minh, về trang chủ">
         <VetMai size={38} animated />
         <span className="bt">
           KHAI MINH<span>Người Khai Vấn</span>
@@ -24,15 +29,18 @@ export function SiteHeader() {
       </Link>
       <div className="top-r">
         <nav className="topnav" aria-label="Ba cửa">
-          <Link className="dn" href="/#chang">
+          <Link className="dn" href="/#chang" prefetch={false}>
             Chín chặng
           </Link>
           {DOOR_KEYS.map((k) => (
             <LienKetCua key={k} cua={k} />
           ))}
-          <Link className="ask-link" href="/gui-cau-hoi">
-            Gửi một câu hỏi
-          </Link>
+          {/* Bản thật chưa có nơi nhận thư thì không có lối gửi thư (docs/07, mục A18). */}
+          {siteConfig.moLoiThu ? (
+            <Link className="ask-link" href="/gui-cau-hoi">
+              Gửi một câu hỏi
+            </Link>
+          ) : null}
         </nav>
         <NutChuLon nhan="Chữ lớn" />
         <NutMucLuc id="openIndex" />

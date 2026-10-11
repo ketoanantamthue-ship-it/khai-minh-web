@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { doors, doorStyle, type DoorKey } from "@/lib/doors";
+import { siteConfig } from "@/site.config";
 import { BaCuaHieuUng } from "./BaCuaHieuUng";
 
 /**
@@ -248,11 +249,14 @@ export function BaCua() {
                   </span>
                 </li>
               </ul>
-              <div className="room-act">
-                <a className="room-more" href={`${doors.tri.href}#thu`}>
-                  Nhận thư hằng tháng của tôi
-                </a>
-              </div>
+              {/* Bản thật chưa có nơi nhận thư: không mời nhận thư (docs/07, mục A18). */}
+              {siteConfig.moLoiThu ? (
+                <div className="room-act">
+                  <a className="room-more" href={`${doors.tri.href}#thu`}>
+                    Nhận thư hằng tháng của tôi
+                  </a>
+                </div>
+              ) : null}
             </Gian>
             <Gian
               cua="than"

@@ -1,4 +1,4 @@
-import { KhoiGiay, TrangKhung } from "@/components/khung/TrangKhung";
+import { KhoiCho, KhoiGiay, TrangKhung } from "@/components/khung/TrangKhung";
 import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { BiaTuSach, LOI_TU_SACH, TIEU_DE_TU_SACH } from "@/components/trang-con/TuSach";
 import { docChinChang } from "@/lib/chang";
@@ -24,18 +24,21 @@ export default function TuSach() {
       soi={LOI_TU_SACH}
     >
       <KhoiGiay>
-        <section className="s" aria-label="Sách gợi ý theo chín chặng">
-          <div className="wrap">
-            {docChinChang().map((c) => (
-              <div key={c.slug} className="tu-sach-chang">
-                <h2>
-                  Chặng {c.so}: {c.ten}
-                </h2>
-                <BiaTuSach tenChang={c.ten} />
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* 27 khung bìa trống (B7): bản thật chưa dựng (docs/10, mục R7). */}
+        <KhoiCho>
+          <section className="s" aria-label="Sách gợi ý theo chín chặng">
+            <div className="wrap">
+              {docChinChang().map((c) => (
+                <div key={c.slug} className="tu-sach-chang">
+                  <h2>
+                    Chặng {c.so}: {c.ten}
+                  </h2>
+                  <BiaTuSach tenChang={c.ten} />
+                </div>
+              ))}
+            </div>
+          </section>
+        </KhoiCho>
         <LoiMoiNhanThu />
       </KhoiGiay>
     </TrangKhung>

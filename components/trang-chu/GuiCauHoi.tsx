@@ -5,9 +5,12 @@ import { ChuTham, ThuGuiToi } from "./GuiCauHoiForm";
  * Phần IX · Gửi một câu hỏi (`#gui-cau-hoi`).
  *
  * Biểu mẫu vẫn là bản xem trước như bản mẫu: chưa gửi thư đi đâu. Phiên S5
- * nối nơi nhận thư (docs/07, mục A5 và E3).
+ * nối nơi nhận thư (docs/07, mục A5 và E3). Bản thật chưa có nơi nhận thư
+ * thì không dựng phần này (`siteConfig.moLoiThu`; docs/07, mục A18): vòng số
+ * La Mã ở góc tự bỏ qua phần IX khi không có.
  */
 export function GuiCauHoi() {
+  if (!siteConfig.moLoiThu) return null;
   const { capCuu, ngayMai } = siteConfig.khanCap;
 
   return (

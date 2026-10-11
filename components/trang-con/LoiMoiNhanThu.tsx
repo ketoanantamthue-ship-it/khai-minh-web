@@ -1,12 +1,15 @@
 import { FormNhanThu } from "./FormNhanThu";
+import { siteConfig } from "@/site.config";
 
 /**
  * Lời mời “Nhận thư hằng tháng” (`section.end#thu` của prototypes/cua-tri.html).
  * Dùng ở Cửa Trí và là lời mời chính của /viet, /thu và các bài trong kho
  * (Bản cuối: “/viet … Nhận thư hằng tháng”, “/thu … Nhận thư”).
- * Ô nhận thư vẫn là bản xem trước (docs/07, mục E18; phiên S5).
+ * Ô nhận thư vẫn là bản xem trước (docs/07, mục E18; phiên S5). Bản thật chưa
+ * có nơi nhận thư thì không dựng lời mời này (`siteConfig.moLoiThu`; mục A18).
  */
 export function LoiMoiNhanThu({ id = "thu", oId = "thu-thang" }: { id?: string; oId?: string }) {
+  if (!siteConfig.moLoiThu) return null;
   return (
     <section className="end" id={id}>
       <div className="wrap">

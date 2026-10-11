@@ -4,9 +4,10 @@ import { ManDauBai } from "@/components/bai/ManDauBai";
 import { JsonLd } from "@/components/JsonLd";
 import { LoiMoiNhanThu } from "@/components/trang-con/LoiMoiNhanThu";
 import { khoHienThi } from "@/lib/kho";
+import { baiCongKhai } from "@/lib/noi-dung";
 import { TEN_TANG } from "@/lib/nhan";
 import { SAU_TANG } from "@/lib/sau-tang";
-import { doThi, nutDuongDan, taoMetadata, type MucDuongDan } from "@/lib/seo";
+import { doThi, nutDuongDan, SO_BAI_DE_LAP_CHI_MUC, taoMetadata, type MucDuongDan } from "@/lib/seo";
 import "@/styles/trang-con.css";
 import "@/styles/bai.css";
 
@@ -36,7 +37,14 @@ function duongDanVun(t: NonNullable<ReturnType<typeof tim>>): MucDuongDan[] {
 export async function generateMetadata({ params }: PageProps<"/tang/[tang]">) {
   const t = tim((await params).tang);
   if (!t) return {};
-  return taoMetadata({ tieuDe: `${t.nhan} – Tầng ${TEN_TANG[t.ma]}`, duongDan: t.href });
+  // Mô tả: dòng phụ của tầng trong Mục lục (bản mẫu). Ít hơn ba bài đã đăng
+  // thì `noindex, follow` (docs/10, mục R5).
+  return taoMetadata({
+    tieuDe: `${t.nhan} – Tầng ${TEN_TANG[t.ma]}`,
+    moTa: `${t.nhan}: ${t.phu.charAt(0).toLowerCase()}${t.phu.slice(1)}.`,
+    duongDan: t.href,
+    mong: baiCongKhai().filter((b) => b.tang === t.ma).length < SO_BAI_DE_LAP_CHI_MUC,
+  });
 }
 
 export default async function TrangTang({ params }: PageProps<"/tang/[tang]">) {

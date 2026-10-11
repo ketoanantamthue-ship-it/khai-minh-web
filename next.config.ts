@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import { chuyenHuongChang } from "./lib/chuyen-huong";
+import { DOOR_KEYS } from "./lib/doors";
 import { kiemTraAnhTam } from "./lib/kiem-tra-build";
 import { danhSachAnhTam, siteConfig } from "./site.config";
 
@@ -21,6 +22,8 @@ export default function nextConfig(phase: string): NextConfig {
         ...chuyenHuongChang(),
         // Trang tác giả duy nhất là /khai-minh, có mục “Câu chuyện của tôi” (docs/01, mục E3).
         { source: "/cau-chuyen", destination: "/khai-minh#cau-chuyen", statusCode: 301 },
+        // Danh sách bài của mỗi cửa đã gộp vào cuối trang cửa (docs/10, mục R6).
+        ...DOOR_KEYS.map((k) => ({ source: `/cua/${k}`, destination: `/${k}#bai-viet`, statusCode: 301 as const })),
       ];
     },
     async headers() {

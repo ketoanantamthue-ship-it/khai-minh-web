@@ -1,3 +1,4 @@
+import { siteConfig } from "@/site.config";
 import { FormNhanThu } from "./FormNhanThu";
 
 export const TIEU_DE_SACH = "Tôi đang viết cuốn sách Soi – Thấu – Chuyển.";
@@ -36,13 +37,16 @@ export function KhoiSach({
             <li>Bách Khoa Cầm Tướng Học</li>
             <li>Bộ sách KHAI MỆNH, gồm nhiều tập ra dần theo năm tháng</li>
           </ul>
-          <div className="ky-form">
-            <FormNhanThu
-              id={oId}
-              nut="Báo cho tôi khi sách ra đời"
-              camOn="Cảm ơn bạn. Tôi sẽ báo cho bạn khi sách ra đời."
-            />
-          </div>
+          {/* Ô nhận thư: bản thật chưa có nơi nhận thư thì không dựng (docs/07, mục A18). */}
+          {siteConfig.moLoiThu ? (
+            <div className="ky-form">
+              <FormNhanThu
+                id={oId}
+                nut="Báo cho tôi khi sách ra đời"
+                camOn="Cảm ơn bạn. Tôi sẽ báo cho bạn khi sách ra đời."
+              />
+            </div>
+          ) : null}
         </div>
         {/* Bìa sách: chờ thiết kế bìa (docs/07, mục B11). */}
         <div className="slot r23" role="img" aria-label="Bìa sách" data-can="B11">

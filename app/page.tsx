@@ -13,8 +13,9 @@ import { NguoiGiu } from "@/components/trang-chu/NguoiGiu";
 import { ThanhRutGon, VongChuong } from "@/components/trang-chu/ThanhRutGon";
 import { TieuVuTru } from "@/components/trang-chu/TieuVuTru";
 import { JsonLd } from "@/components/JsonLd";
+import { siteConfig } from "@/site.config";
 import { docChinChang, duongDanChang } from "@/lib/chang";
-import { doThi, nutNguoi, nutToChuc, nutWeb, taoMetadata } from "@/lib/seo";
+import { doThi, MO_TA_TRANG_CHU, nutNguoi, nutToChuc, nutWeb, taoMetadata } from "@/lib/seo";
 import "@/styles/trang-chu.css";
 import "@/styles/trang-chu-them.css";
 
@@ -22,7 +23,7 @@ import "@/styles/trang-chu-them.css";
 export const metadata = {
   ...taoMetadata({
     tieuDe: "Khai Minh – Người Khai Vấn",
-    moTa: "Đời người có chín chặng, và chặng nào cũng có những câu hỏi ta chỉ dám hỏi mình lúc nửa đêm. Khai Minh không trả lời thay bạn; tôi ngồi cùng bạn, đủ lâu để bạn tự thấy.",
+    moTa: MO_TA_TRANG_CHU,
     duongDan: "/",
     coAnhRieng: true,
   }),
@@ -78,9 +79,10 @@ export default function TrangChu() {
       <MucLuc
         chang={chang.map((c) => ({ ten: c.ten, han: c.han_tu, cauHoi: c.cau_hoi_chinh }))}
         duongDanChang={chang.map(duongDanChang)}
+        moLoiThu={siteConfig.moLoiThu}
       />
       <VongChuong />
-      <ThanhRutGon />
+      <ThanhRutGon moLoiThu={siteConfig.moLoiThu} />
     </div>
   );
 }

@@ -46,7 +46,7 @@ Các đường dẫn `/chang/1` đến `/chang/9` chuyển hướng 301 về slu
 | Phương pháp | `/phuong-phap/soi-thau-chuyen` | Tên riêng của phương pháp | Trang định nghĩa gốc, có ngày công bố và phiên bản | Khung, chữ chờ anh | S3 |
 | Viết (bài dài) | `/viet`, `/viet/[slug]` | Đọc theo chặng, tầng, cửa | Lọc theo ba nhãn | Khung | S3 |
 | Thư hằng tháng | `/thu`, `/thu/2026-11` | Bản lưu thư | Dẫn về các trang hỏi – đáp | Khung | S3 |
-| Trang nhãn | `/chang/[slug]/hoi`, `/tang/[tang]`, `/cua/[cua]` | Danh sách bài theo nhãn | Tự sinh từ frontmatter | Khung | S3 |
+| Trang nhãn | `/chang/[slug]/hoi`, `/tang/[tang]`; bài theo cửa ở mục `#bai-viet` cuối `/tam`, `/tri`, `/than` | Danh sách bài theo nhãn | Tự sinh từ frontmatter. **S4b:** `/cua/[cua]` đã gộp vào trang cửa, chuyển hướng 301 về `/<cửa>#bai-viet` (docs/10, R6). Trang danh sách có dưới 3 bài đã đăng thì `noindex, follow` | Khung | S3, S4b |
 
 ## 3. Các trang riêng còn lại
 

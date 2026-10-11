@@ -19,7 +19,7 @@ export default function Cookie() {
       tieuDe="Chính sách cookie"
     >
       <KhoiGiay>
-        <MucGiay id="noi-dung" tieuDe="Chính sách cookie">
+        <MucGiay id="noi-dung" tieuDe="Chính sách cookie" cho>
           <ChoLuatSu />
         </MucGiay>
       </KhoiGiay>

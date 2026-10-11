@@ -15,7 +15,7 @@ export default function KhongTimThay() {
       tieuDe="Trang bạn tìm không còn ở đây."
       moi={
         <>
-          <Link className="btn" href="/">
+          <Link className="btn" href="/" prefetch={false}>
             Về trang chủ
           </Link>
           <p className="lien-404">

@@ -36,7 +36,7 @@ export default function DuLieu() {
           <p className="lede">{DIEU_8.kiem}</p>
         </MucGiay>
         {MUC.map((m) => (
-          <MucGiay key={m.id} id={m.id} tieuDe={m.ten}>
+          <MucGiay key={m.id} id={m.id} tieuDe={m.ten} cho>
             <ChoLuatSu />
           </MucGiay>
         ))}

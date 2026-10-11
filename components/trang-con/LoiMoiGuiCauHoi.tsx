@@ -1,11 +1,14 @@
 import Link from "next/link";
+import { siteConfig } from "@/site.config";
 
 /**
  * Lời mời cuối trang Cửa Tâm và trang chặng (`section.end` của bản mẫu).
  * Bản mẫu dẫn về index.html#gui-cau-hoi; web dẫn về trang /gui-cau-hoi
- * (docs/02; docs/07, mục E9), trang này dựng ở phiên S5.
+ * (docs/02; docs/07, mục E9). Bản thật chưa có nơi nhận thư thì không dựng
+ * lời mời này (`siteConfig.moLoiThu`; docs/07, mục A18).
  */
 export function LoiMoiGuiCauHoi() {
+  if (!siteConfig.moLoiThu) return null;
   return (
     <section className="end">
       <div className="wrap">

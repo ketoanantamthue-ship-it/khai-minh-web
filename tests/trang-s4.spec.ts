@@ -1,5 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { expect, test, type APIRequestContext } from "@playwright/test";
+import { TRANG_CHUA_DU_CHU } from "../lib/seo";
 
 /**
  * Phiên S4: các trang còn lại (docs/02, mục 3; docs/06; docs/08, mục 1).
@@ -24,6 +27,11 @@ const TRANG_S4 = [
   "/cookie",
   "/mien-tru",
 ];
+
+/** Chín trang chặng, slug đọc từ content/chang/*.mdx. */
+const TRANG_CHANG = readdirSync(join(process.cwd(), "content", "chang"))
+  .filter((t) => t.endsWith(".mdx"))
+  .map((t) => `/chang/${/^slug: "([^"]+)"/m.exec(readFileSync(join(process.cwd(), "content", "chang", t), "utf8"))![1]}`);
 
 const CHINH_SACH = [
   ["/dieu-khoan", "Điều khoản sử dụng"],
@@ -56,9 +64,10 @@ test.describe("Các trang của phiên S4", () => {
     });
   }
 
-  test("mọi trang S4 nằm trong sitemap", async ({ request }) => {
+  test("trang S4 đủ chữ nằm trong sitemap; trang khung còn chờ chữ thì không (docs/10, R7)", async ({ request }) => {
     const url = await trangTrongSitemap(request);
-    expect(url).toEqual(expect.arrayContaining(TRANG_S4));
+    expect(url).toEqual(expect.arrayContaining(TRANG_S4.filter((p) => !TRANG_CHUA_DU_CHU.has(p))));
+    for (const p of TRANG_CHUA_DU_CHU) expect(url, p).not.toContain(p);
   });
 
   test("axe 0 lỗi ở chế độ Chữ lớn", async ({ page }) => {
@@ -145,7 +154,10 @@ test.describe("Các trang của phiên S4", () => {
   test("mọi liên kết nội bộ của mọi trang trong sitemap đều mở được, kể cả neo", async ({ page, request }, info) => {
     test.skip(info.project.name !== "may-tinh-1366", "chỉ cần chạy một lần");
     test.slow();
-    const trang = [...new Set([...(await trangTrongSitemap(request)), "/trang-nay-khong-co"])];
+    // Trang ngoài sitemap (trang khung, trang chặng chưa đủ năm tầng) vẫn phải được duyệt.
+    const trang = [
+      ...new Set([...(await trangTrongSitemap(request)), ...TRANG_S4, ...TRANG_CHANG, "/trang-nay-khong-co"]),
+    ];
     const trangThai = new Map<string, number>();
     const html = new Map<string, string>();
     const loi: string[] = [];

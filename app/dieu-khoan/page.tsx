@@ -19,7 +19,7 @@ export default function DieuKhoan() {
       tieuDe="Điều khoản sử dụng"
     >
       <KhoiGiay>
-        <MucGiay id="noi-dung" tieuDe="Điều khoản sử dụng">
+        <MucGiay id="noi-dung" tieuDe="Điều khoản sử dụng" cho>
           <ChoLuatSu />
         </MucGiay>
       </KhoiGiay>

@@ -19,7 +19,7 @@ export default function BaoMat() {
       tieuDe="Chính sách bảo mật"
     >
       <KhoiGiay>
-        <MucGiay id="noi-dung" tieuDe="Chính sách bảo mật">
+        <MucGiay id="noi-dung" tieuDe="Chính sách bảo mật" cho>
           <ChoLuatSu />
         </MucGiay>
       </KhoiGiay>

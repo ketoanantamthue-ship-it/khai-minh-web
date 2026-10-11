@@ -50,15 +50,63 @@ const moiTruongVercel = process.env.VERCEL_ENV ?? process.env.NEXT_PUBLIC_VERCEL
 const hienBanNhap =
   process.env.HIEN_BAN_NHAP !== "false" && moiTruongVercel !== "production" && !choPhepLapChiMuc;
 
+/**
+ * Bản thật: mọi nơi không hiện bài nháp (ngược với `hienBanNhap`). Ở bản thật,
+ * các trang còn khung ẩn ô “Đang soạn” và để `noindex, follow`; bản xem trước
+ * giữ nguyên để đội viết thấy chỗ còn thiếu (docs/10, mục R7).
+ */
+const laBanThat = !hienBanNhap;
+
+/**
+ * Nơi nhận thư của các biểu mẫu (docs/07, mục A5; nối ở phiên S5). Khi còn
+ * `null`, bản thật ẩn lá thư, các ô nhận thư và mọi lối dẫn tới chúng (anh
+ * chốt ở docs/07, mục A18); bản xem trước vẫn giữ như bản mẫu.
+ */
+const noiNhanThu: string | null = null;
+
 export const siteConfig = {
   ten: "Khai Minh",
   kyTen: "Người Khai Vấn (Khai Minh)",
   siteUrl,
   choPhepLapChiMuc,
   hienBanNhap,
+  laBanThat,
+  noiNhanThu,
+  /**
+   * Lối gửi thư đang mở: lá thư “Gửi một câu hỏi”, ô “Nhận thư hằng tháng”,
+   * ô “Báo cho tôi khi sách ra đời” và mọi nút dẫn tới chúng (xem `noiNhanThu`).
+   * Thành phần chạy ở trình duyệt nhận giá trị này qua prop, vì biến môi
+   * trường của bản thật không có ở phía trình duyệt.
+   */
+  moLoiThu: noiNhanThu !== null || hienBanNhap,
+
+  /**
+   * Thực thể Person “Khai Minh” trong JSON-LD (docs/05, mục 4; docs/10, mục R2).
+   * Chỉ ghi điều đã có chất liệu; trường còn `null` thì JSON-LD bỏ qua.
+   */
+  nguoi: {
+    /** Câu “Khai Minh là ai” của docs/nguon/ban-cuoi-khai-minh-va-an-tam-menh.md, mục 1. */
+    moTa: "Khai Minh là người khai vấn, giúp người Việt tự soi và chuyển hóa tâm mình qua chín chặng đời, trên nền Phật học và cổ học được nói thật mức tin cậy, cho tới ngày họ tự bước đi.",
+    /** Những mảng Khai Minh viết, theo câu trên và ba cửa (Bản cuối, mục 1 và 3). */
+    linhVuc: ["Phật học", "Cổ học", "Dưỡng sinh"],
+    /** Ảnh chân dung (docs/07, mục B2). Đường dẫn trong `public/`. */
+    anh: null as string | null,
+    /**
+     * Nghề dược sĩ trong `hasOccupation`: chỉ ghi khi anh đồng ý công khai
+     * kèm chứng chỉ (docs/07, mục D2).
+     */
+    ngheDuocSi: false,
+  },
 
   /** Tổ chức mà Khai Minh làm việc cho (JSON-LD Organization; docs/05, mục 1). */
-  toChuc: { ten: "An Tâm Mệnh", url: "https://antammenh.com" },
+  toChuc: {
+    ten: "An Tâm Mệnh",
+    url: "https://antammenh.com",
+    /** Logo chính thức: chưa có (docs/nguon/he-nhan-dien-mot-goc.md, mục “Biểu tượng”). */
+    logo: null as string | null,
+    /** Kênh chính thức của tổ chức (docs/07, mục C7). */
+    sameAs: [] as string[],
+  },
 
   /** Liên kết sang các web khác trong cùng ngôi nhà (docs/02, mục 4). */
   lienKetNgoai: {

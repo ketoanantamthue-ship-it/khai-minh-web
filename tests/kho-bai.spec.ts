@@ -26,7 +26,6 @@ const TRANG_MOI = [
   "/chang/tuoi-giua-doi/hoi",
   "/chang/truoc-khi-den/hoi",
   ...["cham", "hieu", "soi", "chuyen", "dong-hanh", "tot-nghiep"].map((t) => `/tang/${t}`),
-  ...["tam", "tri", "than"].map((c) => `/cua/${c}`),
 ];
 
 type Nut = Record<string, unknown>;
@@ -194,7 +193,8 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
   });
 
   test("trang nhãn liệt kê bài theo chặng, tầng và cửa", async ({ page }) => {
-    for (const duong of ["/chang/tuoi-giua-doi/hoi", "/tang/hieu", "/cua/tam", "/hoi"]) {
+    // Bài theo cửa nằm ở mục #bai-viet cuối trang cửa (docs/10, R6).
+    for (const duong of ["/chang/tuoi-giua-doi/hoi", "/tang/hieu", "/tam", "/hoi"]) {
       await page.goto(duong);
       await page.locator(`main a[href="${Q001}"]`).first().click();
       await expect(page).toHaveURL(new RegExp(`${Q001}$`));
@@ -285,7 +285,7 @@ test.describe("Chung cho các trang mới của S3", () => {
         localStorage.setItem("km-easy", "1");
       } catch {}
     });
-    for (const duong of [Q001, "/hoi", "/cua/tri"]) {
+    for (const duong of [Q001, "/hoi", "/tri"]) {
       await page.goto(duong);
       const kq = await new AxeBuilder({ page }).analyze();
       expect(kq.violations.map((v) => `${duong} ${v.id}`)).toEqual([]);
