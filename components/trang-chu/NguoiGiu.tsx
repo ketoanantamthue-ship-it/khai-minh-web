@@ -1,3 +1,4 @@
+import { hrefGuiCauHoi } from "@/lib/lien-ket";
 import { NgoiLaiCauHoi, PhuChanDung } from "./NguoiGiuHieuUng";
 
 /**
@@ -5,7 +6,13 @@ import { NgoiLaiCauHoi, PhuChanDung } from "./NguoiGiuHieuUng";
  * quầy thuốc, ba câu hỏi để ngồi lại, và bốn điều tự kiểm chứng.
  * Các khung nét góc (ảnh, chữ ký, số chứng chỉ) chờ chất liệu thật (docs/07).
  */
-export function NguoiGiu() {
+/**
+ * `noiKhac`: khối được đặt ở trang tác giả /khai-minh. Lời mời gửi thư dẫn sang
+ * /gui-cau-hoi, “chín lời hứa” dẫn sang /hien-chuong, và “câu chuyện của tôi”
+ * dẫn xuống mục #cau-chuyen ngay trên trang ấy.
+ */
+export function NguoiGiu({ noiKhac }: { noiKhac?: boolean } = {}) {
+  const cauChuyen = noiKhac ? "#cau-chuyen" : "/khai-minh";
   return (
     <section className="keeper" id="nguoi-giu" aria-labelledby="h-keeper">
       <div className="grid">
@@ -52,17 +59,17 @@ export function NguoiGiu() {
             </span>
           </div>
           <div className="kp-cta">
-            <a className="kp-ask" href="#gui-cau-hoi" data-topic="q">
+            <a className="kp-ask" href={hrefGuiCauHoi(noiKhac, "q")} data-topic="q">
               Gửi tôi một câu hỏi
             </a>
-            <a className="go" href="/khai-minh">
+            <a className="go" href={cauChuyen}>
               Đọc câu chuyện của tôi
             </a>
           </div>
         </div>
       </div>
 
-      <NgoiLaiCauHoi />
+      <NgoiLaiCauHoi noiKhac={noiKhac} />
 
       <div className="kp-proof">
         <h3 className="kp-ph">Bạn không cần tin lời tôi. Đây là những điều bạn có thể tự kiểm chứng.</h3>
@@ -91,7 +98,7 @@ export function NguoiGiu() {
             <span className="kp-s">
               Tên sách, tên người thầy và nơi tôi đã học được kể đầy đủ trong câu chuyện của tôi.
             </span>
-            <a className="kp-a" href="/khai-minh">
+            <a className="kp-a" href={cauChuyen}>
               Đọc câu chuyện ›
             </a>
           </li>
@@ -103,7 +110,7 @@ export function NguoiGiu() {
             <span className="kp-s">
               Mỗi lời hứa ghi rõ cách bạn kiểm chứng và gốc của nó, và bạn có quyền nhắc tôi khi tôi làm chưa đúng.
             </span>
-            <a className="kp-a" href="#loi-hua">
+            <a className="kp-a" href={noiKhac ? "/hien-chuong" : "#loi-hua"}>
               Xem chín lời hứa ›
             </a>
           </li>
@@ -113,7 +120,7 @@ export function NguoiGiu() {
             </span>
             <span className="kp-b">Tôi không bán lễ giải hạn, bùa hay vật phẩm.</span>
             <span className="kp-s">Nếu có ai nhân danh tôi để bán những thứ ấy, xin bạn báo cho tôi biết.</span>
-            <a className="kp-a" href="#gui-cau-hoi" data-topic="md">
+            <a className="kp-a" href={hrefGuiCauHoi(noiKhac, "md")} data-topic="md">
               Báo cho tôi ›
             </a>
           </li>

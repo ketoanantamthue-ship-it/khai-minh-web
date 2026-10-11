@@ -13,6 +13,10 @@ import { VetMai } from "./VetMai";
  * `data-can` (docs/07).
  */
 
+/** Đoạn Miễn trừ trách nhiệm của bản mẫu; trang /mien-tru dùng lại nguyên văn. */
+export const MIEN_TRU =
+  "Nội dung trên trang này giúp bạn tự soi và tham khảo. Đây không phải là lời khuyên y khoa, tâm lý trị liệu, pháp lý hay tài chính, và không thay thế cho bác sĩ hay chuyên gia. Các môn cổ học được trình bày như những tấm gương để bạn tự nhìn mình, không phải là lời nói trước tương lai. Mọi quyết định về đời bạn luôn thuộc về bạn.";
+
 type MucLienKet = { ten: string; href: string | null; can?: string };
 
 const KHAM_PHA: MucLienKet[] = [
@@ -27,11 +31,11 @@ const KHAM_PHA: MucLienKet[] = [
 ];
 
 const CAM_KET: MucLienKet[] = [
-  { ten: "Hiến chương chín điều", href: "/#loi-hua" },
+  { ten: "Hiến chương chín điều", href: "/hien-chuong" },
   { ten: "Lịch sử sửa đổi Hiến chương", href: "/hien-chuong#lich-su-sua-doi" },
   { ten: "Báo cáo minh bạch hằng năm", href: "/minh-bach#bao-cao" },
   { ten: "Minh bạch lợi ích", href: "/minh-bach" },
-  { ten: "Khi tôi làm chưa đúng một điều", href: "/#khi-sai" },
+  { ten: "Khi tôi làm chưa đúng một điều", href: "/hien-chuong#khi-sai" },
 ];
 
 const CHINH_SACH: MucLienKet[] = [
@@ -39,7 +43,7 @@ const CHINH_SACH: MucLienKet[] = [
   { ten: "Chính sách bảo mật", href: "/bao-mat" },
   { ten: "Dữ liệu cá nhân và quyền của bạn", href: "/du-lieu" },
   { ten: "Chính sách cookie", href: "/cookie" },
-  { ten: "Miễn trừ trách nhiệm", href: "#mien-tru" },
+  { ten: "Miễn trừ trách nhiệm", href: "/mien-tru" },
   { ten: "Trợ năng và cách hiển thị", href: "/tro-nang" },
 ];
 
@@ -209,12 +213,7 @@ export function SiteFooter() {
 
         <div className="ft-disc" id="mien-tru">
           <h2>Miễn trừ trách nhiệm</h2>
-          <p>
-            Nội dung trên trang này giúp bạn tự soi và tham khảo. Đây không phải là lời khuyên y khoa, tâm lý
-            trị liệu, pháp lý hay tài chính, và không thay thế cho bác sĩ hay chuyên gia. Các môn cổ học được
-            trình bày như những tấm gương để bạn tự nhìn mình, không phải là lời nói trước tương lai. Mọi
-            quyết định về đời bạn luôn thuộc về bạn.
-          </p>
+          <p>{MIEN_TRU}</p>
         </div>
 
         <div className="ft-base">

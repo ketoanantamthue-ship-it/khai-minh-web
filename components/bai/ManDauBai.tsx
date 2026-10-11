@@ -9,7 +9,8 @@ import type { MucDuongDan } from "@/lib/seo";
  * (docs/04, khuôn mười bước, bước 3). Không có hiệu ứng nào, nên trang bài
  * không tải thêm JavaScript (docs/05, mục 2).
  *
- * Dải đường dẫn hiện trên trang khớp với BreadcrumbList trong JSON-LD.
+ * Dải đường dẫn hiện trên trang khớp với BreadcrumbList trong JSON-LD. Trang
+ * không có đường dẫn (trang 404) truyền mảng rỗng.
  */
 export function ManDauBai({
   duongDan,
@@ -31,16 +32,18 @@ export function ManDauBai({
     <section className="hero hero-bai">
       <div className="wrap">
         {trangThai && trangThai !== "da-dang" ? <DaiBanNhap trangThai={trangThai} /> : null}
-        <nav className="vun" aria-label="Đường dẫn">
-          <ol>
-            {duongDan.slice(0, -1).map((m) => (
-              <li key={m.duongDan}>
-                <Link href={m.duongDan}>{m.ten}</Link>
-              </li>
-            ))}
-            <li aria-current="page">{duongDan.at(-1)?.ten}</li>
-          </ol>
-        </nav>
+        {duongDan.length > 0 ? (
+          <nav className="vun" aria-label="Đường dẫn">
+            <ol>
+              {duongDan.slice(0, -1).map((m) => (
+                <li key={m.duongDan}>
+                  <Link href={m.duongDan}>{m.ten}</Link>
+                </li>
+              ))}
+              <li aria-current="page">{duongDan.at(-1)?.ten}</li>
+            </ol>
+          </nav>
+        ) : null}
         {nhan ? <p className="k">{nhan}</p> : null}
         <h1>{tieuDe}</h1>
         {soi ? <p className="soi">{soi}</p> : null}

@@ -29,21 +29,6 @@ const TRANG_MOI = [
   ...["tam", "tri", "than"].map((c) => `/cua/${c}`),
 ];
 
-/** Route của các phiên sau: liên kết tới đây được phép chưa chạy (docs/06). */
-const CHO_PHIEN_SAU = [
-  "/gui-cau-hoi",
-  "/hien-chuong",
-  "/ngoi-lang",
-  "/khai-minh",
-  "/bao-chi",
-  "/minh-bach",
-  "/du-lieu",
-  "/dieu-khoan",
-  "/bao-mat",
-  "/cookie",
-  "/tro-nang",
-];
-
 type Nut = Record<string, unknown>;
 
 async function docJsonLd(page: Page): Promise<Nut[]> {
@@ -307,7 +292,7 @@ test.describe("Chung cho các trang mới của S3", () => {
     }
   });
 
-  test("mọi liên kết nội bộ mở được (trừ trang của phiên sau)", async ({ page, request }, info) => {
+  test("mọi liên kết nội bộ mở được", async ({ page, request }, info) => {
     test.skip(info.project.name !== "may-tinh-1366", "chỉ cần chạy một lần");
     test.slow();
     const daKiem = new Map<string, number>();
@@ -318,7 +303,6 @@ test.describe("Chung cho các trang mới của S3", () => {
       for (const href of hrefs) {
         if (!href.startsWith("/")) continue;
         const duongDan = href.split("#")[0]!;
-        if (CHO_PHIEN_SAU.includes(duongDan)) continue;
         if (!daKiem.has(duongDan)) daKiem.set(duongDan, (await request.get(duongDan)).status());
         if (daKiem.get(duongDan) !== 200) loi.push(`${duong} → ${href} (${daKiem.get(duongDan)})`);
       }

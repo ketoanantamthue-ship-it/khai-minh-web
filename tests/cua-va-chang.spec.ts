@@ -39,24 +39,6 @@ const MUOI_BA_TRANG = [
   "/muc-luc",
 ];
 
-/**
- * Route của các phiên sau (docs/02, docs/06). Liên kết tới đây được phép chưa
- * chạy trong phiên S2; mọi liên kết nội bộ khác phải mở được.
- */
-const CHO_PHIEN_SAU = [
-  "/gui-cau-hoi",
-  "/hien-chuong",
-  "/ngoi-lang",
-  "/khai-minh",
-  "/bao-chi",
-  "/minh-bach",
-  "/du-lieu",
-  "/dieu-khoan",
-  "/bao-mat",
-  "/cookie",
-  "/tro-nang",
-];
-
 const chuanHoa = (s: string) => s.replace(/[\s ]+/g, " ").trim();
 
 /** Các đoạn chữ trong <main> của một bản mẫu, mỗi đoạn là chữ giữa hai thẻ. */
@@ -264,7 +246,7 @@ test.describe("Chung cho 13 trang mới", () => {
     await ctx.close();
   });
 
-  test("mọi liên kết nội bộ mở được (trừ trang của phiên sau)", async ({ page, request }, info) => {
+  test("mọi liên kết nội bộ mở được", async ({ page, request }, info) => {
     test.skip(info.project.name !== "may-tinh-1366", "chỉ cần chạy một lần");
     test.slow();
     const daKiem = new Map<string, number>();
@@ -275,7 +257,6 @@ test.describe("Chung cho 13 trang mới", () => {
       for (const href of hrefs) {
         if (!href.startsWith("/")) continue;
         const [duongDan, neo] = href.split("#") as [string, string | undefined];
-        if (CHO_PHIEN_SAU.some((p) => (p.endsWith("/") ? duongDan.startsWith(p) : duongDan === p))) continue;
         if (!daKiem.has(duongDan)) daKiem.set(duongDan, (await request.get(duongDan)).status());
         if (daKiem.get(duongDan) !== 200) loi.push(`${duong} → ${href} (${daKiem.get(duongDan)})`);
         if (neo) {

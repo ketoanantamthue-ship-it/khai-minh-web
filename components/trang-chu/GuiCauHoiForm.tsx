@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState, type FormEvent } from "react";
+import { Fragment, useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import { useCheDoTinh } from "@/lib/dung-moi-truong";
 import { CHU_DE_THU, type ChuDeThu } from "./chu";
 
@@ -72,13 +72,24 @@ const DIEU = [
 
 /**
  * Lá thư gửi Khai Minh (bản mẫu K1.9.9): chọn chủ đề, ô viết, phiếu đồng ý.
- * Các liên kết có `data-topic` ở khắp trang chủ chọn sẵn chủ đề tương ứng.
+ * Các liên kết có `data-topic` ở khắp trang chủ chọn sẵn chủ đề tương ứng; ở
+ * trang /gui-cau-hoi, chủ đề đến từ tham số `?chu-de=` của địa chỉ.
  *
  * Bản xem trước: chưa gửi đi đâu, như bản mẫu. Phiên S5 nối nơi nhận thư,
  * chống spam và trang cảm ơn (docs/06; docs/07, mục A5, E3).
  */
+const khongDoi = () => () => {};
+
+function docChuDeTuDiaChi(): ChuDeThu | null {
+  const ma = new URLSearchParams(window.location.search).get("chu-de");
+  return ma && ma in CHU_DE_THU ? (ma as ChuDeThu) : null;
+}
+
 export function ThuGuiToi() {
-  const [chuDe, setChuDe] = useState<ChuDeThu>("q");
+  // Trang /gui-cau-hoi: chủ đề do liên kết ở trang khác mang theo (lib/lien-ket.ts).
+  const tuDiaChi = useSyncExternalStore(khongDoi, docChuDeTuDiaChi, () => null);
+  const [daChon, setChuDe] = useState<ChuDeThu | null>(null);
+  const chuDe: ChuDeThu = daChon ?? tuDiaChi ?? "q";
   const [loiNhan, setLoiNhan] = useState<{ chu: string; loi: boolean } | null>(null);
   const oViet = useRef<HTMLTextAreaElement>(null);
   const oDongY = useRef<HTMLInputElement>(null);

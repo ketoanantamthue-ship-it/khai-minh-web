@@ -11,8 +11,26 @@ import { urlTuyetDoi } from "@/site.config";
  *
  * Trang danh sách và trang nhãn chỉ vào sitemap khi đã có ít nhất một bài
  * công khai, để máy tìm kiếm không gặp trang chỉ có ô “Đang soạn”.
- * Trang S4, S5 (tác giả, Hiến chương…) thêm vào đây khi dựng.
  */
+const TRANG_S4 = [
+  "/khai-minh",
+  "/cach-toi-dong-hanh",
+  "/noi-chuyen",
+  "/sach",
+  "/tu-sach",
+  "/ngoi-lang",
+  "/hien-chuong",
+  "/bao-chi",
+  "/minh-bach",
+  "/du-lieu",
+  "/tro-nang",
+  "/gui-cau-hoi",
+  "/dieu-khoan",
+  "/bao-mat",
+  "/cookie",
+  "/mien-tru",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const bai = baiCongKhai();
   const chin = docChinChang();
@@ -25,6 +43,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/than",
     "/muc-luc",
     ...chin.map(duongDanChang),
+    // Các trang phiên S4. Trang chính sách và Dữ liệu của bạn còn chờ chữ của
+    // luật sư (docs/07, mục D3); không ra mắt khi chưa có (docs/06, S7).
+    ...TRANG_S4,
     ...(co((b) => b.loai === "hoi") ? ["/hoi"] : []),
     ...chin.filter((c) => co((b) => b.loai === "hoi" && b.chang === c.so)).map((c) => `${duongDanChang(c)}/hoi`),
     ...(co((b) => b.loai === "viet") ? ["/viet"] : []),

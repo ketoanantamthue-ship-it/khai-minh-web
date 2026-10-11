@@ -13,7 +13,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "playwright test",
     "check:words": "node scripts/check-words.mjs",
-    "kiem:bai": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/kiem-bai.mts"
+    "kiem:bai": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/kiem-bai.mts",
+    "liet-ke:can": "node scripts/liet-ke-can.mjs"
   },
   "dependencies": {
     "@fontsource/noto-serif": "^5.3.0",

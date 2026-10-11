@@ -7,7 +7,8 @@ import { NutSuKien } from "./NutSuKien";
  * Phần VIII · Một khoảng lặng (`#khoang-lang`): ngồi lặng chín mươi giây.
  * Video rót trà và giọng đọc còn chờ chất liệu thật (docs/07, mục B5).
  */
-export function KhoangLang() {
+/** `noiKhac`: khối được đặt ở trang /ngoi-lang; “bốn giờ của một đêm dài” nằm ở trang chủ. */
+export function KhoangLang({ noiKhac }: { noiKhac?: boolean } = {}) {
   return (
     <section className="lacquer still" id="khoang-lang" aria-labelledby="h-still">
       <div className="grid">
@@ -34,7 +35,7 @@ export function KhoangLang() {
           </div>
           <p className="st-night">
             Nếu bạn đang thức lúc hai giờ sáng, bạn không cần đọc tiếp. Bạn cứ ngồi lại đây một lúc.{" "}
-            <a href="#binh-minh">Xem lại bốn giờ của một đêm dài ›</a>
+            <a href={noiKhac ? "/#binh-minh" : "#binh-minh"}>Xem lại bốn giờ của một đêm dài ›</a>
           </p>
         </div>
       </div>
