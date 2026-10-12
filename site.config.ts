@@ -89,8 +89,65 @@ export const siteConfig = {
     moTa: "Khai Minh là người khai vấn, giúp người Việt tự soi và chuyển hóa tâm mình qua chín chặng đời, trên nền Phật học và cổ học được nói thật mức tin cậy, cho tới ngày họ tự bước đi.",
     /** Những mảng Khai Minh viết, theo câu trên và ba cửa (Bản cuối, mục 1 và 3). */
     linhVuc: ["Phật học", "Cổ học", "Dưỡng sinh"],
-    /** Ảnh chân dung (docs/07, mục B2). Đường dẫn trong `public/`. */
-    anh: null as string | null,
+    /** Ảnh chân dung khổ 4:5 (docs/07, mục B2). Đường dẫn trong `public/`. */
+    anh: "/assets/img/khai-minh-chan-dung.webp" as string | null,
+    /** Bản nhỏ 480 px cho khung hẹp (srcset). */
+    anhNho: "/assets/img/khai-minh-chan-dung-480.webp",
+    anhMoTa: "Khai Minh mặc áo trắng, đeo chuỗi hạt gỗ, chắp tay chào và mỉm cười.",
+    anhKichThuoc: { rong: 1066, cao: 1332 },
+    /** Bản gốc khổ lớn cho trang Báo chí (mục “Ảnh tải về”). */
+    anhTaiVe: "/assets/img/khai-minh-chan-dung-tai-ve.jpg" as string | null,
+    /**
+     * Tiểu sử (docs/07, mục C7), viết từ trang antammenh.com/about theo lời anh
+     * (12/10/2026). Bản ngắn ngôi thứ ba cho báo chí; bản dài ngôi thứ nhất cho
+     * /khai-minh. Câu nào đổi thì đổi ở đây, hai trang tự cập nhật.
+     */
+    tieuSuNgan: [
+      "Khai Minh là bút danh của người sáng lập An Tâm Mệnh, một dược sĩ sống và làm việc tại TP. Hồ Chí Minh.",
+      "Trước khi chọn con đường khai vấn, anh đã đi qua hơn bảy nghề, từ quầy thuốc đến kinh doanh phần mềm.",
+      "Anh dùng Phật học và cổ học như những tấm gương, để người Việt tự soi tâm mình.",
+      "Anh giữ ba nguyên tắc: không phán xét, không mê tín và không bán nỗi sợ.",
+    ].join(" "),
+    tieuSuDai: {
+      moDau:
+        "Tôi là Khai Minh. Tôi không sinh ra đã biết đường đi. Tôi đã lạc nhiều năm, và chính những năm lạc ấy dạy tôi cách ngồi bên một người đang lạc.",
+      moc: [
+        {
+          nam: "2012",
+          chu: "Tôi rời quê lên Sài Gòn học ngành Dược. Tôi mang theo một câu hỏi mà khi ấy chưa ai trả lời giúp tôi: mình sống để làm gì?",
+        },
+        {
+          nam: "2013–2015",
+          chu: "Tôi làm đủ việc: đứng quầy thuốc, giữ kho, đi trình dược. Tôi làm chăm chỉ, nhưng lòng vẫn thấy mình đang sống sai chỗ.",
+        },
+        {
+          nam: "2015–2016",
+          chu: "Câu hỏi ấy đưa tôi tìm đến cổ học. Tôi học Tử Vi, Bát Tự, Kinh Dịch, Thần Số Học, Nhân Tướng và chỉ tay, cùng lời Phật dạy về nhân quả. Tôi học để hiểu mình trước, rồi mới dám ngồi nghe câu hỏi của người khác.",
+        },
+        {
+          nam: "2016–2019",
+          chu: "Tôi làm kinh doanh phần mềm trong ngành viễn thông. Công việc ổn định, nhưng câu hỏi cũ chưa bao giờ rời tôi.",
+        },
+        {
+          nam: "2019",
+          chu: "Một trận bệnh nặng buộc tôi phải dừng lại. Tôi lên núi và ngồi thiền mười ngày. Ở đó, lần đầu tiên tôi nhìn thẳng vào những điều mình vẫn chạy trốn.",
+        },
+        {
+          nam: "2020–2023",
+          chu: "Tôi khởi nghiệp nhiều lần và thất bại cũng nhiều lần. Tôi đi qua Đông y, trà thảo mộc, marketing, nội thất và nông nghiệp sạch. Mỗi lần ngã, tôi hiểu thêm một điều về tâm mình.",
+        },
+        {
+          nam: "2023",
+          chu: "Tôi dùng chính những gì đã học để soi lại lá số và đời mình. Những mảnh rời rạc của bao năm bỗng khớp vào nhau, như một căn phòng tối vừa được thắp đèn.",
+        },
+        {
+          nam: "2024",
+          chu: "Tôi lập An Tâm Mệnh. Tôi muốn trao lại chiếc la bàn mà mình đã mất mười bốn năm để tìm. Tôi mong bạn không phải đi vòng lâu như tôi.",
+        },
+      ],
+      ketLai:
+        "Tôi không trao câu trả lời. Tôi trao lại chiếc la bàn, để bạn tự tìm đường về với lòng mình. Tôi giữ ba điều: không phán xét, không mê tín và không bán nỗi sợ.",
+    },
     /**
      * Nghề dược sĩ trong `hasOccupation`: chỉ ghi khi anh đồng ý công khai
      * kèm chứng chỉ (docs/07, mục D2).
@@ -105,7 +162,11 @@ export const siteConfig = {
     /** Logo chính thức: chưa có (docs/nguon/he-nhan-dien-mot-goc.md, mục “Biểu tượng”). */
     logo: null as string | null,
     /** Kênh chính thức của tổ chức (docs/07, mục C7). */
-    sameAs: [] as string[],
+    sameAs: [
+      "https://www.facebook.com/antammenh",
+      "https://www.youtube.com/@antammenh",
+      "https://www.tiktok.com/@antammenh",
+    ] as string[],
   },
 
   /** Liên kết sang các web khác trong cùng ngôi nhà (docs/02, mục 4). */
@@ -134,7 +195,9 @@ export const siteConfig = {
   /** Thông tin liên hệ và pháp nhân (docs/07, mục D1). */
   lienHe: {
     email: null as string | null,
-    zalo: null as string | null,
+    /** Số Zalo, cũng là số điện thoại (anh gửi ngày 12/10/2026). */
+    zalo: "094 436 5246" as string | null,
+    dienThoai: "0944365246" as string | null,
     thanhPho: "TP. Hồ Chí Minh",
     diaChi: null as string | null,
     chuSoHuuNhanHieu: null as string | null,

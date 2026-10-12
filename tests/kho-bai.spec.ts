@@ -178,11 +178,13 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     expect(Math.abs(kieu.rong - kieu.sauMuoiSauKyTu)).toBeLessThan(1);
   });
 
-  test("khối tác giả có chỗ ảnh chân dung chờ chất liệu", async ({ page }) => {
+  test("khối tác giả có ảnh chân dung thật, có mô tả, đã tải được", async ({ page }) => {
     await page.goto(Q001);
-    const anh = page.locator(".bai-tg [data-can='B2']");
-    await expect(anh).toHaveAttribute("role", "img");
-    await expect(anh).toHaveAttribute("aria-label", "Ảnh chân dung");
+    await expect(page.locator(".bai-tg [data-can='B2']")).toHaveCount(0);
+    const anh = page.locator(".bai-tg .tg-anh img");
+    await expect(anh).toHaveAttribute("alt", /^Khai Minh /);
+    await anh.scrollIntoViewIfNeeded();
+    await expect.poll(() => anh.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth)).toBeGreaterThan(0);
   });
 
   test("chữ nằm sẵn trong HTML do server dựng (không cần JavaScript)", async ({ request }) => {

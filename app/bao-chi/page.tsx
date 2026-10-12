@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { KhoiGiay, MucGiay, TrangKhung } from "@/components/khung/TrangKhung";
+import { KhungChanDung } from "@/components/AnhChanDung";
 import { OCan } from "@/components/trang-con/OCan";
 import { taoMetadata } from "@/lib/seo";
 import { siteConfig } from "@/site.config";
@@ -30,15 +31,21 @@ export default function BaoChi() {
       }
     >
       <KhoiGiay>
-        <MucGiay id="tieu-su" tieuDe="Tiểu sử" cho>
-          <OCan ma="C7" />
+        <MucGiay id="tieu-su" tieuDe="Tiểu sử">
+          <p>{siteConfig.nguoi.tieuSuNgan}</p>
+          <p>
+            <Link href="/khai-minh#tieu-su">Bạn có thể đọc tiểu sử đầy đủ ở trang Khai Minh.</Link>
+          </p>
         </MucGiay>
-        <MucGiay id="anh" tieuDe="Ảnh tải về" cho>
-          <div className="slot r45 tg-anh" role="img" aria-label="Ảnh chân dung" data-can="B2">
-            <div>
-              <b>Ảnh chân dung</b>Khổ 4:5, ánh sáng cửa sổ
-            </div>
-          </div>
+        <MucGiay id="anh" tieuDe="Ảnh tải về" cho={!siteConfig.nguoi.anhTaiVe}>
+          <KhungChanDung className="r45 tg-anh" sizes="240px" />
+          {siteConfig.nguoi.anhTaiVe ? (
+            <p>
+              <a href={siteConfig.nguoi.anhTaiVe} download>
+                Bạn có thể tải ảnh chân dung khổ lớn tại đây.
+              </a>
+            </p>
+          ) : null}
         </MucGiay>
         <MucGiay id="chu-de" tieuDe="Chủ đề nói chuyện" cho>
           <OCan ma="C13" />

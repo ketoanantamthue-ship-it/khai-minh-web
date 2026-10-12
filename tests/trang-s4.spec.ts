@@ -187,3 +187,29 @@ test.describe("Các trang của phiên S4", () => {
     expect(loi).toEqual([]);
   });
 });
+
+test.describe("Chất liệu tác giả (B2, C7, D1)", () => {
+  test("/khai-minh có tiểu sử theo mốc năm và ảnh chân dung thật", async ({ page }) => {
+    await page.goto("/khai-minh");
+    await expect(page.locator("#tieu-su .tieu-su-moc li")).toHaveCount(8);
+    await expect(page.locator("#tieu-su .tieu-su-nam").first()).toHaveText("2012");
+    // Ô “Đang soạn” của tiểu sử đã thay bằng chữ; bốn kênh riêng vẫn chờ C7.
+    await expect(page.locator("#tieu-su .o-can")).toHaveCount(0);
+    await expect(page.locator("#portraitSlot img")).toHaveAttribute("alt", /^Khai Minh /);
+    await expect(page.locator("#portraitSlot")).not.toHaveAttribute("role", "img");
+  });
+
+  test("/bao-chi có tiểu sử ngắn và ảnh tải về", async ({ page, request }) => {
+    await page.goto("/bao-chi");
+    await expect(page.locator("#tieu-su")).toContainText("Khai Minh là bút danh của người sáng lập An Tâm Mệnh");
+    const taiVe = page.locator("#anh a[download]");
+    const href = (await taiVe.getAttribute("href"))!;
+    expect((await request.get(href)).headers()["content-type"]).toContain("image/jpeg");
+  });
+
+  test("chân trang có số Zalo và điện thoại bấm được", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator(".ft a[href='tel:0944365246']")).toHaveText("094 436 5246");
+    await expect(page.locator(".ft a[href='https://zalo.me/0944365246']")).toHaveText("Nhắn Zalo");
+  });
+});

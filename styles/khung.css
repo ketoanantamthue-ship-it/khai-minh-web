@@ -26,3 +26,11 @@
 .km-bai .hero-bai .lien-404 a{color:var(--cream-gold)}
 /* Hai nút cách hiển thị ở màn đầu trang /tro-nang */
 .km-bai .hero-bai .prefs{display:flex;flex-wrap:wrap;gap:10px}
+/* Trang Báo chí: ảnh tải về lớn hơn ảnh ở khối tác giả. */
+.km-khung #anh .tg-anh{width:min(240px,100%);margin-bottom:12px}
+/* Tiểu sử dạng các mốc năm (/khai-minh#tieu-su). */
+.km-bai .tieu-su-moc{list-style:none;margin:10px 0 24px;padding:0 0 0 2px;border-left:2px solid rgba(124,90,30,.35)}
+.km-bai .tieu-su-moc li{position:relative;padding:0 0 20px 24px}
+.km-bai .tieu-su-moc li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold-text)}
+.km-bai .tieu-su-nam{display:block;font-family:var(--serif);font-size:16px;letter-spacing:.04em;color:var(--gold-text)}
+.km-bai .tieu-su-moc p{margin:4px 0 0}

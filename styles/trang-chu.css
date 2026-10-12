@@ -1462,3 +1462,7 @@ body.mzs-lock{overflow:hidden}
 .km-tc .tq-bay .room .read{background:var(--dc)!important;color:#FFF4E6!important}
 .km-tc .tq-bay .room .read:hover{filter:brightness(1.12)}
 .km-tc .tq-bay .room .room-more{color:var(--dc2)!important;text-decoration-color:var(--dc2)!important}
+/* Ảnh chân dung thật trong khung 4:5 (docs/07, mục B2): ảnh phủ kín khung, góc vàng nằm trên ảnh. */
+.km-tc #portraitSlot.co-anh{padding:0}
+.km-tc #portraitSlot.co-anh .anh-chan-dung{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.km-tc #portraitSlot.co-anh::before,.km-tc #portraitSlot.co-anh::after{z-index:3}

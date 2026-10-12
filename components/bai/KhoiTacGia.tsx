@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KhungChanDung } from "@/components/AnhChanDung";
 import { OCan } from "@/components/trang-con/OCan";
 import { lopTinCay } from "@/lib/nhan";
 import { vietNgay, type Bai, type Nguon } from "@/lib/noi-dung";
@@ -23,11 +24,7 @@ export function KhoiTacGia({ bai }: { bai: Bai }) {
         <h2 id="tac-gia">Tác giả và nguồn</h2>
         <div className="tg-luoi">
           {/* Ảnh chân dung khổ 4:5 (docs/07, mục B2). */}
-          <div className="slot r45 tg-anh" role="img" aria-label="Ảnh chân dung" data-can="B2">
-            <div>
-              <b>Ảnh chân dung</b>Khổ 4:5, ánh sáng cửa sổ
-            </div>
-          </div>
+          <KhungChanDung className="r45 tg-anh" sizes="150px" />
           <dl className="tg-ds">
             <div>
               <dt>Tác giả</dt>
