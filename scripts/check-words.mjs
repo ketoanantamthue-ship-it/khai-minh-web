@@ -25,7 +25,7 @@ import choPhep from "./check-words-cho-phep.json" with { type: "json" };
 const ROOT = new URL("..", import.meta.url).pathname;
 const STRICT = process.argv.includes("--strict");
 
-const SCAN = ["content", "components", "app", "lib/thu-chu.ts", "apps-script/Code.gs", "site.config.ts"];
+const SCAN = ["content", "components", "app", "lib/thu-chu.ts", "lib/thu-cam-on.ts", "apps-script/Code.gs", "site.config.ts"];
 const EXT_CONTENT = new Set([".mdx", ".md"]);
 const EXT_CODE = new Set([".tsx", ".ts", ".jsx", ".js", ".mjs", ".gs"]);
 const SKIP_DIRS = new Set(["node_modules", ".next", "out"]);

@@ -82,7 +82,7 @@ Trong Apps Script, chọn hàm **guiThuThu** rồi bấm **Chạy**. Một thư 
    - **Key:** `THU_BI_MAT`
    - **Value:** dãy 64 ký tự ở bước 3
 
-Bản production của web sẽ **không chịu dựng** nếu thiếu hai biến này. Tôi đặt chốt ấy để không có ngày lá thư hiện trên web mà gửi không đi.
+Khi lá thư đã bật, bản production của web sẽ **không chịu dựng** nếu thiếu hai biến này. Tôi đặt chốt ấy để không có ngày lá thư hiện trên web mà gửi không đi.
 
 ## Bước 7. Dựng lại bản xem trước và gửi thử
 
@@ -99,7 +99,7 @@ Biến môi trường chỉ có hiệu lực từ lần dựng sau, nên cần d
    - [ ] địa chỉ thư kia nhận “Tôi đã nhận được lá thư của bạn”. Nếu không thấy, anh xem mục **Thư rác**.
 6. Mở `/tri`, kéo xuống ô “Gửi thư cho tôi mỗi tháng”, điền địa chỉ, đánh dấu ô đồng ý và gửi. Trang **Danh sách nhận thư** phải có thêm một dòng.
 
-Anh nhắn tôi kết quả. Đủ bốn điều thì tôi mở pull request.
+Đủ bốn điều thì nhờ Claude Code đổi `noiNhanThu` trong `site.config.ts` thành `"/api/thu"`. Từ lúc ấy, lá thư và các ô nhận thư mới hiện ra ở web thật.
 
 ---
 

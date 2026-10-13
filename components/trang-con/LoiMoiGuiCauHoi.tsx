@@ -18,7 +18,7 @@ export function LoiMoiGuiCauHoi() {
           đồng hành riêng.
         </p>
         <div className="cta">
-          <Link className="btn" href="/gui-cau-hoi">
+          <Link className="btn" href="/gui-cau-hoi" prefetch={false}>
             Gửi một câu hỏi cho Khai&nbsp;Minh
           </Link>
         </div>

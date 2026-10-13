@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { taoGioiHan } from "@/lib/gioi-han";
 import { kiemThu, loaiKhai } from "@/lib/thu";
 import { TRANG_CAM_ON, TRANG_CHUA_GUI, type LoaiThu, type MaLoiThu } from "@/lib/thu-chu";
+import { siteConfig } from "@/site.config";
 
 /**
  * Nơi nhận thư của web (phiên S5; docs/07, mục A5): lá thư “Gửi một câu hỏi”,
@@ -68,6 +69,9 @@ async function docDuLieu(request: NextRequest): Promise<Record<string, string> |
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  // Lá thư còn tắt ở bản thật (site.config.ts, `noiNhanThu`): không nhận thư nào.
+  if (!siteConfig.moLoiThu) return NextResponse.json({ ok: false, loi: "du-lieu" }, { status: 404 });
+
   const json = (request.headers.get("accept") ?? "").includes("application/json");
 
   // Chỉ nhận thư gửi từ chính web này.

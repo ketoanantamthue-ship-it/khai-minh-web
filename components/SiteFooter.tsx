@@ -156,7 +156,7 @@ export function SiteFooter() {
           {/* Bản thật chưa có nơi nhận thư: không mời gửi thư, không hứa hồi âm (docs/07, mục A18). */}
           {siteConfig.moLoiThu ? (
             <div className="ft-act">
-              <Link className="ft-letter" href="/gui-cau-hoi">
+              <Link className="ft-letter" href="/gui-cau-hoi" prefetch={false}>
                 Gửi tôi một lá thư ›
               </Link>
               <span className="ft-reply">Tôi hồi âm mọi lời nhắn trong ngày.</span>

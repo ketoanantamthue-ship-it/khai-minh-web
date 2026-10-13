@@ -58,7 +58,7 @@ Các đường dẫn `/chang/1` đến `/chang/9` chuyển hướng 301 về slu
 | Sách | `/sach` | Sách lõi và các bộ sách | Nhận tin khi sách ra | **S4: đã dựng khung** (dùng `cua-tri.html#sach`); mục lục dự kiến và đoạn trích chờ C12 | S4 |
 | Tủ sách | `/tu-sach` | Ba cuốn sách gợi ý cho mỗi chặng | Nhận thư hằng tháng | **S4: đã dựng khung**, chờ danh sách sách (B7) | S4 |
 | Ngồi lặng | `/ngoi-lang` | Chín mươi giây có người dẫn | Bắt đầu ngồi lặng | **S4: đã dựng** (dùng `#khoang-lang`); chờ video và giọng đọc (B5) | S4 |
-| Gửi một câu hỏi | `/gui-cau-hoi` | Lời nhắn riêng, phiếu đồng ý dữ liệu | Gửi câu hỏi | **Dựng sớm ở S4** (dùng `#gui-cau-hoi`, chủ đề chọn sẵn qua `?chu-de=`); **S5: gửi thật** qua `/api/thu` tới Google Sheets và Gmail | S5 |
+| Gửi một câu hỏi | `/gui-cau-hoi` | Lời nhắn riêng, phiếu đồng ý dữ liệu | Gửi câu hỏi | **Dựng sớm ở S4** (dùng `#gui-cau-hoi`, chủ đề chọn sẵn qua `?chu-de=`); **S5: có mã gửi thật** qua `/api/thu` tới Google Sheets và Gmail; chờ cài Apps Script rồi bật (docs/07, E3) | S5 |
 | Trang cảm ơn | `/cam-on/la-thu`, `/cam-on/thu-hang-thang`, `/cam-on/bao-sach` | Báo đã nhận thư, lời nhắc an toàn | — (chỉ liên kết chữ) | **S5: đã dựng**; `noindex`, không vào sitemap | S5 |
 | Chưa gửi được | `/chua-gui-duoc` | Báo gửi không được khi trình duyệt tắt JavaScript | Quay lại trang Gửi một câu hỏi | **S5: đã dựng**; `noindex`, không vào sitemap | S5 |
 | Hiến chương (bản trên web Khai Minh) | `/hien-chuong` | Chín điều hứa, khi tôi sai | (không có nút bán) | BM (dùng `#loi-hua`, `#dieu-1…9`, `#khi-sai`). Thêm mục `#lich-su-sua-doi` (Lịch sử sửa đổi Hiến chương). Bản gốc đầy đủ đặt ở antammenh.com. **S4: đã dựng**; lịch sử sửa đổi chờ ngày công bố (C8) | S4 |

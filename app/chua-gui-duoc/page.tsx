@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { TrangKhung } from "@/components/khung/TrangKhung";
 import { taoMetadata } from "@/lib/seo";
-import { CHU_THU, CHUA_GUI } from "@/lib/thu-chu";
+import { CHUA_GUI } from "@/lib/thu-cam-on";
+import { CHU_THU } from "@/lib/thu-chu";
 import { siteConfig } from "@/site.config";
 
 /**
@@ -9,6 +11,7 @@ import { siteConfig } from "@/site.config";
  * JavaScript: biểu mẫu gửi theo cách thường của HTML, nơi nhận thư không
  * chuyển được thư đi thì đưa khách tới đây. Có JavaScript thì lời báo hiện
  * ngay dưới nút gửi và chữ khách viết vẫn còn nguyên. Luôn để `noindex`.
+ * Lá thư còn tắt ở bản thật (`moLoiThu`) thì trang này ra 404.
  */
 export const metadata = taoMetadata({
   tieuDe: CHUA_GUI.tieuDe,
@@ -18,6 +21,7 @@ export const metadata = taoMetadata({
 });
 
 export default function TrangChuaGui() {
+  if (!siteConfig.moLoiThu) notFound();
   const zalo = siteConfig.lienHe.zalo;
   return (
     <TrangKhung

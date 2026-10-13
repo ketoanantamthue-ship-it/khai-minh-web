@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { KhoiGiay, TrangKhung } from "@/components/khung/TrangKhung";
 import { taoMetadata } from "@/lib/seo";
-import { CAM_ON, CAM_ON_NGOI_LANG, LOAI_THU, type LoaiThu } from "@/lib/thu-chu";
+import { CAM_ON, CAM_ON_NGOI_LANG, LOAI_THU, type LoaiThu } from "@/lib/thu-cam-on";
 import { siteConfig } from "@/site.config";
 
 /**
@@ -16,7 +16,9 @@ const THEO_DUONG_DAN = Object.fromEntries(
 
 export const dynamicParams = false;
 
+/** Lá thư còn tắt ở bản thật (`moLoiThu`) thì không dựng trang cảm ơn nào. */
 export function generateStaticParams() {
+  if (!siteConfig.moLoiThu) return [];
   return Object.keys(THEO_DUONG_DAN).map((loai) => ({ loai }));
 }
 
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/cam-on/[loai]">) 
 
 export default async function TrangCamOn({ params }: PageProps<"/cam-on/[loai]">) {
   const l = THEO_DUONG_DAN[(await params).loai];
-  if (!l) notFound();
+  if (!l || !siteConfig.moLoiThu) notFound();
   const c = CAM_ON[l];
   const { capCuu, ngayMai } = siteConfig.khanCap;
 

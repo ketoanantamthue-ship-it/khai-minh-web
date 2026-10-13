@@ -30,9 +30,8 @@ function dau(): string {
 }
 
 test.describe("Nơi nhận thư /api/thu", () => {
-  test("site.config.ts trỏ đúng nơi nhận thư mà biểu mẫu gửi tới", () => {
-    expect(siteConfig.noiNhanThu).toBe(NOI_NHAN_THU);
-    expect(siteConfig.moLoiThu).toBe(true);
+  test("site.config.ts trỏ đúng nơi nhận thư mà biểu mẫu gửi tới, hoặc còn tắt", () => {
+    expect([null, NOI_NHAN_THU]).toContain(siteConfig.noiNhanThu);
   });
 
   test("lá thư hợp lệ đi sang Apps Script kèm mã bí mật, không kèm địa chỉ mạng", async ({ request }) => {
