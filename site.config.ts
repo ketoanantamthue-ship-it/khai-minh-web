@@ -58,11 +58,17 @@ const hienBanNhap =
 const laBanThat = !hienBanNhap;
 
 /**
- * Nơi nhận thư của các biểu mẫu (docs/07, mục A5; nối ở phiên S5). Khi còn
- * `null`, bản thật ẩn lá thư, các ô nhận thư và mọi lối dẫn tới chúng (anh
- * chốt ở docs/07, mục A18); bản xem trước vẫn giữ như bản mẫu.
+ * Nơi nhận thư của các biểu mẫu (docs/07, mục A5; nối ở phiên S5): lá thư và
+ * các ô nhận thư gửi về app/api/thu/route.ts, rồi sang Google Apps Script ghi
+ * vào Google Sheets và gửi Gmail (apps-script/HUONG-DAN.md).
+ *
+ * Đặt lại `null` thì bản thật ẩn lá thư, các ô nhận thư và mọi lối dẫn tới
+ * chúng (docs/07, mục A18); bản xem trước vẫn giữ như bản mẫu.
+ *
+ * Phải trùng NOI_NHAN_THU ở lib/thu-chu.ts (tests/thu.spec.ts kiểm). Không nhập
+ * thẳng từ đó vì scripts/kiem-bai.mts đọc tệp này bằng Node, không qua Next.
  */
-const noiNhanThu: string | null = null;
+const noiNhanThu: string | null = "/api/thu";
 
 export const siteConfig = {
   ten: "Khai Minh",
