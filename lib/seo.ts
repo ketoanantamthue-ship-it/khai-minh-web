@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig, urlTuyetDoi } from "@/site.config";
+import { siteConfig, urlTuyetDoi, type LienKet } from "@/site.config";
 import { TRANG_CHUA_DU_CHU } from "./trang-khung";
 
 /**
@@ -129,7 +129,8 @@ type Nut = Record<string, unknown>;
  */
 export function nutNguoi(): Nut {
   const { nguoi } = siteConfig;
-  const sameAs = siteConfig.mangXaHoi.flatMap((k) => (k.url ? [k.url] : []));
+  // Nhóm cộng đồng không phải là trang của chính Khai Minh, nên không vào sameAs.
+  const sameAs = (siteConfig.mangXaHoi as readonly LienKet[]).flatMap((k) => (k.url && !k.laNhom ? [k.url] : []));
   return {
     "@type": "Person",
     "@id": ID_NGUOI,

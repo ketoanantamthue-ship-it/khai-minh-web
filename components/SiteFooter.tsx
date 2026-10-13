@@ -176,7 +176,11 @@ export function SiteFooter() {
               <div>
                 <dt>Thư điện tử</dt>
                 <dd>
-                  <O giaTri={lienHe.email} nhan="Địa chỉ thư" can="D1: địa chỉ thư" />
+                  {lienHe.email ? (
+                    <a href={`mailto:${lienHe.email}`}>{lienHe.email}</a>
+                  ) : (
+                    <O giaTri={lienHe.email} nhan="Địa chỉ thư" can="D1: địa chỉ thư" />
+                  )}
                 </dd>
               </div>
               <div>

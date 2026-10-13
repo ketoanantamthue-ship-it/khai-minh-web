@@ -213,3 +213,22 @@ test.describe("Chất liệu tác giả (B2, C7, D1)", () => {
     await expect(page.locator(".ft a[href='https://zalo.me/0944365246']")).toHaveText("Nhắn Zalo");
   });
 });
+
+test.describe("Liên hệ và nhóm cộng đồng (C7, D1)", () => {
+  test("chân trang có thư điện tử bấm được và nhóm An Tâm Mệnh; nhóm không vào sameAs của Person", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator(".ft a[href='mailto:khaivannguoi@gmail.com']")).toHaveText("khaivannguoi@gmail.com");
+    await expect(page.locator(".ft-soc a", { hasText: "Nhóm An Tâm Mệnh" })).toHaveAttribute(
+      "href",
+      "https://www.facebook.com/share/g/1C1GnZtCar/",
+    );
+    const doThi = await page.locator('script[type="application/ld+json"]').evaluateAll((ss) =>
+      ss.flatMap((s) => {
+        const j = JSON.parse(s.textContent ?? "{}");
+        return (j["@graph"] ?? [j]) as Record<string, unknown>[];
+      }),
+    );
+    const nguoi = doThi.find((n) => n["@type"] === "Person")!;
+    expect(JSON.stringify(nguoi.sameAs ?? [])).not.toContain("facebook.com/share/g/");
+  });
+});
