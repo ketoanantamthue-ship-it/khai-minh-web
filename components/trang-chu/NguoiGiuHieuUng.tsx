@@ -8,7 +8,7 @@ import { hrefGuiCauHoi } from "@/lib/lien-ket";
  * Khung ảnh chân dung, phủ một lớp sơn để khách mài lộ người viết
  * (bản mẫu: "V2: mài sơn lộ chân dung"). Chế độ tĩnh: không có lớp sơn.
  */
-export function PhuChanDung({ children }: { children: ReactNode }) {
+export function PhuChanDung({ children, coAnh = false }: { children: ReactNode; coAnh?: boolean }) {
   const khung = useRef<HTMLDivElement>(null);
   const cvRef = useRef<HTMLCanvasElement>(null);
   const bat = !useCheDoTinh();
@@ -120,7 +120,13 @@ export function PhuChanDung({ children }: { children: ReactNode }) {
   }, [bat]);
 
   return (
-    <div className="slot portrait" id="portraitSlot" role="img" aria-label="Khung ảnh chân dung" ref={khung}>
+    <div
+      className={coAnh ? "slot portrait co-anh" : "slot portrait"}
+      id="portraitSlot"
+      // Có ảnh thật thì ảnh tự mang mô tả (alt); khung chờ mới cần nhãn riêng.
+      {...(coAnh ? {} : { role: "img", "aria-label": "Khung ảnh chân dung" })}
+      ref={khung}
+    >
       {children}
       {bat ? (
         <>

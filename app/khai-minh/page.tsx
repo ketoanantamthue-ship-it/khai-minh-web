@@ -60,8 +60,17 @@ export default function TrangTacGia() {
           <OCan ma="B3" />
         </MucGiay>
         <MucGiay id="tieu-su" tieuDe="Tiểu sử">
-          {/* Tiểu sử chuẩn, một đoạn ngắn và một đoạn dài (docs/07, mục C7). */}
-          <OCan ma="C7" />
+          {/* Tiểu sử (docs/07, mục C7): lấy từ site.config.ts, mục nguoi.tieuSuDai. */}
+          <p>{siteConfig.nguoi.tieuSuDai.moDau}</p>
+          <ol className="tieu-su-moc">
+            {siteConfig.nguoi.tieuSuDai.moc.map((m) => (
+              <li key={m.nam}>
+                <span className="tieu-su-nam">{m.nam}</span>
+                <p>{m.chu}</p>
+              </li>
+            ))}
+          </ol>
+          <p>{siteConfig.nguoi.tieuSuDai.ketLai}</p>
           <ul className="kenh" aria-label="Kênh chính thức">
             {siteConfig.mangXaHoi.map((k) => (
               <li key={k.ten}>{k.url ? <a href={k.url}>{k.ten}</a> : <a data-can={k.can}>{k.ten}</a>}</li>

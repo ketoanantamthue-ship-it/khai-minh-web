@@ -1,3 +1,4 @@
+import { AnhChanDung } from "@/components/AnhChanDung";
 import { hrefGuiCauHoi } from "@/lib/lien-ket";
 import { siteConfig } from "@/site.config";
 import { NgoiLaiCauHoi, PhuChanDung } from "./NguoiGiuHieuUng";
@@ -19,10 +20,14 @@ export function NguoiGiu({ noiKhac }: { noiKhac?: boolean } = {}) {
       <div className="grid">
         <div className="kp-pcol">
           {/* Ảnh chân dung khổ 4:5 (docs/07, mục B2). */}
-          <PhuChanDung>
-            <div data-can="B2">
-              <b>Ảnh chân dung</b>Khổ 4:5, ánh sáng cửa sổ
-            </div>
+          <PhuChanDung coAnh={siteConfig.nguoi.anh !== null}>
+            {siteConfig.nguoi.anh ? (
+              <AnhChanDung sizes="(min-width: 960px) 400px, 320px" />
+            ) : (
+              <div data-can="B2">
+                <b>Ảnh chân dung</b>Khổ 4:5, ánh sáng cửa sổ
+              </div>
+            )}
           </PhuChanDung>
           <p className="kp-cap">
             <b>Khai Minh</b>Dược sĩ, người khai vấn của An Tâm Mệnh

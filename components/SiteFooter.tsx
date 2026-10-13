@@ -180,9 +180,18 @@ export function SiteFooter() {
                 </dd>
               </div>
               <div>
-                <dt>Zalo</dt>
+                <dt>Zalo và điện thoại</dt>
                 <dd>
-                  <O giaTri={lienHe.zalo} nhan="Số Zalo" can="D1: số Zalo" />
+                  {lienHe.zalo && lienHe.dienThoai ? (
+                    <>
+                      <a href={`tel:${lienHe.dienThoai}`}>{lienHe.zalo}</a> ·{" "}
+                      <a href={`https://zalo.me/${lienHe.dienThoai}`} rel="noopener">
+                        Nhắn Zalo
+                      </a>
+                    </>
+                  ) : (
+                    <O giaTri={lienHe.zalo} nhan="Số Zalo" can="D1: số Zalo" />
+                  )}
                 </dd>
               </div>
               <div>

@@ -22,14 +22,14 @@ async function docDoThi(page: Page): Promise<Nut[]> {
 }
 
 test.describe("R2 · Person và Organization", () => {
-  test("Person có mô tả và lĩnh vực lấy từ site.config.ts; không bịa ảnh, kênh hay nghề", async ({ page }) => {
+  test("Person có mô tả, lĩnh vực và ảnh lấy từ site.config.ts; không bịa kênh hay nghề", async ({ page }) => {
     await page.goto("/");
     const g = await docDoThi(page);
     const nguoi = g.find((n) => n["@type"] === "Person")!;
     expect(String(nguoi.description)).toMatch(/^Khai Minh là người khai vấn/);
     expect(nguoi.knowsAbout).toEqual(["Phật học", "Cổ học", "Dưỡng sinh"]);
-    // Chưa có chân dung (B2), kênh chính thức (C7), sự đồng ý công khai nghề (D2).
-    expect(nguoi).not.toHaveProperty("image");
+    // Chân dung đã có (B2); kênh riêng của Khai Minh (C7) và sự đồng ý công khai nghề (D2) thì chưa.
+    expect(String(nguoi.image)).toMatch(/\/assets\/img\/khai-minh-chan-dung\.webp$/);
     expect(nguoi).not.toHaveProperty("sameAs");
     expect(nguoi).not.toHaveProperty("hasOccupation");
     const toChuc = g.find((n) => n["@type"] === "Organization")!;

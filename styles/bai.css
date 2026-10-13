@@ -133,3 +133,6 @@
 /* Liên kết chữ trên giấy: chữ màu mực, gạch chân màu cửa (màu xanh ngọc của
    Cửa Thân trên nền giấy sẫm chưa đạt tương phản AA). */
 .km-bai section.s .hc-link a{color:var(--ink);text-decoration-color:var(--dc,var(--gold-text))}
+/* Ảnh chân dung thật ở khối tác giả và trang Báo chí (docs/07, mục B2). */
+.km-bai .tg-anh.co-anh{padding:0}
+.km-bai .tg-anh.co-anh img{display:block;width:100%;height:auto;border-radius:3px}
