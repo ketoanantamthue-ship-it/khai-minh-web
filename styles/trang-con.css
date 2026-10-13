@@ -73,6 +73,11 @@
 .km-con .signup{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;max-width:560px}
 .km-con .signup input{flex:1 1 240px;min-height:52px;padding:12px 14px;border:1px solid #8D8273;border-radius:4px;background:#FBF7EF;font-family:var(--sans);font-size:16px}
 .km-con .msg{font-size:15px;margin-top:10px;min-height:24px}
+/* Phiếu đồng ý của ô nhận thư (phiên S5): một dòng riêng dưới ô và nút. */
+.km-con .signup-dy{flex:1 1 100%;display:flex;gap:12px;align-items:flex-start;margin-top:4px;font-family:var(--sans);font-size:15px;line-height:1.55;color:var(--ink)}
+.km-con .signup .signup-dy input{flex:none;width:22px;height:22px;min-height:0;margin:1px 0 0;padding:0;accent-color:var(--navy)}
+.km-con .signup-dy a{text-decoration:underline}
+.easy .km-con .signup-dy{font-size:17.5px}
 
 @media (prefers-reduced-motion:reduce){.km-con .card::after{background-size:100% 1px,1px 100%,100% 1px,1px 100%;transition:none}}
 /* ===== Đồng bộ K1.8.2: bảng màu chung, từ tối ra sáng ===== */

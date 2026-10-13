@@ -94,6 +94,16 @@ export const CHU_DE_THU = {
 } as const satisfies Record<string, readonly [string, string]>;
 export type ChuDeThu = keyof typeof CHU_DE_THU;
 
+/** Tên các chủ đề trên lá thư, theo thứ tự hiện ra. Nơi nhận thư cũng ghi tên này vào bảng tính. */
+export const NHAN_CHU_DE_THU: { ma: ChuDeThu; nhan: string }[] = [
+  { ma: "q", nhan: "Một câu hỏi tôi đang mang" },
+  { ma: "hoso", nhan: "Xin Hồ sơ Soi" },
+  { ma: "dong", nhan: "Xin đi cùng hành trình" },
+  { ma: "tra", nhan: "Hỏi về Trà thất" },
+  { ma: "hc", nhan: "Góp ý một điều trong Hiến chương" },
+  { ma: "md", nhan: "Báo người mạo danh tôi" },
+];
+
 /** Lớp Ngồi lặng chín mươi giây. */
 export const NGOI_LANG = {
   batDau: "Bạn ngồi thoải mái. Chúng ta bắt đầu.",

@@ -10,8 +10,8 @@ import "@/styles/trang-chu.css";
  * nơi đến (docs/07, mục E9, E12, E17). Liên kết từ trang khác mang chủ đề
  * theo tham số ?chu-de= (lib/lien-ket.ts).
  *
- * Biểu mẫu vẫn là bản xem trước: chưa gửi thư đi đâu. Phiên S5 nối nơi nhận
- * thư, chống spam và trang cảm ơn (docs/07, mục A5, E3, E18).
+ * Từ phiên S5, lá thư gửi thật tới nơi nhận thư của web (app/api/thu/route.ts),
+ * rồi sang trang cảm ơn (docs/07, mục A5, E3).
  *
  * Bản thật chưa có nơi nhận thư (docs/07, mục A18): không lối nào dẫn tới
  * đây, lá thư không được dựng, trang để `noindex, follow` và không vào

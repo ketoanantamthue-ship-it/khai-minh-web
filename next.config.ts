@@ -2,12 +2,17 @@ import type { NextConfig } from "next";
 import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import { chuyenHuongChang } from "./lib/chuyen-huong";
 import { DOOR_KEYS } from "./lib/doors";
-import { kiemTraAnhTam } from "./lib/kiem-tra-build";
+import { kiemTraAnhTam, kiemTraNoiNhanThu } from "./lib/kiem-tra-build";
 import { danhSachAnhTam, siteConfig } from "./site.config";
 
 export default function nextConfig(phase: string): NextConfig {
   if (phase === PHASE_PRODUCTION_BUILD) {
     kiemTraAnhTam({ choPhepLapChiMuc: siteConfig.choPhepLapChiMuc, anhTam: danhSachAnhTam() });
+    kiemTraNoiNhanThu({
+      laProduction: process.env.VERCEL_ENV === "production",
+      noiNhanThu: siteConfig.noiNhanThu,
+      bien: process.env,
+    });
   }
 
   return {

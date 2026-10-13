@@ -1,8 +1,12 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
+import { OBay, guiThu } from "@/components/thu/GuiThu";
 import { useCheDoTinh } from "@/lib/dung-moi-truong";
-import { CHU_DE_THU, type ChuDeThu } from "./chu";
+import { CHU_THU, NOI_NHAN_THU, loiGuiThu } from "@/lib/thu-chu";
+import { CHU_DE_THU, NHAN_CHU_DE_THU, type ChuDeThu } from "./chu";
 
 /**
  * Tiêu đề "chữ thấm vào giấy": từng chữ hiện dần khi cuộn tới (bản mẫu V2).
@@ -49,14 +53,6 @@ export function ChuTham({ id, chu }: { id: string; chu: string }) {
   );
 }
 
-const CHU_DE: { ma: ChuDeThu; nhan: string }[] = [
-  { ma: "q", nhan: "Một câu hỏi tôi đang mang" },
-  { ma: "hoso", nhan: "Xin Hồ sơ Soi" },
-  { ma: "dong", nhan: "Xin đi cùng hành trình" },
-  { ma: "tra", nhan: "Hỏi về Trà thất" },
-  { ma: "hc", nhan: "Góp ý một điều trong Hiến chương" },
-  { ma: "md", nhan: "Báo người mạo danh tôi" },
-];
 
 const DIEU = [
   "Không nói trước tương lai",
@@ -75,9 +71,10 @@ const DIEU = [
  * Các liên kết có `data-topic` ở khắp trang chủ chọn sẵn chủ đề tương ứng; ở
  * trang /gui-cau-hoi, chủ đề đến từ tham số `?chu-de=` của địa chỉ.
  *
- * Bản xem trước: chưa gửi đi đâu, như bản mẫu. Phiên S5 nối nơi nhận thư,
- * chống spam và trang cảm ơn (docs/06; docs/07, mục A5, E3). Bản thật chưa có
- * nơi nhận thư thì không dựng lá thư (GuiCauHoi, `siteConfig.moLoiThu`).
+ * Gửi thật từ phiên S5: lá thư đi tới nơi nhận thư của web (NOI_NHAN_THU,
+ * app/api/thu/route.ts), rồi sang trang cảm ơn. Gửi không được thì hiện lời
+ * báo ngay dưới nút và giữ nguyên chữ khách đã viết. Khi trình duyệt không
+ * chạy JavaScript, biểu mẫu vẫn gửi được theo cách thường của HTML.
  */
 const khongDoi = () => () => {};
 
@@ -86,14 +83,20 @@ function docChuDeTuDiaChi(): ChuDeThu | null {
   return ma && ma in CHU_DE_THU ? (ma as ChuDeThu) : null;
 }
 
-export function ThuGuiToi() {
+export function ThuGuiToi({ zalo }: { zalo: string | null }) {
   // Trang /gui-cau-hoi: chủ đề do liên kết ở trang khác mang theo (lib/lien-ket.ts).
   const tuDiaChi = useSyncExternalStore(khongDoi, docChuDeTuDiaChi, () => null);
   const [daChon, setChuDe] = useState<ChuDeThu | null>(null);
   const chuDe: ChuDeThu = daChon ?? tuDiaChi ?? "q";
   const [loiNhan, setLoiNhan] = useState<{ chu: string; loi: boolean } | null>(null);
+  const [dangGui, setDangGui] = useState(false);
+  // Trình duyệt không chạy JavaScript thì tự kiểm các ô `required`; có JavaScript
+  // thì biểu mẫu tự kiểm để hiện lời nhắc ấm hơn.
+  const tuKiem = useSyncExternalStore(khongDoi, () => true, () => false);
   const oViet = useRef<HTMLTextAreaElement>(null);
+  const oThu = useRef<HTMLInputElement>(null);
   const oDongY = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const bam = (e: MouseEvent) => {
@@ -105,37 +108,50 @@ export function ThuGuiToi() {
     return () => document.removeEventListener("click", bam);
   }, []);
 
-  const gui = (e: FormEvent) => {
+  const gui = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (dangGui) return;
     const t = oViet.current;
+    const m = oThu.current;
     const ok = oDongY.current;
-    if (!t || !ok) return;
+    if (!t || !m || !ok) return;
     if (!t.value.trim()) {
-      setLoiNhan({ chu: "Bạn viết giúp tôi câu hỏi trước khi gửi nhé.", loi: true });
+      setLoiNhan({ chu: CHU_THU.thieuCauHoi, loi: true });
       t.focus();
       return;
     }
+    if (m.value.trim() && !m.checkValidity()) {
+      setLoiNhan({ chu: CHU_THU.saiDiaChi, loi: true });
+      m.focus();
+      return;
+    }
     if (!ok.checked) {
-      setLoiNhan({ chu: "Bạn đánh dấu ô đồng ý để tôi được đọc câu hỏi này nhé.", loi: true });
+      setLoiNhan({ chu: CHU_THU.chuaDongYHoi, loi: true });
       ok.focus();
       return;
     }
-    setLoiNhan({
-      chu: "Tôi đã nhận được lá thư của bạn. Cảm ơn bạn đã tin mà gửi cho tôi. Tôi sẽ hồi âm trong ngày.",
-      loi: false,
-    });
-    t.value = "";
+    setDangGui(true);
+    setLoiNhan({ chu: CHU_THU.dangGui, loi: false });
+    const kq = await guiThu(e.currentTarget);
+    if (kq.ok) {
+      router.push(kq.den);
+      return;
+    }
+    setDangGui(false);
+    const loi = loiGuiThu(kq.loi, "hoi");
+    setLoiNhan({ chu: kq.loi === "nhieu" || !zalo ? loi : `${loi} ${CHU_THU.loiZalo(zalo)}`, loi: true });
   };
 
   const [nhanO, nhacNho] = CHU_DE_THU[chuDe];
 
   return (
-    // Biểu mẫu chưa gửi thư đi đâu (docs/07, mục A5, E3).
-    <form id="askForm" noValidate onSubmit={gui} data-can="A5: chưa có nơi nhận thư">
+    <form id="askForm" action={NOI_NHAN_THU} method="post" noValidate={tuKiem} onSubmit={gui}>
+      <input type="hidden" name="loai" value="hoi" />
+      <OBay />
       <fieldset className="sd-topic">
         <legend>Bạn viết thư về điều gì?</legend>
         <div className="sd-chips">
-          {CHU_DE.map((c) => (
+          {NHAN_CHU_DE_THU.map((c) => (
             <label className="sd-chip" key={c.ma}>
               <input
                 type="radio"
@@ -164,7 +180,7 @@ export function ThuGuiToi() {
       </div>
       <div className="field">
         <label htmlFor="q-name">Bạn muốn tôi gọi bạn là gì? (không bắt buộc)</label>
-        <input id="q-name" name="ten" type="text" autoComplete="nickname" />
+        <input id="q-name" name="ten" type="text" autoComplete="nickname" maxLength={80} />
       </div>
       <div className="field">
         <label htmlFor="q-text" id="qLabel">
@@ -174,21 +190,23 @@ export function ThuGuiToi() {
           id="q-text"
           name="cau-hoi"
           ref={oViet}
+          required
+          maxLength={6000}
           placeholder="Bạn viết bằng lời của mình, dài ngắn thế nào cũng được."
         />
       </div>
       <div className="field">
         <label htmlFor="q-mail">Địa chỉ thư, nếu bạn muốn nhận lời hồi âm</label>
-        <input id="q-mail" name="thu" type="email" autoComplete="email" />
+        <input id="q-mail" name="email" type="email" autoComplete="email" maxLength={254} ref={oThu} />
       </div>
       <label className="consent">
-        <input type="checkbox" id="q-ok" name="dong-y" ref={oDongY} />
+        <input type="checkbox" id="q-ok" name="dong-y" ref={oDongY} required />
         <span>
           Tôi đồng ý để Khai&nbsp;Minh đọc lá thư này và có thể trả lời trong một bài viết không nêu tên tôi, theo cách
-          được nói rõ ở trang Dữ liệu.
+          được nói rõ ở <Link href="/du-lieu">trang Dữ liệu</Link>.
         </span>
       </label>
-      <button className="submit" type="submit">
+      <button className="submit" type="submit" aria-disabled={dangGui || undefined}>
         Gửi thư cho Khai&nbsp;Minh
       </button>
       <p className="msg" id="askMsg" aria-live="polite" style={loiNhan?.loi ? { color: "#7A3B10" } : undefined}>

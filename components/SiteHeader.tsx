@@ -35,9 +35,10 @@ export function SiteHeader() {
           {DOOR_KEYS.map((k) => (
             <LienKetCua key={k} cua={k} />
           ))}
-          {/* Bản thật chưa có nơi nhận thư thì không có lối gửi thư (docs/07, mục A18). */}
+          {/* Bản thật chưa có nơi nhận thư thì không có lối gửi thư (docs/07, mục A18).
+              Không tải trước mã lá thư ở mọi trang (ngân sách JS, docs/10, mục R12). */}
           {siteConfig.moLoiThu ? (
-            <Link className="ask-link" href="/gui-cau-hoi">
+            <Link className="ask-link" href="/gui-cau-hoi" prefetch={false}>
               Gửi một câu hỏi
             </Link>
           ) : null}

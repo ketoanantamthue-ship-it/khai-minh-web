@@ -10,7 +10,8 @@
  *   chỉ trong câu phủ định của Hiến chương). Script in ra để người viết
  *   tự kiểm, không làm hỏng CI.
  *
- * Phạm vi: content/ (MDX, MD), components/, app/ và site.config.ts.
+ * Phạm vi: content/ (MDX, MD), components/, app/, chữ thư ở lib/thu-chu.ts và
+ * apps-script/Code.gs (thư xác nhận), site.config.ts.
  * Bỏ qua tệp CSS, chú thích trong mã và các giá trị CSS như `width:100%`.
  *
  * Chỗ đã được người thật xem và cho phép giữ nằm ở check-words-cho-phep.json.
@@ -24,9 +25,9 @@ import choPhep from "./check-words-cho-phep.json" with { type: "json" };
 const ROOT = new URL("..", import.meta.url).pathname;
 const STRICT = process.argv.includes("--strict");
 
-const SCAN = ["content", "components", "app", "site.config.ts"];
+const SCAN = ["content", "components", "app", "lib/thu-chu.ts", "lib/thu-cam-on.ts", "apps-script/Code.gs", "site.config.ts"];
 const EXT_CONTENT = new Set([".mdx", ".md"]);
-const EXT_CODE = new Set([".tsx", ".ts", ".jsx", ".js", ".mjs"]);
+const EXT_CODE = new Set([".tsx", ".ts", ".jsx", ".js", ".mjs", ".gs"]);
 const SKIP_DIRS = new Set(["node_modules", ".next", "out"]);
 
 /** [mẫu, lý do / chữ thay]. Mẫu là biểu thức chính quy, không phân biệt hoa thường. */
