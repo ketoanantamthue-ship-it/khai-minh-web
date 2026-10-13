@@ -152,11 +152,13 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     }
     await muc.nth(3).click();
     await expect(page).toHaveURL(/#khoa-hoc-noi-gi$/);
-    // Chưa có video, bản đọc, ảnh: không hiện trình phát hay ảnh nào. Bảng soi ba lớp có chữ nên hiện.
-    await expect(page.locator(".video-yt, .am-thanh, .anh-bai")).toHaveCount(0);
-    // Bản xem trước hiện khung chờ cho video bài giảng (B12), ảnh đầu bài và ảnh giữa bài (B13).
+    // Chưa có video, bản đọc: không hiện trình phát. Ảnh đầu bài đã có, kèm mô tả và chú thích. Bảng soi ba lớp có chữ nên hiện.
+    await expect(page.locator(".video-yt, .am-thanh")).toHaveCount(0);
+    await expect(page.locator(".anh-bai img")).toHaveAttribute("alt", /^Tranh sơn mài: /);
+    await expect(page.locator(".anh-bai figcaption")).toContainText("tạo bằng công cụ AI");
+    // Bản xem trước còn khung chờ video bài giảng (B12); ảnh đã có nên không còn khung chờ ảnh (B13).
     await expect(page.locator(".khung-cho-video[data-can='B12']")).toHaveCount(1);
-    await expect(page.locator(".khung-cho-anh[data-can='B13']")).toHaveCount(2);
+    await expect(page.locator(".khung-cho-anh[data-can='B13']")).toHaveCount(0);
     await expect(page.locator(".ba-lop .ba-lop-o")).toHaveCount(3);
   });
 
@@ -218,7 +220,8 @@ test.describe("SEO: metadata, JSON-LD, sitemap, robots, ảnh chia sẻ", () => 
       const og = await page.locator('meta[property="og:image"]').getAttribute("content");
       const anh = await request.get(new URL(og!).pathname + new URL(og!).search);
       expect(anh.status(), `${duong} → ${og}`).toBe(200);
-      expect(anh.headers()["content-type"]).toBe("image/png");
+      // Ảnh chia sẻ là PNG dựng tự động, hoặc ảnh đầu bài JPG (Facebook, Zalo đọc được cả hai).
+      expect(anh.headers()["content-type"]).toMatch(/^image\/(png|jpeg)$/);
     }
   });
 
