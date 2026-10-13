@@ -343,6 +343,25 @@ test.describe("Mọi bài hỏi – đáp (bản xem trước)", () => {
       const html = await (await request.get(b.duongDan)).text();
       expect(html).toContain((b.fm.tra_loi_ngan ?? "").split(".")[0]!);
 
+      // Tiêu đề cho Google: ngắn, có đuôi “– Khai Minh”, khác chữ h1 khi bài có tieu_de_seo.
+      const tieuDeGoogle = b.fm.tieu_de_seo ?? b.tieuDe;
+      expect(tieuDeGoogle.length).toBeLessThanOrEqual(60);
+      expect((await page.title()).startsWith(tieuDeGoogle), await page.title()).toBe(true);
+
+      // FAQPage khớp từng câu hỏi ### trong mục “Câu hỏi thường gặp”.
+      const doThi = (await page.locator('script[type="application/ld+json"]').allTextContents()).flatMap(
+        (k) => JSON.parse(k)["@graph"] as Record<string, unknown>[],
+      );
+      const faq = doThi.find((n) => n["@type"] === "FAQPage");
+      const cauHoi = await page.locator("h2#cau-hoi-thuong-gap ~ h3").allTextContents();
+      expect(faq, "có FAQPage").toBeTruthy();
+      const ten = (faq!.mainEntity as { name: string; acceptedAnswer: { text: string } }[]).map((q) => q.name);
+      expect(ten.length).toBeGreaterThanOrEqual(2);
+      for (const t of ten) expect(cauHoi.join("|")).toContain(t);
+      for (const q of faq!.mainEntity as { acceptedAnswer: { text: string } }[]) {
+        expect(q.acceptedAnswer.text.length).toBeGreaterThan(40);
+      }
+
       const kq = await new AxeBuilder({ page }).analyze();
       expect(kq.violations).toEqual([]);
     });

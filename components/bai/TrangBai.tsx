@@ -8,6 +8,7 @@ import { docChinChang, duongDanChang } from "@/lib/chang";
 import { doorStyle } from "@/lib/doors";
 import { khoHienThi } from "@/lib/kho";
 import {
+  cauHoiThuongGap,
   phutDoc,
   taoNeo,
   TEN_LOAI,
@@ -22,6 +23,7 @@ import {
   idVideo,
   nutBaiViet,
   nutDuongDan,
+  nutHoiDap,
   nutNguoi,
   nutToChuc,
   nutVideo,
@@ -78,7 +80,7 @@ export function duongDanVunBai(bai: Bai): MucDuongDan[] {
 export function metadataBai(bai: Bai | undefined): Metadata {
   if (!bai) return {};
   return taoMetadata({
-    tieuDe: bai.tieuDe,
+    tieuDe: (bai.loai === "hoi" ? bai.fm.tieu_de_seo : undefined) ?? bai.tieuDe,
     moTa: bai.moTa,
     duongDan: bai.duongDan,
     loai: "article",
@@ -226,6 +228,7 @@ export async function TrangBai({ bai }: { bai: Bai }) {
   // Từ điển và phương pháp có phần riêng từ frontmatter, nên thân bài đặt sau phần ấy.
   const thanTruoc = bai.loai !== "tu-dien" && bai.loai !== "phuong-phap";
   const video = videoCuaBai(bai);
+  const hoiDap = bai.loai === "hoi" ? cauHoiThuongGap(bai.than) : [];
 
   return (
     <main id="main" className="km-con km-bai" data-door={cua} style={doorStyle(cua)}>
@@ -242,6 +245,7 @@ export async function TrangBai({ bai }: { bai: Bai }) {
             video: video.map((v) => idVideo(v.id)),
           }),
           ...video.map(nutVideo),
+          ...(hoiDap.length > 0 ? [nutHoiDap(bai.duongDan, hoiDap)] : []),
           nutDuongDan(vun),
           nutNguoi(),
           nutToChuc(),
