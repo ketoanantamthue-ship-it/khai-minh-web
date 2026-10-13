@@ -34,7 +34,7 @@ test.describe("Đầu trang và chân trang", () => {
     await expect(chan.getByText("Nếu bạn đang gặp nguy hiểm")).toBeVisible();
     await expect(chan.locator('a[href="tel:115"]')).toBeVisible();
     await expect(chan.locator("#mien-tru")).toContainText("Miễn trừ trách nhiệm");
-    await expect(chan.getByRole("link", { name: "An Tâm Mệnh" })).toHaveAttribute("href", "https://antammenh.com");
+    await expect(chan.getByRole("link", { name: "An Tâm Mệnh", exact: true })).toHaveAttribute("href", "https://antammenh.com");
     await expect(chan.getByRole("link", { name: "Khai Mệnh" })).toHaveAttribute("href", "https://khaimenh.com");
 
     // Quyết định F1 (docs/01): ba liên kết chân trang trỏ vào mục và trang đã chốt.

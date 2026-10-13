@@ -14,6 +14,11 @@ export type LienKet = {
   url: string | null;
   /** Mã việc ở docs/07 khi `url` còn trống. */
   can?: string;
+  /**
+   * Nhóm cộng đồng, không phải trang của chính Khai Minh: vẫn hiện ở chân
+   * trang và trang tác giả, nhưng không đưa vào `sameAs` của Person.
+   */
+  laNhom?: boolean;
 };
 
 export type AnhTam = {
@@ -188,13 +193,16 @@ export const siteConfig = {
   mangXaHoi: [
     { ten: "Facebook", url: null, can: "C7" },
     { ten: "Ngôi Nhà Khai Mệnh", url: null, can: "C7" },
+    /** Nhóm Facebook An Tâm Mệnh (anh gửi ngày 13/10/2026). */
+    { ten: "Nhóm An Tâm Mệnh", url: "https://www.facebook.com/share/g/1C1GnZtCar/", laNhom: true },
     { ten: "YouTube", url: null, can: "C7" },
     { ten: "Zalo OA", url: null, can: "C7" },
   ] satisfies LienKet[],
 
   /** Thông tin liên hệ và pháp nhân (docs/07, mục D1). */
   lienHe: {
-    email: null as string | null,
+    /** Địa chỉ thư liên hệ, cũng là nơi nhận lá thư khi nối ở phiên S5 (anh gửi ngày 13/10/2026). */
+    email: "khaivannguoi@gmail.com" as string | null,
     /** Số Zalo, cũng là số điện thoại (anh gửi ngày 12/10/2026). */
     zalo: "094 436 5246" as string | null,
     dienThoai: "0944365246" as string | null,
