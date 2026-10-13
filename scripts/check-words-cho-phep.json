@@ -5,6 +5,11 @@
       "tep": "content/chang/05-tuoi-giua-doi.mdx",
       "cum": "hạn nặng",
       "ly_do": "Câu hỏi nguyên văn của người đọc (“Tuổi bốn mươi chín có thật là một năm hạn nặng?”), có sẵn trong bản mẫu chang-5.html và index.html. Bài trả lời nhằm gỡ nỗi sợ, không gieo sợ. Anh đã xác nhận giữ ngày 09/10/2026 (docs/01, mục F2)."
+    },
+    {
+      "tep": "content/hoi/tuoi-bon-muoi-chin-co-that-la-mot-nam-han-nang.mdx",
+      "cum": "hạn nặng",
+      "ly_do": "Tiêu đề là đúng câu hỏi nguyên văn của người đọc trên trang chặng 5 (đã được cho giữ ở mục trên, docs/01, F2). Chỉ dùng trong tiêu đề và tên tệp; thân bài không lặp lại cụm này. Bài nhằm gỡ nỗi sợ, không gieo sợ."
     }
   ]
 }

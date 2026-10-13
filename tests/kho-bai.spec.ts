@@ -312,3 +312,39 @@ test.describe("Chung cho các trang mới của S3", () => {
     expect(loi).toEqual([]);
   });
 });
+
+test.describe("Mọi bài hỏi – đáp (bản xem trước)", () => {
+  const hoi = docKho().filter((b) => b.loai === "hoi");
+
+  test("kho có đủ lô bài chặng 5, mỗi bài một mã câu hỏi riêng", () => {
+    const ma = hoi.map((b) => (b.loai === "hoi" ? b.fm.ma_cau_hoi : ""));
+    expect(ma).toEqual(expect.arrayContaining(["Q001", "Q010", "Q011", "Q012", "Q013", "Q014"]));
+    expect(new Set(ma).size).toBe(ma.length);
+  });
+
+  for (const b of hoi) {
+    test(`${b.duongDan}: đủ năm bước, có ý chính, khung chờ, chữ trong HTML, axe 0 lỗi`, async ({ page, request }) => {
+      if (b.loai !== "hoi") return;
+      const n = demChu(b.fm.tra_loi_ngan ?? "");
+      expect(n).toBeGreaterThanOrEqual(40);
+      expect(n).toBeLessThanOrEqual(60);
+      expect(b.thieu.filter((t) => t.startsWith("bước"))).toEqual([]);
+
+      await page.goto(b.duongDan);
+      await expect(page.locator("main h1")).toHaveText(b.tieuDe);
+      const h2 = await page.locator("main h2").allTextContents();
+      expect(h2.filter((t) => (BUOC_HOI as readonly string[]).includes(t))).toEqual([...BUOC_HOI]);
+      await expect(page.locator(".y-chinh li")).toHaveCount(3);
+      await expect(page.locator(".ba-lop .ba-lop-o")).toHaveCount(3);
+      await expect(page.locator(".khung-cho-video")).toHaveCount(1);
+      await expect(page.locator(".bai-than .o-can")).toHaveCount(0);
+      expect((await page.locator("main").textContent()) ?? "").not.toMatch(/CẦN|ghi_chu/);
+
+      const html = await (await request.get(b.duongDan)).text();
+      expect(html).toContain((b.fm.tra_loi_ngan ?? "").split(".")[0]!);
+
+      const kq = await new AxeBuilder({ page }).analyze();
+      expect(kq.violations).toEqual([]);
+    });
+  }
+});
