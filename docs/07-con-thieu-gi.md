@@ -1,6 +1,6 @@
 # 07 · Bảng rà soát: web Khai Minh còn thiếu gì
 
-Cập nhật ngày 13/10/2026, sau phiên S5 (biểu mẫu gửi thư thật). Claude Code cập nhật bảng này cuối mỗi phiên: ghi `[x]` khi xong và thêm chỗ thiếu mới phát hiện.
+Cập nhật ngày 14/10/2026, sau phiên đồng bộ thuật ngữ (docs/01, mục G). Claude Code cập nhật bảng này cuối mỗi phiên: ghi `[x]` khi xong và thêm chỗ thiếu mới phát hiện.
 
 **Cách đọc bảng:**
 - **Nhóm A–D và F** là việc chỉ anh hoặc đội của anh làm được.
@@ -11,9 +11,9 @@ Cập nhật ngày 13/10/2026, sau phiên S5 (biểu mẫu gửi thư thật). C
 
 | Nhóm | Số mục | Mục gấp nhất |
 | --- | --- | --- |
-| A. Quyết định | 19 | A1 kho mã, A9 tên miền |
+| A. Quyết định | 20 | A1 kho mã, A9 tên miền |
 | B. Chất liệu thật | 11 | B1 ảnh có bản quyền, B2 chân dung, B3 ghi âm |
-| C. Nội dung | 14 | C1 hiện chưa có bài nào để tìm thấy |
+| C. Nội dung | 15 | C1 hiện chưa có bài nào để tìm thấy |
 | D. Pháp lý | 6 | D1 pháp nhân, D3 luật sư, D5 kiểm đường dây nóng |
 | E. Kỹ thuật | 10 (+6 từ S0, +5 từ S1, +3 từ S2, +7 từ S3, +3 từ S4, +4 từ S4b, +3 từ S5) | Đã nằm trong S0–S7 |
 | F. Vận hành | 4 | F1 người giữ hộp thư |
@@ -42,6 +42,7 @@ Cập nhật ngày 13/10/2026, sau phiên S5 (biểu mẫu gửi thư thật). C
 
 | [x] A18 | *(Phát hiện ở S4b.)* **Lá thư và các ô nhận thư khi chưa có nơi nhận thư (A5).** **Đã chốt ngày 11/10/2026: hướng (2).** Ở bản thật, khi `noiNhanThu` trong `site.config.ts` còn trống (`moLoiThu` tắt), web không dựng lá thư (phần IX trang chủ), ô “Nhận thư hằng tháng”, ô “Báo cho tôi khi sách ra đời”, và mọi lối dẫn tới chúng: “Gửi một câu hỏi” ở đầu trang, thanh rút gọn và Mục lục; “Gửi tôi một lá thư” ở chân trang (kèm câu hứa hồi âm); lời mời cuối trang Cửa Tâm, trang chặng, trang hỏi – đáp; các nút “Gửi thư xin…” của Con đường đồng hành (lời mời cuối phần ấy còn “Bắt đầu Bảng tự soi”); “Gửi tôi một câu hỏi” và “Báo cho tôi” của Người giữ những câu hỏi; nút “Nhận thư hằng tháng” ở `/tri`, `/thu` và ở ba cửa trang chủ; nút “Gửi lời mời hợp tác” ở `/bao-chi`. Ở `/than`, câu nhắc hỏi bác sĩ vẫn giữ, chỉ bỏ lời mời nhận thư. Trong Hiến chương (“Khi tôi làm chưa đúng một điều”), chữ “Gửi câu hỏi” giữ nguyên nhưng không còn là liên kết. `/gui-cau-hoi` vẫn mở được bằng địa chỉ, chỉ có tiêu đề, để `noindex, follow` và không vào sitemap. Bản xem trước giữ nguyên. Khi nối nơi nhận thư ở S5, điền `noiNhanThu` là mọi thứ hiện lại. | S5 | Đã làm |
 | [x] A19 | *(Phát hiện ở S4b.)* **Ngân sách JavaScript của trang con (R12).** Phần khung chạy của React và Next.js đã là 137 KB (nén gzip). **Đã chốt ngày 11/10/2026: hướng (1)**, nâng ngân sách lên **160 KB đã nén** (docs/05, mục 2). Bài kiểm thử `tests/ra-soat-s4b.spec.ts` đo sáu trang con mỗi lần chạy. | S6 | Đã làm |
+| [x] A20 | *(14/10/2026.)* **Bộ thuật ngữ chung cho bốn web.** Hai bộ tên sáu tâm (Tâm Ham… và tham, sân, si…) làm khách nhầm và khó nhớ; thang Cuốn · Dừng chưa đứng trên từ Phật học. **Đã chốt (docs/01, A5 và G):** sáu tánh hạnh gọi đúng tên trong kinh, xếp ba cặp Tham – Tín, Sân – Trí, Si – Tầm; thang bốn bậc Mê · Tỉnh · Chuyển · An. Bản đầy đủ ở `docs/thuat-ngu-chung.md`. Đã sửa: nhãn “Bốn giờ” ở trang chủ, kèm câu 2 giờ sáng (“càng tỉnh” đổi thành “đầu óc bạn lại càng chạy nhanh hơn”); hai dòng tên tâm trong bài Q001; `check:words` bắt các từ đã thôi dùng. Ở phần “Bốn giờ”, lời kể của mỗi giờ đóng vai câu giải nghĩa, nên chưa thêm câu giải nghĩa riêng; anh xem có cần thêm không. **Còn lại ngoài kho này:** chạy lệnh đồng bộ cho antammenh-web (gồm Khai Tâm) và cho Khai Mệnh. | — | Đã làm ở kho này |
 
 ## B. Chất liệu thật
 
@@ -87,6 +88,7 @@ Cập nhật ngày 13/10/2026, sau phiên S5 (biểu mẫu gửi thư thật). C
 | [ ] C12 | *(Phát hiện ở S4.)* Trang `/sach`: **mục lục dự kiến** và **một đoạn trích** của cuốn Soi – Thấu – Chuyển. docs/02 hẹn trang này có “sách lõi và các bộ sách”, nhưng bản mẫu chỉ có khối `#sach` của Cửa Trí (đã dùng nguyên văn). Hai mục còn lại hiện ô “Đang soạn”. | Không chặn | S4 khung |
 | [ ] C13 | *(Phát hiện ở S4.)* Trang `/bao-chi`: danh sách **chủ đề nói chuyện** và **nguyên tắc nhận lời** mời phỏng vấn, hợp tác. Bản mẫu và `docs/nguon/` chưa có chữ. Tiểu sử ở trang này dùng chung C7, ảnh tải về dùng chung B2. | Không chặn | S4 khung |
 | [ ] C14 | *(Phát hiện ở S4.)* Trang `/tro-nang`: chữ hướng dẫn cách dùng chế độ **Chữ lớn, dễ đọc** và **Bản nhẹ cho máy yếu**, và lời cam kết về trợ năng (docs/02). Hai nút bật tắt đã chạy ngay ở đầu trang; hai mục giải thích hiện ô “Đang soạn”. | Không chặn | S4 khung |
+| [ ] C15 | *(Phát hiện khi đồng bộ thuật ngữ, 14/10/2026.)* **Mục từ điển cho sáu tánh hạnh và bốn bậc.** `content/tu-dien/` chưa có mục nào cho Tham, Tín, Sân, Trí, Si, Tầm và Mê, Tỉnh, Chuyển, An. Đây là các từ khách sẽ tra nhiều nhất, và là nơi hợp nhất để ghi nguồn Thanh Tịnh Đạo, chương III, cùng câu trung thực về thang bốn bậc. Câu giải nghĩa đã có ở `docs/thuat-ngu-chung.md`; phần thân mục từ cần người viết và người soát (F2). | Không chặn; nên có trước S7 | S7 |
 
 ## D. Pháp lý
 

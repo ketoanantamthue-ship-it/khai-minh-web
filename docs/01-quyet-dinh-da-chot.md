@@ -8,7 +8,7 @@
 | A2 | Ra bên ngoài chỉ có hai cái tên: **Khai Minh** (con người, tác giả) và **An Tâm Mệnh** (mọi dịch vụ). Các tên khác chỉ gặp khi đã vào bên trong. | Bản cuối |
 | A3 | Ký tên trên mọi văn bản cho khách: **Người Khai Vấn (Khai Minh)**. Chỉ dùng bút danh, không dùng tên thật. | Bản cuối, hồ sơ thương hiệu |
 | A4 | Thôi dùng ra bên ngoài các tên: Cửu Minh Mệnh Học, Karmic Mind-Map, ATAM. | Bản cuối |
-| A5 | Hệ ngôn ngữ với người đọc: bốn tầng Cuốn · Dừng · Chuyển · An; sáu tâm Tâm Ham · Tâm Tin · Tâm Nóng · Tâm Hiểu · Tâm Mơ · Tâm Nghĩ. | Bản cuối |
+| A5 | Hệ ngôn ngữ với người đọc *(chốt lại 14/10/2026, thay bản cũ; xem mục G)*: sáu tánh hạnh gọi đúng tên trong kinh **Tham · Tín · Sân · Trí · Si · Tầm**, xếp theo ba cặp; thang bốn bậc của tâm **Mê · Tỉnh · Chuyển · An**. Bộ thuật ngữ đầy đủ ở `docs/thuat-ngu-chung.md`. | Quyết định 14/10/2026 |
 | A6 | Tên phương pháp: Soi – Thấu – Chuyển. Tên hệ thống và chứng nhận: Tổng Mệnh Học™. | Bản cuối |
 
 ## B. Kiến trúc
@@ -68,3 +68,15 @@ Claude Code làm theo cột "Mặc định" cho tới khi anh chốt khác. Mụ
 | F6 | *(Sau phiên S3.)* Trường `ngay_kiem_lai` là **ngày người soát đã đọc lại bài gần nhất**, không phải ngày hẹn kiểm lại. Ngày này hiện trên trang, vào sitemap và `dateModified` của JSON-LD. | A16 |
 | F7 | *(Sau phiên S3.)* Khuôn bài hỏi – đáp có **mười bước**: thêm bước riêng “Khoa học nói gì”, đặt giữa “Huyền học nói gì” và “Ba việc bạn làm được từ hôm nay”, có nhãn tin cậy riêng. Đã cập nhật docs/04, docs/09 và `content/hoi/_mau.mdx`. | A17 |
 | F8 | *(Sau phiên S3.)* Chữ giao diện của trang bài: thời gian đọc là “Bạn đọc bài này trong khoảng {n} phút.”; nút mở lời thoại video là “Đọc lời trong video”; mục lục nhỏ đầu bài có dòng dẫn “Bài này có các phần:”. Giữ nguyên “Xem video: {tiêu đề}” (tên đọc cho máy đọc màn hình) và ba tên ô “Nhân quả”, “Khoa học”, “Huyền học”. | E30 |
+
+## G. Bộ thuật ngữ chung cho bốn web (14/10/2026)
+
+Anh đã chốt bộ thuật ngữ chung v1 cho Khai Minh, An Tâm Mệnh, Khai Mệnh và Khai Tâm. Bản đầy đủ, kèm câu giải nghĩa đã duyệt, nằm ở `docs/thuat-ngu-chung.md`.
+
+| # | Điều đã chốt | Mã ở docs/07 |
+| --- | --- | --- |
+| G1 | Sáu tánh hạnh dùng một bộ tên duy nhất, đúng tên trong Thanh Tịnh Đạo, chương III: Tham · Tín · Sân · Trí · Si · Tầm, xếp ba cặp Tham – Tín, Sân – Trí, Si – Tầm. Thôi dùng bộ tên Tâm Ham, Tâm Tin, Tâm Nóng, Tâm Hiểu, Tâm Mơ, Tâm Nghĩ. | A20 |
+| G2 | “Tánh tham” là khuynh hướng lâu dài; “tâm tham” là lúc nó khởi lên. Không viết “người tham”, “bạn là người sân”. Không gọi tánh trí là “tâm trí”. | A20 |
+| G3 | Thang bốn bậc của tâm đổi từ Cuốn · Dừng · Chuyển · An thành **Mê · Tỉnh · Chuyển · An**. Nơi nào giới thiệu thang phải có câu trung thực: thang là cách sắp xếp của Tổng Mệnh Học™, không bài kinh nào liệt kê đúng bốn bậc này. | A20 |
+| G4 | Ở mọi chỗ nói về sáu tâm và thang bốn bậc, mục A5 và mục G thắng bản mẫu `prototypes/` và các tài liệu trong `docs/nguon/` (W1, W2, Bản cuối, Mục lục bản đồ nội dung). Các tài liệu đó giữ nguyên làm lịch sử. | A20 |
+| G5 | Khoá trong mã có tiền tố riêng để không trùng nhãn khác: `tanh-tham`, `tanh-tin`, `tanh-san`, `tanh-tri`, `tanh-si`, `tanh-tam`; `thang-me`, `thang-tinh`, `thang-chuyen`, `thang-an`. | A20 |
