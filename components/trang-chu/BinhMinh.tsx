@@ -21,12 +21,12 @@ export function BinhMinh() {
           gio={[
             {
               gio: "2 GIỜ SÁNG",
-              tang: "Cuốn",
-              ta: "Bạn nằm nhìn trần nhà. Một ý nghĩ cứ quay đi quay lại, và càng cố ngủ, bạn lại càng tỉnh.",
+              tang: "Mê",
+              ta: "Bạn nằm nhìn trần nhà. Một ý nghĩ cứ quay đi quay lại, và càng cố ngủ, đầu óc bạn lại càng chạy nhanh hơn.",
             },
             {
               gio: "4 GIỜ SÁNG",
-              tang: "Dừng",
+              tang: "Tỉnh",
               ta: "Bạn ngồi dậy, rót một ly nước, và lần đầu tiên gọi được đúng tên điều đang làm mình sợ.",
             },
             {

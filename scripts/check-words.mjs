@@ -75,6 +75,12 @@ const LOI = [
   ["tâm linh cao cấp", "tự xưng"],
   ["trải nghiệm đẳng cấp", "văn quảng cáo"],
   ["cam kết kết quả", "rủi ro pháp lý"],
+  // Bộ thuật ngữ chung v1 (docs/thuat-ngu-chung.md, mục 4): từ đã thôi dùng.
+  ["tâm (?:ham|tin|nóng|hiểu|mơ|nghĩ)", "tên cũ; dùng “tánh tham”, “tâm tham trỗi lên”… (docs/thuat-ngu-chung.md)"],
+  ["cuốn\\s*[·–→-]\\s*dừng", "thang cũ; dùng Mê · Tỉnh · Chuyển · An"],
+  ["người tham(?! gia| dự| khảo| vấn| quan| luận)", "gắn nhãn; dùng “khi tâm tham trỗi lên”"],
+  ["người sân(?! khấu| bay| vườn| nhà| chơi)", "gắn nhãn; dùng “khi tâm sân trỗi lên”"],
+  ["người si(?! tình| mê)", "gắn nhãn; dùng “khi tâm si trỗi lên”"],
 ];
 
 const CAN_XEM = [
