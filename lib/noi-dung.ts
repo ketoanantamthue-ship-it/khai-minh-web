@@ -153,6 +153,12 @@ const schemaHoi = z.strictObject({
   ...coBan,
   /** Bước 1: câu hỏi nguyên văn của khách. */
   tieu_de: z.string().min(1),
+  /**
+   * Tiêu đề cho Google (thẻ <title> và ảnh chia sẻ), ngắn hơn và dùng đúng chữ
+   * người ta hay gõ, ví dụ số “49” thay cho “bốn mươi chín”. Trên trang vẫn hiện
+   * `tieu_de`. Bỏ trống thì dùng `tieu_de`. Tối đa 60 ký tự để Google không cắt.
+   */
+  tieu_de_seo: z.string().min(1).max(60, "tiêu đề cho Google tối đa 60 ký tự").optional(),
   /** Bước 2: hai câu nói lại tình cảnh người đọc. */
   tinh_canh: z.string().min(1).optional(),
   /** Bước 3: trả lời ngắn 40–60 chữ, hiện ngay dưới tiêu đề. */
@@ -295,6 +301,25 @@ export function phanDuoiTieuDe(than: string, tieuDe: string): string | undefined
   if (dau < 0) return undefined;
   const sau = dong.findIndex((d, i) => i > dau && /^##\s/.test(d));
   return dong.slice(dau + 1, sau < 0 ? undefined : sau).join("\n");
+}
+
+/**
+ * Các cặp hỏi – đáp trong mục “## Câu hỏi thường gặp” của thân bài: mỗi câu hỏi
+ * là một tiêu đề `###`, câu trả lời là phần chữ ngay dưới nó. Dùng cho dữ liệu
+ * FAQPage, để máy tìm kiếm và AI đọc đúng từng câu trả lời.
+ */
+export function cauHoiThuongGap(than: string): { hoi: string; dap: string }[] {
+  const phan = phanDuoiTieuDe(than.replace(/\{\/\*[\s\S]*?\*\/\}/g, ""), "Câu hỏi thường gặp");
+  if (!phan) return [];
+  return phan
+    .split(/^###\s+/m)
+    .slice(1)
+    .flatMap((khoi) => {
+      const [dau = "", ...con] = khoi.split("\n");
+      const hoi = dau.trim();
+      const dap = chuTrongThan(con.join("\n")).replace(/\s+/g, " ").trim();
+      return hoi && dap ? [{ hoi, dap }] : [];
+    });
 }
 
 /** Chữ người đọc thấy trong thân MDX: bỏ chú thích, thẻ và dấu Markdown. */

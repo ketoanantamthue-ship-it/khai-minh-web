@@ -312,6 +312,20 @@ export function nutVideo(v: DuLieuVideo): Nut {
 }
 
 /** Gói các nút thành một khối JSON-LD. */
+/** FAQPage: mục “Câu hỏi thường gặp” của một bài, đúng chữ hiện trên trang. */
+export function nutHoiDap(duongDan: string, cap: { hoi: string; dap: string }[]): Nut {
+  return {
+    "@type": "FAQPage",
+    "@id": `${urlTuyetDoi(duongDan)}#hoi-dap`,
+    inLanguage: "vi",
+    mainEntity: cap.map((c) => ({
+      "@type": "Question",
+      name: c.hoi,
+      acceptedAnswer: { "@type": "Answer", text: c.dap },
+    })),
+  };
+}
+
 export function doThi(...nut: Nut[]): Nut {
   return { "@context": "https://schema.org", "@graph": nut };
 }

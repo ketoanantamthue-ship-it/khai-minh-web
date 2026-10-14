@@ -75,6 +75,7 @@ Thiếu một nhãn thì web không dựng được. Nhãn quyết định bài 
 | Trường | Là gì | Bắt buộc khi đăng |
 | --- | --- | --- |
 | `tieu_de` | **Bước 1.** Câu hỏi nguyên văn của khách | Có |
+| `tieu_de_seo` | Tiêu đề cho Google, tối đa 60 ký tự, dùng đúng chữ người ta hay gõ (ví dụ “tuổi 49” bằng số, “vợ chồng như người dưng”). Trên trang vẫn hiện `tieu_de` | Không |
 | `slug` | Tên tệp, không có `.mdx` | Có |
 | `ma_cau_hoi` | ID trong bảng lọc, ví dụ `"Q001"`. Mỗi mã chỉ dùng cho một bài | Có |
 | `tinh_canh` | **Bước 2.** Hai câu nói lại tình cảnh người đọc, để họ thấy mình được hiểu | Có |
@@ -86,7 +87,7 @@ Thiếu một nhãn thì web không dựng được. Nhãn quyết định bài 
 | `nguoi_soat` | Tên người soát | Có |
 | `trang_thai` | `ban-nhap`, `da-soat` hoặc `da-dang` | Có |
 | `lien_quan` | Bài khác nên dẫn tới, ví dụ `["tu-dien/tam-tai"]` | Không |
-| `mo_ta` | Câu mô tả cho Google, 120–155 ký tự. Bỏ trống thì web lấy đoạn trả lời ngắn | Không |
+| `mo_ta` | Câu mô tả cho Google, 120–155 ký tự, nên có một hai cách gọi khác của vấn đề mà người ta hay gõ. Bỏ trống thì web lấy đoạn trả lời ngắn | Không |
 | `ghi_chu_noi_bo` | Ghi chú cho đội, không bao giờ hiện trên web | Không |
 | `video` | Video YouTube đặt ở đầu bài (xem dưới) | Không |
 | `am_thanh` | Bản ghi âm Khai Minh đọc bài, hiện dòng “Nghe Khai Minh đọc bài này” | Không |
@@ -151,7 +152,7 @@ Bước 5 và bước 6 mà thiếu thẻ `<NhanTinCay>` thì bài không đăng
 
 - Mở bài bằng vài câu thư, rồi hộp `<YChinh>` với ba ý cốt lõi, để người đọc nắm ý trước khi đọc sâu.
 - `## Dấu hiệu bạn đang ở trong khoảng trống này` (đổi chữ theo bài), đặt trước bước 4: năm đến bảy cảnh đời rất cụ thể, để người đọc thấy mình.
-- `## Câu hỏi thường gặp`, đặt sau bước 8: hai đến bốn câu hỏi phụ người ta hay gõ lên Google, mỗi câu là một tiêu đề `###`, trả lời ngay câu đầu.
+- `## Câu hỏi thường gặp`, đặt sau bước 8: hai đến bốn câu hỏi phụ người ta hay gõ lên Google, mỗi câu là một tiêu đề `###`, trả lời ngay câu đầu. Web tự dựng dữ liệu FAQPage từ mục này cho máy tìm kiếm và AI.
 - `## Trước khi bạn gấp lá thư này`: lời kết và chữ ký.
 
 Từ khóa Phật học, tâm lý học và huyền học (ví dụ: Tứ Diệu Đế, vô thường, khủng hoảng tuổi trung niên, đại vận) nên nằm tự nhiên trong câu, nhất là ở câu đầu mỗi phần. Không nhồi từ khóa vào câu không cần nó.

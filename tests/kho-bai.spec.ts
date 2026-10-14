@@ -152,11 +152,13 @@ test.describe("Trang hỏi – đáp mẫu Q001 (bản xem trước)", () => {
     }
     await muc.nth(3).click();
     await expect(page).toHaveURL(/#khoa-hoc-noi-gi$/);
-    // Chưa có video, bản đọc, ảnh: không hiện trình phát hay ảnh nào. Bảng soi ba lớp có chữ nên hiện.
-    await expect(page.locator(".video-yt, .am-thanh, .anh-bai")).toHaveCount(0);
-    // Bản xem trước hiện khung chờ cho video bài giảng (B12), ảnh đầu bài và ảnh giữa bài (B13).
+    // Chưa có video, bản đọc: không hiện trình phát. Ảnh đầu bài đã có, kèm mô tả và chú thích. Bảng soi ba lớp có chữ nên hiện.
+    await expect(page.locator(".video-yt, .am-thanh")).toHaveCount(0);
+    await expect(page.locator(".anh-bai img")).toHaveAttribute("alt", /^Tranh sơn mài: /);
+    await expect(page.locator(".anh-bai figcaption")).toContainText("tạo bằng công cụ AI");
+    // Bản xem trước còn khung chờ video bài giảng (B12); ảnh đã có nên không còn khung chờ ảnh (B13).
     await expect(page.locator(".khung-cho-video[data-can='B12']")).toHaveCount(1);
-    await expect(page.locator(".khung-cho-anh[data-can='B13']")).toHaveCount(2);
+    await expect(page.locator(".khung-cho-anh[data-can='B13']")).toHaveCount(0);
     await expect(page.locator(".ba-lop .ba-lop-o")).toHaveCount(3);
   });
 
@@ -218,7 +220,8 @@ test.describe("SEO: metadata, JSON-LD, sitemap, robots, ảnh chia sẻ", () => 
       const og = await page.locator('meta[property="og:image"]').getAttribute("content");
       const anh = await request.get(new URL(og!).pathname + new URL(og!).search);
       expect(anh.status(), `${duong} → ${og}`).toBe(200);
-      expect(anh.headers()["content-type"]).toBe("image/png");
+      // Ảnh chia sẻ là PNG dựng tự động, hoặc ảnh đầu bài JPG (Facebook, Zalo đọc được cả hai).
+      expect(anh.headers()["content-type"]).toMatch(/^image\/(png|jpeg)$/);
     }
   });
 
@@ -311,4 +314,59 @@ test.describe("Chung cho các trang mới của S3", () => {
     }
     expect(loi).toEqual([]);
   });
+});
+
+test.describe("Mọi bài hỏi – đáp (bản xem trước)", () => {
+  const hoi = docKho().filter((b) => b.loai === "hoi");
+
+  test("kho có đủ lô bài chặng 5, mỗi bài một mã câu hỏi riêng", () => {
+    const ma = hoi.map((b) => (b.loai === "hoi" ? b.fm.ma_cau_hoi : ""));
+    expect(ma).toEqual(expect.arrayContaining(["Q001", "Q010", "Q011", "Q012", "Q013", "Q014"]));
+    expect(new Set(ma).size).toBe(ma.length);
+  });
+
+  for (const b of hoi) {
+    test(`${b.duongDan}: đủ năm bước, có ý chính, khung chờ, chữ trong HTML, axe 0 lỗi`, async ({ page, request }) => {
+      if (b.loai !== "hoi") return;
+      const n = demChu(b.fm.tra_loi_ngan ?? "");
+      expect(n).toBeGreaterThanOrEqual(40);
+      expect(n).toBeLessThanOrEqual(60);
+      expect(b.thieu.filter((t) => t.startsWith("bước"))).toEqual([]);
+
+      await page.goto(b.duongDan);
+      await expect(page.locator("main h1")).toHaveText(b.tieuDe);
+      const h2 = await page.locator("main h2").allTextContents();
+      expect(h2.filter((t) => (BUOC_HOI as readonly string[]).includes(t))).toEqual([...BUOC_HOI]);
+      await expect(page.locator(".y-chinh li")).toHaveCount(3);
+      await expect(page.locator(".ba-lop .ba-lop-o")).toHaveCount(3);
+      await expect(page.locator(".khung-cho-video")).toHaveCount(1);
+      await expect(page.locator(".bai-than .o-can")).toHaveCount(0);
+      expect((await page.locator("main").textContent()) ?? "").not.toMatch(/CẦN|ghi_chu/);
+
+      const html = await (await request.get(b.duongDan)).text();
+      expect(html).toContain((b.fm.tra_loi_ngan ?? "").split(".")[0]!);
+
+      // Tiêu đề cho Google: ngắn, có đuôi “– Khai Minh”, khác chữ h1 khi bài có tieu_de_seo.
+      const tieuDeGoogle = b.fm.tieu_de_seo ?? b.tieuDe;
+      expect(tieuDeGoogle.length).toBeLessThanOrEqual(60);
+      expect((await page.title()).startsWith(tieuDeGoogle), await page.title()).toBe(true);
+
+      // FAQPage khớp từng câu hỏi ### trong mục “Câu hỏi thường gặp”.
+      const doThi = (await page.locator('script[type="application/ld+json"]').allTextContents()).flatMap(
+        (k) => JSON.parse(k)["@graph"] as Record<string, unknown>[],
+      );
+      const faq = doThi.find((n) => n["@type"] === "FAQPage");
+      const cauHoi = await page.locator("h2#cau-hoi-thuong-gap ~ h3").allTextContents();
+      expect(faq, "có FAQPage").toBeTruthy();
+      const ten = (faq!.mainEntity as { name: string; acceptedAnswer: { text: string } }[]).map((q) => q.name);
+      expect(ten.length).toBeGreaterThanOrEqual(2);
+      for (const t of ten) expect(cauHoi.join("|")).toContain(t);
+      for (const q of faq!.mainEntity as { acceptedAnswer: { text: string } }[]) {
+        expect(q.acceptedAnswer.text.length).toBeGreaterThan(40);
+      }
+
+      const kq = await new AxeBuilder({ page }).analyze();
+      expect(kq.violations).toEqual([]);
+    });
+  }
 });
