@@ -43,7 +43,7 @@ export function KhoiSach({
               <FormNhanThu
                 id={oId}
                 nut="Báo cho tôi khi sách ra đời"
-                camOn="Cảm ơn bạn. Tôi sẽ báo cho bạn khi sách ra đời."
+                loai="sach"
               />
             </div>
           ) : null}

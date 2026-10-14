@@ -131,7 +131,7 @@ export default function CuaThan() {
               <FormNhanThu
                 id="thu-thang"
                 nut="Gửi thư cho tôi mỗi tháng"
-                camOn="Cảm ơn bạn. Lá thư đầu tiên sẽ đến hộp thư của bạn trong vài ngày tới."
+                loai="thang"
               />
             </>
           ) : null}

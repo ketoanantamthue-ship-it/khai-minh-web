@@ -24,7 +24,7 @@ export default function BaoChi() {
       moi={
         // Bản thật chưa có nơi nhận thư: chưa có lối gửi lời mời (docs/07, mục A18).
         siteConfig.moLoiThu ? (
-          <Link className="btn" href="/gui-cau-hoi">
+          <Link className="btn" href="/gui-cau-hoi" prefetch={false}>
             Gửi lời mời hợp tác
           </Link>
         ) : undefined

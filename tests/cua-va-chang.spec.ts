@@ -96,15 +96,32 @@ test.describe("Ba trang cửa", () => {
     }
   });
 
-  test("ô nhận thư của cửa Trí báo lỗi khi thiếu địa chỉ, cảm ơn khi đủ", async ({ page }) => {
+  test("ô nhận thư của cửa Trí báo lỗi khi thiếu địa chỉ hay chưa đồng ý, cảm ơn khi đủ", async ({ page }) => {
+    // Nơi nhận thư thật nằm ngoài bài kiểm thử: giả lời đáp của /api/thu.
+    let goi = "";
+    await page.route("**/api/thu", async (route) => {
+      goi = route.request().postData() ?? "";
+      await route.fulfill({ json: { ok: true, den: "/cam-on/thu-hang-thang" } });
+    });
     await page.goto("/tri");
     const o = page.locator("#thu-thang");
-    await page.locator("#thu").getByRole("button", { name: "Gửi thư cho tôi mỗi tháng" }).click();
+    const nut = page.locator("#thu").getByRole("button", { name: "Gửi thư cho tôi mỗi tháng" });
+    await nut.click();
     await expect(page.locator("#thu-thang-bao")).toContainText("điền địa chỉ thư đầy đủ");
     await expect(o).toBeFocused();
     await o.fill("ban@vi-du.vn");
-    await page.locator("#thu").getByRole("button", { name: "Gửi thư cho tôi mỗi tháng" }).click();
-    await expect(page.locator("#thu-thang-bao")).toContainText("Lá thư đầu tiên sẽ đến hộp thư của bạn");
+    await nut.click();
+    await expect(page.locator("#thu-thang-bao")).toContainText("đánh dấu ô đồng ý");
+    await page.locator("#thu").getByRole("checkbox").check();
+    await nut.click();
+    await expect(page).toHaveURL(/\/cam-on\/thu-hang-thang$/);
+    await expect(page.locator("h1")).toContainText("Cảm ơn bạn đã muốn nhận thư");
+    await expect(page.locator("main")).toContainText("Lá thư đầu tiên sẽ đến hộp thư của bạn");
+    const p = new URLSearchParams(goi);
+    expect(p.get("loai")).toBe("thang");
+    expect(p.get("email")).toBe("ban@vi-du.vn");
+    expect(p.get("dong-y")).toBe("on");
+    expect(p.get("website")).toBe("");
   });
 });
 
